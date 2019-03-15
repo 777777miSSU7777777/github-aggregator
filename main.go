@@ -26,5 +26,7 @@ func main(){
 	http.HandleFunc("/",index.Render)
 	http.HandleFunc("/auth",api.Auth)
 	http.HandleFunc("/logout",api.Logout)
-	http.ListenAndServe(fmt.Sprintf("%s:%s",host,port), nil)
+	err := http.ListenAndServe(fmt.Sprintf("%s:%s",host,port), nil); if err != nil {
+		log.Println(err.Error())
+	}
 }
