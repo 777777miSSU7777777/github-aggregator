@@ -1,10 +1,10 @@
 {{ define "profile" }}
 
     <div class="card" style="width:50%">
-        <img class="card-img-top" src="{{ .AvatarUrl }}" alt="Card image">
+        <img class="card-img-top" src="{{ .AvatarURL }}" alt="Card image">
         <div class="card-body">
             <h4 class="card-title">{{ .Username }}</h4>
-            <a href="{{ .ProfileUrl }}" class="btn btn-primary">See Profile</a>
+            <a href="{{ .ProfileURL }}" class="btn btn-primary">See Profile</a>
             {{ template "scopes" . }}
             {{ template "logout-button" }}
         </div>

@@ -8,14 +8,15 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/cookie"
 )
 
+//GetScopes returns scopes for provided token.
 func GetScopes(req *http.Request)([]string){
-	access_token, err := cookie.GetCookieValue(req, "access_token")
+	accessToken, err := cookie.GetCookieValue(req, "access_token")
 
 	if err != nil {
 		log.Println(err.Error())
 	}
 
-	resp, err := http.Get("https://api.github.com/user?access_token=" + access_token)
+	resp, err := http.Get("https://api.github.com/user?access_token=" + accessToken)
 
 	respHeader := header.ReadResponseHeader(resp)
 

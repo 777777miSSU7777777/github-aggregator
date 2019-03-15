@@ -9,19 +9,20 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator-web/app/query"
 )
 
+//Render renders index page.
 func Render(rw http.ResponseWriter, req *http.Request){
 	session := entity.Session{}
 	
-	access_token, err := cookie.GetCookieValue(req, "access_token")
+	accessToken, err := cookie.GetCookieValue(req, "access_token")
 
 	if err != nil {
 		log.Println(err.Error())
 	}
 
-	session.Authorized = access_token != ""; if session.Authorized {
+	session.Authorized = accessToken != ""; if session.Authorized {
 		session.Username, _ = query.GetUsername(req)
-		session.AvatarUrl, _  = query.GetAvatarUrl(req)
-		session.ProfileUrl, _ = query.GetProfileUrl(req)
+		session.AvatarURL, _  = query.GetAvatarURL(req)
+		session.ProfileURL, _ = query.GetProfileURL(req)
 		session.Scopes = query.GetScopes(req)
 	}
 	

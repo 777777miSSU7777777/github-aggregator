@@ -4,10 +4,12 @@ import (
 	"net/http"
 )
 
+//ReadRequestHeader returns header's bytes from request.
 func ReadRequestHeader(req *http.Request)(map[string][]string){
 	return readHeader(req.Header)
 }
 
+//ReadResponseHeader returns header's bytes from response.
 func ReadResponseHeader(resp *http.Response)(map[string][]string){
 	return readHeader(resp.Header)
 }
