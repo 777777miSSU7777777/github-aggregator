@@ -1,23 +1,23 @@
 package cookie
 
-import(
+import (
 	"net/http"
 	"time"
 )
 
 //SaveCookie saves value to cookie with specified key and store duration.
-func SaveCookie(rw http.ResponseWriter, key string, value string, duration time.Duration){
+func SaveCookie(rw http.ResponseWriter, key string, value string, duration time.Duration) {
 	cookie := http.Cookie{Name: key, Value: value, Expires: time.Now().Add(duration)}
 	http.SetCookie(rw, &cookie)
 }
 
 //GetCookieValue returns value from cookie with specified key.
 // Also returns error if happen.
-func GetCookieValue(req *http.Request, key string)(string, error){
+func GetCookieValue(req *http.Request, key string) (string, error) {
 	cookie, err := req.Cookie(key)
 
 	if err != nil {
-		return "", err 
+		return "", err
 	}
 
 	return cookie.Value, nil
@@ -25,9 +25,9 @@ func GetCookieValue(req *http.Request, key string)(string, error){
 
 //DeleteCookie removes cookie with specified key.
 // Also returns error if happen.
-func DeleteCookie(rw http.ResponseWriter, req *http.Request, key string)(error){
+func DeleteCookie(rw http.ResponseWriter, req *http.Request, key string) error {
 	cookie, err := req.Cookie(key)
-	
+
 	if err != nil {
 		return err
 	}

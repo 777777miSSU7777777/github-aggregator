@@ -1,15 +1,16 @@
 package query
 
 import (
+	"log"
 	"net/http"
 	"strings"
-	"log"
-	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/header"
+
 	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/cookie"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/header"
 )
 
 //GetScopes returns scopes for provided token.
-func GetScopes(req *http.Request)([]string){
+func GetScopes(req *http.Request) []string {
 	accessToken, err := cookie.GetCookieValue(req, "access_token")
 
 	if err != nil {
@@ -20,5 +21,5 @@ func GetScopes(req *http.Request)([]string){
 
 	respHeader := header.ReadResponseHeader(resp)
 
-	return strings.Split(respHeader["X-Oauth-Scopes"][0],",")
+	return strings.Split(respHeader["X-Oauth-Scopes"][0], ",")
 }

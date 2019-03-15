@@ -4,8 +4,8 @@ package entity
 // contains auth status, username, avatar url, profile url and token scopes.
 type Session struct {
 	Authorized bool
-	Username string
+	Username   string
 	ProfileURL string
-	AvatarURL string
-	Scopes []string
+	AvatarURL  string
+	Scopes     []string
 }

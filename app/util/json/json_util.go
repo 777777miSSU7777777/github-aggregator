@@ -6,10 +6,10 @@ import (
 
 //BytesToMap returns string : interface map from JSON bytes.
 // Also returns error if happen.
-func BytesToMap(jsonBytes []byte)(map[string]interface{}, error){
+func BytesToMap(jsonBytes []byte) (map[string]interface{}, error) {
 	jsonMap := make(map[string]interface{})
 	err := json.Unmarshal(jsonBytes, &jsonMap)
-	
+
 	if err != nil {
 		return nil, err
 	}
