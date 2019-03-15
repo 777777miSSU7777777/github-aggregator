@@ -12,7 +12,7 @@ func Logout(rw http.ResponseWriter, req *http.Request) {
 	err := cookie.DeleteCookie(rw, req, "access_token")
 
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 	}
 
 	log.Println("Logout")

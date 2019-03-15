@@ -15,7 +15,7 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 		resp, err := http.Get("https://api.github.com/user?access_token=" + accessToken)
 
 		if err != nil {
-			log.Println(err.Error())
+			log.Println(err)
 		}
 
 		if resp.StatusCode == 200 {
