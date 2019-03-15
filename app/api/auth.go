@@ -12,7 +12,6 @@ import (
 func Auth(rw http.ResponseWriter, req *http.Request) {
 	if req.Method == http.MethodPost {
 		accessToken := req.FormValue("access_token")
-		log.Printf("Token: %s", accessToken)
 		resp, err := http.Get("https://api.github.com/user?access_token=" + accessToken)
 
 		if err != nil {
