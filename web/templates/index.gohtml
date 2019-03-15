@@ -1,0 +1,7 @@
+{{ template "header" }}
+  {{ if .Authorized }}
+    {{ template "profile" . }}
+  {{ else }}
+    {{ template "token-form" }}
+  {{end }}
+{{ template "footer" }}
