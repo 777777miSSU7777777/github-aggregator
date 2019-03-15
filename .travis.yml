@@ -9,7 +9,6 @@ before_install:
     - go get -u golang.org/x/lint/golint
     - go get github.com/securego/gosec/cmd/gosec/...
     - go get golang.org/x/tools/cmd/goimports
-    - go get github.com/stretchr/testify
 
 script:
     - go fmt ./...
