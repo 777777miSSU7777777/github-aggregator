@@ -3,10 +3,10 @@ package index
 import (
 	"net/http"
 	"log"
-	"github-aggregator-web-closed/app/view/render"
-	"github-aggregator-web-closed/app/entity"
-	"github-aggregator-web-closed/app/util/http/cookie"
-	"github-aggregator-web-closed/app/query"
+	"github-aggregator-web/app/view/render"
+	"github-aggregator-web/app/entity"
+	"github-aggregator-web/app/util/http/cookie"
+	"github-aggregator-web/app/query"
 )
 
 func Render(rw http.ResponseWriter, req *http.Request){
