@@ -6,8 +6,8 @@ import (
 	"flag"
 	"log"
 	"net/http"
-	"github-aggregator-web/app/view/index"
-	"github-aggregator-web/app/api"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/view/index"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/api"
 )
 
 var host string

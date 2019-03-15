@@ -2,9 +2,9 @@ package query
 
 import (
 	"net/http"
-	"github-aggregator-web/app/util/http/cookie"
-	"github-aggregator-web/app/util/http/body"
-	"github-aggregator-web/app/util/json"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/cookie"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/body"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/json"
 )
 
 func GetUsername(req *http.Request)(string, error){

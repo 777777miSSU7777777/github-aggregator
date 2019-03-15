@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 	"log"
-	"github-aggregator-web/app/util/http/cookie"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/cookie"
 )
 
 func Logout(rw http.ResponseWriter, req *http.Request){

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"log"
 	"time"
-	"github-aggregator-web/app/util/http/cookie"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/cookie"
 )
 
 func Auth(rw http.ResponseWriter, req *http.Request){

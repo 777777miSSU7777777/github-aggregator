@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 	"log"
-	"github-aggregator-web/app/util/http/header"
-	"github-aggregator-web/app/util/http/cookie"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/header"
+	"github.com/777777miSSU7777777/github-aggregator-web/app/util/http/cookie"
 )
 
 func GetScopes(req *http.Request)([]string){
