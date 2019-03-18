@@ -1,6 +1,6 @@
 package constants
 
-const GHApiUrl = "https://api.github.com/"
+const GHApiURL = "https://api.github.com/"
 
 const User = "user"
 
