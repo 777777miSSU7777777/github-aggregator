@@ -1,0 +1,29 @@
+language: go 
+
+go: 
+    - 1.12.x
+
+sudo: true
+
+before_install: 
+    # - go get -u golang.org/x/lint/golint
+    # - go get github.com/securego/gosec/cmd/gosec/...
+    # - go get golang.org/x/tools/cmd/goimports
+
+script:
+    # - go fmt ../.././...
+    # - golint ../.././...
+    # - gosec ../.././...
+    # - goimports ../.././
+
+    # - go test ../.././...
+
+    # - go build ../../cmd/web-app/main.go
+
+    # docker image check
+
+    # docker image push to dockerhub check
+
+    # github checks
+
+    
