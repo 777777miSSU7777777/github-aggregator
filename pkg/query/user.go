@@ -2,7 +2,6 @@ package query
 
 import (
 	"fmt"
-	"encoding/json"
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/constants"
