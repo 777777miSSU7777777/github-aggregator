@@ -1,5 +1,7 @@
 package constants
 
-const UserApiURL = "https://api.github.com/user"
+const GHApiUrl = "https://api.github.com/"
+
+const User = "user"
 
 const AccessTokenParam = "access_token="
