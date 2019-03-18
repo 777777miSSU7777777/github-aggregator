@@ -18,6 +18,8 @@ func ReadResponseBody(resp *http.Response) ([]byte, error) {
 
 
 func readBody(body io.ReadCloser) ([]byte, error) {
+	defer body.Close()
+
 	bodyBytes, err := ioutil.ReadAll(body)
 
 	if err != nil {
