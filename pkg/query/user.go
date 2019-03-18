@@ -10,7 +10,7 @@ import (
 )
 
 
-func QueryUser(req *http.Request, tkn string)([]byte, error){
+func QueryUser(tkn string)([]byte, error){
 	resp, err := http.Get( fmt.Sprintf("%s%s?%s%s",constants.GHApiURL, constants.User, constants.AccessTokenParam, tkn) )
 
 	if err != nil {
