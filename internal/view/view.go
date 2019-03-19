@@ -8,7 +8,7 @@ var templates *template.Template
 
 
 func init() {
-	templates = template.Must(template.ParseGlob("../../web/templates/*.gohtml"))
+	templates = template.Must(template.ParseGlob("web/templates/*.gohtml"))
 }
 
 
