@@ -5,8 +5,22 @@ import (
 	"time"
 )
 
-func SaveCookie(rw http.ResponseWriter, key string, value string, duration time.Duration) {
-	cookie := http.Cookie{Name: key, Value: value, Expires: time.Now().Add(duration)}
+
+var expirationDuration time.Duration
+
+
+func SetExpiration(duration string)(error){
+	parsedDuration, err := time.ParseDuration(duration); if err != nil {
+		return err
+	}
+
+	expirationDuration = parsedDuration
+
+	return nil
+}
+
+func SaveCookie(rw http.ResponseWriter, key string, value string) {
+	cookie := http.Cookie{Name: key, Value: value, Expires: time.Now().Add(expirationDuration)}
 	http.SetCookie(rw, &cookie)
 }
 

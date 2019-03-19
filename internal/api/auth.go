@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/constants"
@@ -20,7 +19,7 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if resp.StatusCode == 200 {
-		cookieutil.SaveCookie(rw, "access_token", tkn, time.Hour)
+		cookieutil.SaveCookie(rw, "access_token", tkn)
 		log.Println("Authentication is successful")
 	} else if resp.StatusCode == 401 {
 		log.Println("Authentication is failed")
