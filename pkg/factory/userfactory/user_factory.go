@@ -9,7 +9,7 @@ import (
 func New(userBytes []byte)(*entity.User, error){
 	user := entity.User{}
 
-	err := json.Unmarshal(userBytes, user)
+	err := json.Unmarshal(userBytes, &user)
 
 	if err != nil {
 		return nil, err
