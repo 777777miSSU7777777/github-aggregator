@@ -5,14 +5,14 @@ import (
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/profilefactory"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
 )
 
 
 func Render(rw http.ResponseWriter, req *http.Request) {
-	tkn, err := cookieutil.GetCookieValue(req, "access_token"); if err != nil {
+	tkn, err := webtokenservice.GetToken(req); if err != nil {
 		log.Println(err)
 	}
 
