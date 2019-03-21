@@ -14,10 +14,10 @@ before_install:
     - dep ensure
 
 script:
-    - gofmt -d ./
+    - bash build/gofmt_check.sh
     - golint ./...
     - gosec ./...
-    - goimports -d ./
+    - bash build/goimports_check.sh
 
     - go test ./...
 
