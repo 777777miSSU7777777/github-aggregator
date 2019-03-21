@@ -2,7 +2,7 @@
 diff=$(gofmt -d ./..)
 
 if [ "$diff" != "" ]; then 
-    echo $diff; echo "Gofmt check has failed";  exit 1; 
+    echo "Gofmt check has failed";  exit 1; 
 else 
     echo "Gofmt check is sucessful"; exit 0;
 fi
