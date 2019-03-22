@@ -9,7 +9,7 @@ import (
 var expirationDuration time.Duration
 
 
-// SetExpiration set cookie duration expiration for SaveCookie func.
+// SetExpiration sets cookie duration expiration for SaveCookie func.
 // If time.ParseDuration occurs any error, this will be returned.
 func SetExpiration(duration string)(error){
 	parsedDuration, err := time.ParseDuration(duration); if err != nil {

@@ -17,14 +17,14 @@ type AES struct {
 }
 
 
-// SetKey set secret key for AES instance.
+// SetKey sets secret key for AES instance.
 // Key should be presented as byte array.
 func (a *AES) SetKey(key []byte){
 	a.key = key
 }
 
 
-// SetIV set IV for AES instance.
+// SetIV sets IV for AES instance.
 // IV should be presented as byte array.
 func (a *AES) SetIV(IV []byte){
 	a.initializationVector = IV
