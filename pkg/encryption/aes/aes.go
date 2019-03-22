@@ -5,21 +5,36 @@ import (
 	"crypto/cipher"
 )
 
+
+// AES is an implementation of Advanced Encryption Standart also known as Rjindael.
 type AES struct {
-	key []byte
+	// key is a private field for secret key.
+	// Correct key is byte array with length 16, 24 or 32.
+	key []byte 
+
+	// initiliazationVector is private field for IV.
 	initializationVector []byte
 }
 
 
+// SetKey set secret key for AES instance.
+// Key should be presented as byte array.
 func (a *AES) SetKey(key []byte){
 	a.key = key
 }
 
+
+// SetIV set IV for AES instance.
+// IV should be presented as byte array.
 func (a *AES) SetIV(IV []byte){
 	a.initializationVector = IV
 }
 
 
+// Encrypt encrypts data using AES with CTR block mode.
+// Data should be presented as byte array.
+// Encrypted data is presented as byte array.
+// If aes.NewCipher occurs any error, this will be returned.
 func (a AES) Encrypt(data []byte)([]byte,error){
 	block, err := aes.NewCipher(a.key)
 
@@ -34,6 +49,10 @@ func (a AES) Encrypt(data []byte)([]byte,error){
 }
 
 
+// Decrypt decrypts encrypted data using AES with CTR block mode.
+// Encrypted data should be presented as byte array.
+// Decrypted data is presented as byte array.
+// If aes.NewCipher occurs any error, this will be returned.
 func (a AES) Decrypt(data []byte)([]byte,error){
 	block, err := aes.NewCipher(a.key)
 
