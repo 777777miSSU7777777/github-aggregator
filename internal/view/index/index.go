@@ -22,12 +22,12 @@ func Render(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if tkn != "" {
-		userBytes, err := query.User(tkn); if err != nil {
+		userBytes, err := query.GetUser(tkn); if err != nil {
 			log.Println(err)
 			http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		}
 
-		scopes, err := query.Scopes(tkn); if err != nil {
+		scopes, err := query.GetScopes(tkn); if err != nil {
 			log.Println(err)
 			http.Error(rw, "Internal server error", http.StatusInternalServerError)
 		}
