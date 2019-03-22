@@ -9,7 +9,7 @@ import (
 )
 
 
-// Logout app user logouts.
+// Logout logs out user from app.
 func Logout(rw http.ResponseWriter, req *http.Request) {
 	err := webtokenservice.DeleteToken(rw,req); if err != nil{
 		log.Println(err)
