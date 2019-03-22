@@ -8,6 +8,8 @@ import (
 
 )
 
+
+// Logout app user logouts.
 func Logout(rw http.ResponseWriter, req *http.Request) {
 	err := webtokenservice.DeleteToken(rw,req); if err != nil{
 		log.Println(err)
