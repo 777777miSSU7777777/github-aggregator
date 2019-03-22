@@ -2,9 +2,12 @@ package constants
 
 
 const (
-	GHApiURL = "https://api.github.com/" // Core Github API token.
- 
-	User = "user" // User query token.
+	// GHApiURL core Github API token.
+	GHApiURL = "https://api.github.com/" 
+	
+	// User user query token.
+	User = "user" 
 
-	AccessTokenParam = "access_token=" // Access token param token.
+	// AccessTokenParam Access token param token.
+	AccessTokenParam = "access_token=" 
 )
