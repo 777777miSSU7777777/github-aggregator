@@ -22,7 +22,8 @@ func SetExpiration(duration string)(error){
 }
 
 
-// SaveCookie saves cookie with specified key and string.
+// SaveCookie saves cookie with specified key and value.
+// Key and value should presented as strings.
 func SaveCookie(rw http.ResponseWriter, key string, value string) {
 	cookie := http.Cookie{Name: key, Value: value, Expires: time.Now().Add(expirationDuration)}
 	http.SetCookie(rw, &cookie)
