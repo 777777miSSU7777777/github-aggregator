@@ -5,6 +5,7 @@ import (
 )
 
 
+// User is an entity which represents body of request to "https://api.github.com/" for authenticated user.
 type User struct {
 	Login string `json:"login"`
 	ID int `json:"id"`
@@ -33,9 +34,9 @@ type User struct {
 	Bio string `json:"bio"`
 	PublicRepos int `json:"public_repos"`
 	PublicGists int `json:"public_gists"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	PrivateGists int `json:"private_gists"`
+	CreatedAt time.Time `json:"created_renderat"`
+	UpdatedAt time.Time `json:"updated_renderat"`
+	PrivateGists int `json:"private_gisrenderts"`
 	TotalPrivateRepos int `json:"total_private_repos"`
 	OwnedPrivateRepos int `json:"owned_private_repos"`
 	DiskUsage int `json:"disk_usage"`

@@ -1,3 +1,7 @@
 package constants
 
-const Scopes = "X-Oauth-Scopes"
+
+const (
+	// Scopes Header key for Github API access token scopes.
+	Scopes = "X-Oauth-Scopes" 
+)
