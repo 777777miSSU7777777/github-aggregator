@@ -6,12 +6,12 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/encoding/base64util"
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
 
 	"github.com/gorilla/mux"
 )
@@ -34,41 +34,45 @@ func init() {
 	flag.Parse()
 }
 
-func encryptionInitSetup(){
+func encryptionInitSetup() {
 	flag.StringVar(&algorithm, "algorithm", "aes", "Defines token encryption algorithm")
 	flag.StringVar(&algorithm, "a", "aes", "Defines token encryption algorithm")
-	randomBytes, err := randutil.GenerateRandomBytes(16); if err != nil {
+	randomBytes, err := randutil.GenerateRandomBytes(16)
+	if err != nil {
 		log.Fatalln(err)
 	}
 	flag.StringVar(&key, "k", base64util.Encode(randomBytes), "Defines encryption key")
-	randomBytes, err = randutil.GenerateRandomBytes(16); if err != nil {
+	randomBytes, err = randutil.GenerateRandomBytes(16)
+	if err != nil {
 		log.Fatalln(err)
 	}
 	flag.StringVar(&iv, "iv", base64util.Encode(randomBytes), "Defines initialization vector")
 }
 
-
-func encryptionSetup(){
-	err := cookieutil.SetExpiration(duration); if err != nil {
+func encryptionSetup() {
+	err := cookieutil.SetExpiration(duration)
+	if err != nil {
 		log.Fatalln(err)
 	}
 
 	webtokenservice.SetCryptoService(algorithm)
 
-	Key, err := base64util.Decode(key); if err != nil {
+	Key, err := base64util.Decode(key)
+	if err != nil {
 		log.Fatalln(err)
 	}
 
 	webtokenservice.SetCryptoServiceKey(Key)
 
-	IV, err := base64util.Decode(iv); if err != nil {
+	IV, err := base64util.Decode(iv)
+	if err != nil {
 		log.Fatalln(err)
 	}
 
 	webtokenservice.SetCryptoServiceIV(IV)
 }
 
-func main() {	
+func main() {
 	encryptionSetup()
 
 	router := mux.NewRouter()
@@ -79,8 +83,9 @@ func main() {
 	http.Handle("/", router)
 
 	log.Printf("Server started on %s:%s", host, port)
-	
-	err := http.ListenAndServe( fmt.Sprintf("%s:%s", host, port), nil); if err != nil {
+
+	err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
+	if err != nil {
 		log.Fatalln(err)
 	}
 
