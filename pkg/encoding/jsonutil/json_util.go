@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 )
 
-
 // BytesToMap transforms jsonBytes to map.
 // Map stores interface{} values.
 // If json.Unmarshal occurs any error, this will be returned.

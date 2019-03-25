@@ -5,14 +5,13 @@ import (
 	"time"
 )
 
-
 var expirationDuration time.Duration
-
 
 // SetExpiration sets cookie duration expiration for SaveCookie func.
 // If time.ParseDuration occurs any error, this will be returned.
-func SetExpiration(duration string)(error){
-	parsedDuration, err := time.ParseDuration(duration); if err != nil {
+func SetExpiration(duration string) error {
+	parsedDuration, err := time.ParseDuration(duration)
+	if err != nil {
 		return err
 	}
 
@@ -21,14 +20,12 @@ func SetExpiration(duration string)(error){
 	return nil
 }
 
-
 // SaveCookie saves cookie with specified key and value.
 // Key and value should presented as strings.
 func SaveCookie(rw http.ResponseWriter, key string, value string) {
 	cookie := http.Cookie{Name: key, Value: value, Expires: time.Now().Add(expirationDuration)}
 	http.SetCookie(rw, &cookie)
 }
-
 
 // GetCookieValue returns cookie value for specified key.
 // Cookie value is presented as string.
@@ -42,7 +39,6 @@ func GetCookieValue(req *http.Request, key string) (string, error) {
 
 	return cookie.Value, nil
 }
-
 
 // DeleteCookie deletes cookie for specified key.
 // Cookie key should be presented as string.
