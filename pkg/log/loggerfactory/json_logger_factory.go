@@ -6,9 +6,10 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logger"
 )
 
-func NewJson(level string, stream io.Writer) *logger.JsonLogger {
-	jsonLogger := &logger.JsonLogger{}
-	jsonLogger.SetLevel(level)
-	jsonLogger.SetStream(stream)
-	return jsonLogger
+// NewJSON returns an intstance of JSONLogger.
+func NewJSON(level string, stream io.Writer) *logger.JSONLogger {
+	JSONLogger := &logger.JSONLogger{}
+	JSONLogger.SetLevel(level)
+	JSONLogger.SetStream(stream)
+	return JSONLogger
 }

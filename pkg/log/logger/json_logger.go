@@ -9,49 +9,62 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logfactory"
 )
 
-type JsonLogger struct {
-	level  string
+// JSONLogger is an implemtation of Logger interface.
+// Makes logs in json format.
+type JSONLogger struct {
+	// level is a private field which responsible for level of logging.
+	level string
+
+	// stream is a private field which responsible for output stream for logging.
 	stream io.Writer
 }
 
-func (jl *JsonLogger) SetLevel(level string) {
+// SetLevel sets level of logging.
+func (jl *JSONLogger) SetLevel(level string) {
 	jl.level = level
 }
 
-func (jl JsonLogger) GetLevel() string {
+// GetLevel returns level of logging.
+func (jl JSONLogger) GetLevel() string {
 	return jl.level
 }
 
-func (jl *JsonLogger) SetStream(stream io.Writer) {
+// SetStream sets logging output stream.
+func (jl *JSONLogger) SetStream(stream io.Writer) {
 	jl.stream = stream
 }
 
-func (jl JsonLogger) GetStream() io.Writer {
+// GetStream returns logging output stream.
+func (jl JSONLogger) GetStream() io.Writer {
 	return jl.stream
 }
 
-func (jl JsonLogger) Print(v ...interface{}) {
+// Print prints log record in json format.
+func (jl JSONLogger) Print(v ...interface{}) {
 	logRecord := logfactory.New(v...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
 	fmt.Fprint(jl.stream, string(jsonLog))
 }
 
-func (jl JsonLogger) Println(v ...interface{}) {
+// Println prints log record in json format with new line.
+func (jl JSONLogger) Println(v ...interface{}) {
 	logRecord := logfactory.New(v...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
 	fmt.Fprintln(jl.stream, string(jsonLog))
 }
 
-func (jl JsonLogger) Printf(format string, a ...interface{}) {
+// Printf print log record in json format with formatted message.
+func (jl JSONLogger) Printf(format string, a ...interface{}) {
 	logRecord := logfactory.NewF(format, a...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
 	fmt.Fprintln(jl.stream, string(jsonLog))
 }
 
-func (jl JsonLogger) Panic(v ...interface{}) {
+// Panic prints log record in json format and then panics.
+func (jl JSONLogger) Panic(v ...interface{}) {
 	logRecord := logfactory.New(v...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
@@ -59,7 +72,8 @@ func (jl JsonLogger) Panic(v ...interface{}) {
 	panic(logRecord.Msg)
 }
 
-func (jl JsonLogger) Panicln(v ...interface{}) {
+// Panicln prints log record in json format with new line and then panics.
+func (jl JSONLogger) Panicln(v ...interface{}) {
 	logRecord := logfactory.New(v...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
@@ -67,7 +81,8 @@ func (jl JsonLogger) Panicln(v ...interface{}) {
 	panic(logRecord.Msg)
 }
 
-func (jl JsonLogger) Panicf(format string, a ...interface{}) {
+// Panicf prints log record in json format with formatted message and the panics.
+func (jl JSONLogger) Panicf(format string, a ...interface{}) {
 	logRecord := logfactory.NewF(format, a...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
@@ -75,7 +90,8 @@ func (jl JsonLogger) Panicf(format string, a ...interface{}) {
 	panic(logRecord.Msg)
 }
 
-func (jl JsonLogger) Fatal(v ...interface{}) {
+// Fatal prints log record in json format and then makes os.Exit(1).
+func (jl JSONLogger) Fatal(v ...interface{}) {
 	logRecord := logfactory.New(v...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
@@ -83,7 +99,8 @@ func (jl JsonLogger) Fatal(v ...interface{}) {
 	os.Exit(1)
 }
 
-func (jl JsonLogger) Fatalln(v ...interface{}) {
+// Fatalln prints log record in json format with new line and then makes os.Exit(1).
+func (jl JSONLogger) Fatalln(v ...interface{}) {
 	logRecord := logfactory.New(v...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
@@ -91,7 +108,8 @@ func (jl JsonLogger) Fatalln(v ...interface{}) {
 	os.Exit(1)
 }
 
-func (jl JsonLogger) Fatalf(format string, a ...interface{}) {
+// Fatalf prints log record in json format with formatted message and then makes os.Exit(1).
+func (jl JSONLogger) Fatalf(format string, a ...interface{}) {
 	logRecord := logfactory.NewF(format, a...)
 	logRecord.SetLevel(jl.level)
 	jsonLog, _ := json.Marshal(logRecord)
