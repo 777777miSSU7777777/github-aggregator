@@ -1,3 +1,4 @@
+// Package cookieutil implements functions for working with http cookie.
 package cookieutil
 
 import (

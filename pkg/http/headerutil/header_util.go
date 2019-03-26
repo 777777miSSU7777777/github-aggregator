@@ -1,3 +1,4 @@
+// Package headerutil implements functions for working with heade of http request/response.
 package headerutil
 
 import (

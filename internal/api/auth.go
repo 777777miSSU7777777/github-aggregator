@@ -1,5 +1,7 @@
 package api
 
+// Contains function for authentication in github aggregator.
+
 import (
 	"fmt"
 	"net/http"

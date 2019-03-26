@@ -1,3 +1,4 @@
+// Package aes contains an implentation of CryptoService interface.
 package aes
 
 import (

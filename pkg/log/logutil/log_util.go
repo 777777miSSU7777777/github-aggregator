@@ -1,3 +1,9 @@
+// Package logutil implements util functions for logging.
+// Using this package you can get formatted string with current time,
+// function and line number of call place with specified depth and
+// shortcut to call place with specified depth.
+// Also this package contains constants with levels of logging
+// and entity for log records.
 package logutil
 
 import (
@@ -9,7 +15,8 @@ import (
 // DefaultLogDepth default depth for runtime.Caller which goes through log factory and print functions.
 const DefaultLogDepth int = 4
 
-// timeFormat is
+// timeFormat is pattern for formatted strings with time.
+// Pattern looks like "dd-mm-yyyy HH-mm-ss".
 const timeFormat string = "02-01-2006 15:04:05"
 
 // GetFnAndLineNumber returns function and code line number where it was called.

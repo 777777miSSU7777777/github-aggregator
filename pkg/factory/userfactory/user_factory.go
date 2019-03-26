@@ -1,3 +1,4 @@
+// Package userfactory contains a factory for user entity.
 package userfactory
 
 import (

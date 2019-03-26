@@ -1,3 +1,4 @@
+// Package index implements function for index page render.
 package index
 
 import (

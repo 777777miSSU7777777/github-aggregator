@@ -1,5 +1,7 @@
 package query
 
+// Gets user info for provided token, if it exists.
+
 import (
 	"fmt"
 	"net/http"

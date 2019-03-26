@@ -1,3 +1,4 @@
+// Package jsonutil implements function for unmarshalling data to map.
 package jsonutil
 
 import (
