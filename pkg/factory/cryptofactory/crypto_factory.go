@@ -1,3 +1,4 @@
+// Package cryptofactory contains an factory for crypto services.
 package cryptofactory
 
 import (

@@ -1,5 +1,7 @@
 package api
 
+// Contains function for logout from github aggregator.
+
 import (
 	"net/http"
 

@@ -1,3 +1,4 @@
+// Package bodyutil implements functions for working with body of http request/response.
 package bodyutil
 
 import (

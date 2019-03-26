@@ -1,5 +1,7 @@
 package constants
 
+// Tokens for github api.
+
 const (
 	// GHApiURL core Github API token.
 	GHApiURL = "https://api.github.com/"

@@ -1,5 +1,9 @@
 package logger
 
+// JSONLogger is an implentation of Logger interface.
+// Makes logs in JSON format.
+// Provides such info as level, time, shortcut to call place and message.
+
 import (
 	"encoding/json"
 	"fmt"

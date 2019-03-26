@@ -1,5 +1,7 @@
 package logutil
 
+// Contains LogRecord entity and method for log level setting.
+
 // LogRecord is entity for logging.
 // JSON tags allows to make logs in JSON format.
 type LogRecord struct {

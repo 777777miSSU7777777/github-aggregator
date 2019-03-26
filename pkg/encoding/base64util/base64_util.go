@@ -1,3 +1,4 @@
+// Package base64util implements functions for string decoding and bytes encoding in base64 encoding.
 package base64util
 
 import (

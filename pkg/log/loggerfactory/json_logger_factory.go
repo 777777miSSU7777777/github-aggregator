@@ -1,5 +1,7 @@
 package loggerfactory
 
+// A factory for JSONLoggers.
+
 import (
 	"io"
 

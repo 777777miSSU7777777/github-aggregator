@@ -1,3 +1,4 @@
+// Package cryptoservice contains an interface for block crypto systems.
 package cryptoservice
 
 // CryptoService is an interface for block crypto systems with IV required.

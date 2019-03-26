@@ -1,5 +1,7 @@
 package query
 
+// Gets scopes for provided token.
+
 import (
 	"fmt"
 	"net/http"

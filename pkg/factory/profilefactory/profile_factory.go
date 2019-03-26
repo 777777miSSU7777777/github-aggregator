@@ -1,3 +1,4 @@
+// Package profilefactory contains a factory for profile entity.
 package profilefactory
 
 import (

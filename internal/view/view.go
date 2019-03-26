@@ -1,3 +1,5 @@
+// Package view parses html templates for web version of github aggregator.
+// Also contains getter and setter for templates.
 package view
 
 import (

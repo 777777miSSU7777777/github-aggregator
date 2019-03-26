@@ -1,3 +1,4 @@
+// Package logfactory contains a factory for LogRecord entity.
 package logfactory
 
 import (

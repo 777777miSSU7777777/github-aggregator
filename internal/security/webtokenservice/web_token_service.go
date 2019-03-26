@@ -1,3 +1,5 @@
+// Package webtokenservice implements function for working with token
+// in web version of github aggregator.
 package webtokenservice
 
 import (

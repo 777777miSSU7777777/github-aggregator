@@ -1,3 +1,8 @@
+// Package log contains an interface for loggers,
+// implentation for JSONLogger and factory for it,
+// constants for logging levels,
+// entity for log records and factory for it,
+// and util functions for logging.
 package log
 
 import (

@@ -1,5 +1,7 @@
 package logutil
 
+// Contains 4 levels of logging: Info, Warning, Trace and Error.
+
 const (
 	// INFO const string for info logging level.
 	INFO = "INFO"

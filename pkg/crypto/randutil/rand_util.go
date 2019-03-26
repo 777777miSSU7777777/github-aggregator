@@ -1,5 +1,7 @@
 package randutil
 
+// Package randutil implements function for generation of random bytes slice.
+
 import (
 	"crypto/rand"
 )

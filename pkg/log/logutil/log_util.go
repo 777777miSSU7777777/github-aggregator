@@ -1,3 +1,9 @@
+// Package logutil implements util functions for logging.
+// Using this package you can get formatted string with current time,
+// function and line number of call place with specified depth and
+// shortcut to call place with specified depth.
+// Also this package contains constants with levels of logging
+// and entity for log records.
 package logutil
 
 import (
