@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
@@ -12,6 +11,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/encoding/base64util"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 
 	"github.com/gorilla/mux"
 )
@@ -39,12 +39,12 @@ func encryptionInitSetup() {
 	flag.StringVar(&algorithm, "a", "aes", "Defines token encryption algorithm")
 	randomBytes, err := randutil.GenerateRandomBytes(16)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error.Fatalln(err)
 	}
 	flag.StringVar(&key, "k", base64util.Encode(randomBytes), "Defines encryption key")
 	randomBytes, err = randutil.GenerateRandomBytes(16)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error.Fatalln(err)
 	}
 	flag.StringVar(&iv, "iv", base64util.Encode(randomBytes), "Defines initialization vector")
 }
@@ -52,21 +52,21 @@ func encryptionInitSetup() {
 func encryptionSetup() {
 	err := cookieutil.SetExpiration(duration)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error.Fatalln(err)
 	}
 
 	webtokenservice.SetCryptoService(algorithm)
 
 	Key, err := base64util.Decode(key)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error.Fatalln(err)
 	}
 
 	webtokenservice.SetCryptoServiceKey(Key)
 
 	IV, err := base64util.Decode(iv)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error.Fatalln(err)
 	}
 
 	webtokenservice.SetCryptoServiceIV(IV)
@@ -82,11 +82,11 @@ func main() {
 	router.HandleFunc("/logout", api.Logout).Methods("POST")
 	http.Handle("/", router)
 
-	log.Printf("Server started on %s:%s", host, port)
+	log.Info.Printf("Server started on %s:%s", host, port)
 
 	err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
 	if err != nil {
-		log.Fatalln(err)
+		log.Error.Fatalln(err)
 	}
 
 }
