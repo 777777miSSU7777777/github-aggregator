@@ -31,13 +31,13 @@ script:
 
     - go build cmd/web-app/main.go
 
-    - sudo docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
+    - docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
 
-    - echo "$DOCKER_PASSWORD" | sudo docker login --username $DOCKER_LOGIN --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
 
-    - sudo docker tag $DEFAULT_TAG $DOCKER_LOGIN/$DEFAULT_TAG
+    - docker tag $DEFAULT_TAG $DOCKER_LOGIN/$DEFAULT_TAG
 
-    - sudo docker push $DOCKER_LOGIN/$DEFAULT_TAG
+    - docker push $DOCKER_LOGIN/$DEFAULT_TAG
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) 
