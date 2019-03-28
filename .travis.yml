@@ -35,7 +35,7 @@ script:
 
     - echo "$DOCKER_PASSWORD" | sudo docker login --username $DOCKER_LOGIN --password-stdin
 
-    - docke tag github-aggregator-web:latest $DOCKER_LOGIN/github-aggregator-web:latest
+    - sudo docker tag github-aggregator-web:latest $DOCKER_LOGIN/github-aggregator-web:latest
 
     - sudo docker push $DOCKER_LOGIN/github-aggregator-web:latest
 
