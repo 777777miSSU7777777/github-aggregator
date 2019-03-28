@@ -3,6 +3,9 @@ language: go
 go: 
     - 1.12.x
 
+services: 
+    - docker
+
 sudo: true
 
 before_install: 
@@ -28,11 +31,13 @@ script:
 
     - go build cmd/web-app/main.go
 
-    # docker image check
+    - sudo docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
 
-    # docker image push to dockerhub check
+    - echo "$DOCKER_PASSWORD" | sudo docker login --username $DOCKER_LOGIN --password-stdin
 
-    # github checks
+    - sudo docker tag $DEFAULT_TAG $DOCKER_LOGIN/$DEFAULT_TAG
+
+    - sudo docker push $DOCKER_LOGIN/$DEFAULT_TAG
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) 
