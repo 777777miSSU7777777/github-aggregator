@@ -33,12 +33,10 @@ script:
 
     - sudo docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
 
-    # docker image check
+    - ECHO "$DOCKER_PASSWORD" | sudo docker login --username $DOCKER_LOGIN --password-stdin
 
-    # docker image push to dockerhub check
-
-    # github checks
-
+    - sudo docker push $DOCKER_LOGIN/github-aggregator-web
+    
 after_success:
     - bash <(curl -s https://codecov.io/bash) 
 
