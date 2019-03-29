@@ -5,7 +5,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/http/httptest"
 	"testing"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
@@ -57,7 +56,7 @@ func TestReadBody__MockedReadAll__Error(t *testing.T) {
 func TestReadRequestBody__SameBody__Equal(t *testing.T) {
 	randomBytes, _ := randutil.GenerateRandomBytes(16)
 
-	req := httptest.NewRequest("POST", "/", bytes.NewBuffer(randomBytes))
+	req := &http.Request{Body: ioutil.NopCloser(bytes.NewBuffer(randomBytes))}
 
 	readBytes, _ := ReadRequestBody(req)
 
@@ -67,7 +66,7 @@ func TestReadRequestBody__SameBody__Equal(t *testing.T) {
 func TestReadRequestBody__AnotherBytes__NotEqual(t *testing.T) {
 	randomBytes, _ := randutil.GenerateRandomBytes(16)
 
-	req := httptest.NewRequest("POST", "/", bytes.NewBuffer(randomBytes))
+	req := &http.Request{Body: ioutil.NopCloser(bytes.NewBuffer(randomBytes))}
 
 	readBytes, _ := ReadRequestBody(req)
 
