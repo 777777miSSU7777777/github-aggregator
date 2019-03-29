@@ -34,7 +34,7 @@ func TestReadBody__AnotherBytes__NotEqual(t *testing.T) {
 	assert.NotEqual(t, randomBytes, readBytes)
 }
 
-func TestReadBody__MockedError__Error(t *testing.T) {
+func TestReadBody__MockedReadAll__Error(t *testing.T) {
 	original := ioutilReadAll
 
 	defer func() {
