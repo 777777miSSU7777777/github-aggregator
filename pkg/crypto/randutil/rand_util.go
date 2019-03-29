@@ -6,14 +6,14 @@ import (
 	"crypto/rand"
 )
 
-var readFunc = rand.Read
+var randRead = rand.Read
 
 // GenerateRandomBytes generates random byte array with length of size.
 // Returns error if any occurs while the byte array filling.
 func GenerateRandomBytes(size int) ([]byte, error) {
 	randomBytes := make([]byte, size)
 
-	_, err := readFunc(randomBytes)
+	_, err := randRead(randomBytes)
 	if err != nil {
 		return nil, err
 	}

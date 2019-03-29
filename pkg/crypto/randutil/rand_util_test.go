@@ -43,13 +43,13 @@ func TestGenerateRandomBytes__NegativeSize__Panics(t *testing.T) {
 }
 
 func TestGenerateRandomBytes__MockerRead__Error(t *testing.T) {
-	original := readFunc
+	original := randRead
 
 	defer func() {
-		readFunc = original
+		randRead = original
 	}()
 
-	readFunc = func(b []byte) (int, error) {
+	randRead = func(b []byte) (int, error) {
 		return 0, errors.New("Error")
 	}
 
