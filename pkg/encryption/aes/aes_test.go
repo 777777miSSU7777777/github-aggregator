@@ -30,7 +30,7 @@ func tearDown() {
 	aesInstance.iv = nil
 }
 
-func TestSetKey__SameKey__Successful(t *testing.T) {
+func TestSetKey__SameKey__Equal(t *testing.T) {
 	tearUp()
 
 	key := aesInstance.key
@@ -42,7 +42,7 @@ func TestSetKey__SameKey__Successful(t *testing.T) {
 	tearDown()
 }
 
-func TestSetKey__DifferentKeys__Failed(t *testing.T) {
+func TestSetKey__DifferentKeys__NotEqual(t *testing.T) {
 	tearUp()
 
 	key := aesInstance.key
@@ -56,7 +56,7 @@ func TestSetKey__DifferentKeys__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestSetIV__SameIV__Successful(t *testing.T) {
+func TestSetIV__SameIV__Equal(t *testing.T) {
 	tearUp()
 
 	iv := aesInstance.iv
@@ -68,7 +68,7 @@ func TestSetIV__SameIV__Successful(t *testing.T) {
 	tearDown()
 }
 
-func TestSetIV__DifferentIV__Failed(t *testing.T) {
+func TestSetIV__DifferentIV__NotEqual(t *testing.T) {
 	tearUp()
 
 	iv := aesInstance.iv
@@ -82,7 +82,7 @@ func TestSetIV__DifferentIV__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestEncrypt__SameKeyAndIV__Successful(t *testing.T) {
+func TestEncrypt__SameKeyAndIV__Equal(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -102,7 +102,7 @@ func TestEncrypt__SameKeyAndIV__Successful(t *testing.T) {
 	tearDown()
 }
 
-func TestEncrypt__AnotherKeyAndSameIV__Failed(t *testing.T) {
+func TestEncrypt__AnotherKeyAndSameIV__NotEqual(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -124,7 +124,7 @@ func TestEncrypt__AnotherKeyAndSameIV__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestEncrypt__SameKeyAndAnotherIV__Failed(t *testing.T) {
+func TestEncrypt__SameKeyAndAnotherIV__Equal(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -146,7 +146,7 @@ func TestEncrypt__SameKeyAndAnotherIV__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestEncrypt__DifferentKeyAndIV__Failed(t *testing.T) {
+func TestEncrypt__DifferentKeyAndIV__NotEqual(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -184,7 +184,7 @@ func TestEncrypt__NilKeyAndCorrectIV__Error(t *testing.T) {
 	tearDown()
 }
 
-func TestEncrypt__CorrectKeyAndNilIV__Panic(t *testing.T) {
+func TestEncrypt__CorrectKeyAndNilIV__Panics(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -213,7 +213,7 @@ func TestEncrypt__NilKeyAndNilIV__Error(t *testing.T) {
 	tearDown()
 }
 
-func TestDecrypt__SameKeyAndIV__Successful(t *testing.T) {
+func TestDecrypt__SameKeyAndIV__Equal(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -227,7 +227,7 @@ func TestDecrypt__SameKeyAndIV__Successful(t *testing.T) {
 	tearDown()
 }
 
-func TestDecrypt__AnotherKeyAndSameIV__Failed(t *testing.T) {
+func TestDecrypt__AnotherKeyAndSameIV__NotEqual(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -245,7 +245,7 @@ func TestDecrypt__AnotherKeyAndSameIV__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestDecrypt__SameKeyAndAnotherIV__Failed(t *testing.T) {
+func TestDecrypt__SameKeyAndAnotherIV__NotEqual(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -263,7 +263,7 @@ func TestDecrypt__SameKeyAndAnotherIV__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestDecrypt__DifferentKeyAndIV__Failed(t *testing.T) {
+func TestDecrypt__DifferentKeyAndIV__NotEqual(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)
@@ -299,7 +299,7 @@ func TestDecrypt__NilKeyAndCorrectIV__Error(t *testing.T) {
 	tearDown()
 }
 
-func TestDecrypt__CorrectKeyAndNilIV__Panic(t *testing.T) {
+func TestDecrypt__CorrectKeyAndNilIV__Panics(t *testing.T) {
 	tearUp()
 
 	testData, _ := randutil.GenerateRandomBytes(16)

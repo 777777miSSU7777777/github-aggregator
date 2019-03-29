@@ -24,7 +24,7 @@ func tearDown() {
 	testMap = nil
 }
 
-func TestBytesToMap__SameMap__Successful(t *testing.T) {
+func TestBytesToMap__SameMap__Equal(t *testing.T) {
 	tearUp()
 
 	jsonBytes, _ := json.Marshal(testMap)
@@ -34,7 +34,7 @@ func TestBytesToMap__SameMap__Successful(t *testing.T) {
 	assert.Equal(t, testMap, m)
 }
 
-func TestBytesToMap__DifferentMaps__Failed(t *testing.T) {
+func TestBytesToMap__DifferentMaps__NotEqual(t *testing.T) {
 	tearUp()
 
 	m := map[string]interface{}{}

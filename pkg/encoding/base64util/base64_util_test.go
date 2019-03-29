@@ -21,7 +21,7 @@ func tearDown() {
 	byteData = nil
 }
 
-func TestEncode__SameString__Successful(t *testing.T) {
+func TestEncode__SameString__Eqaul(t *testing.T) {
 	tearUp()
 
 	encoded := Encode(byteData)
@@ -31,7 +31,7 @@ func TestEncode__SameString__Successful(t *testing.T) {
 	tearDown()
 }
 
-func TestEncode__DifferentStrings__Failed(t *testing.T) {
+func TestEncode__DifferentStrings__NotEqual(t *testing.T) {
 	tearUp()
 
 	encoded := Encode(byteData)
@@ -45,7 +45,7 @@ func TestEncode__DifferentStrings__Failed(t *testing.T) {
 	tearDown()
 }
 
-func TestDecode__SameBytes__Successful(t *testing.T) {
+func TestDecode__SameBytes__Equal(t *testing.T) {
 	tearUp()
 
 	decoded, _ := Decode(stringData)
@@ -55,7 +55,7 @@ func TestDecode__SameBytes__Successful(t *testing.T) {
 	tearDown()
 }
 
-func TestDecode__DifferentBytes__Failed(t *testing.T) {
+func TestDecode__DifferentBytes__NotEqual(t *testing.T) {
 	tearUp()
 
 	anotherDecoded, _ := base64.StdEncoding.DecodeString("YWJjMTIzIT8kKiYoKSctPUB+")
