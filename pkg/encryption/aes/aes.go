@@ -38,7 +38,7 @@ func (a AES) Encrypt(data []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	enData := make([]byte, len(data))
 	stream := cipher.NewCTR(block, a.iv)
 	stream.XORKeyStream(enData, data)
