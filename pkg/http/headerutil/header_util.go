@@ -5,14 +5,24 @@ import (
 	"net/http"
 )
 
+func readHeader(header http.Header) map[string][]string {
+	hdr := map[string][]string{}
+
+	for k, v := range header {
+		hdr[k] = v
+	}
+
+	return hdr
+}
+
 // ReadRequestHeader returns header of req.
 // Header is presented as map of string arrays.
 func ReadRequestHeader(req *http.Request) map[string][]string {
-	return req.Header
+	return readHeader(req.Header)
 }
 
 // ReadResponseHeader returns header of resp.
 // Header is presented as map of string arrays.
 func ReadResponseHeader(resp *http.Response) map[string][]string {
-	return resp.Header
+	return readHeader(resp.Header)
 }
