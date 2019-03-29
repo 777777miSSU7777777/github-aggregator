@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -28,17 +27,9 @@ func tearDown() {
 func TestBytesToMap__SameMap__Successful(t *testing.T) {
 	tearUp()
 
-	jsonBytes, err := json.Marshal(testMap)
+	jsonBytes, _ := json.Marshal(testMap)
 
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
-
-	m, err := BytesToMap(jsonBytes)
-
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
+	m, _ := BytesToMap(jsonBytes)
 
 	assert.Equal(t, testMap, m)
 }
@@ -51,29 +42,17 @@ func TestBytesToMap__DifferentMaps__Failed(t *testing.T) {
 	m["two"] = "2"
 	m["three"] = "3"
 
-	jsonBytes, err := json.Marshal(m)
+	jsonBytes, _ := json.Marshal(m)
 
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
-
-	m, err = BytesToMap(jsonBytes)
-
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
+	m, _ = BytesToMap(jsonBytes)
 
 	assert.NotEqual(t, testMap, m)
 }
 
 func TestBytesToMap__RandomBytes__Error(t *testing.T) {
-	randomBytes, err := randutil.GenerateRandomBytes(16)
+	randomBytes, _ := randutil.GenerateRandomBytes(16)
 
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
-
-	_, err = BytesToMap(randomBytes)
+	_, err := BytesToMap(randomBytes)
 
 	assert.Error(t, err)
 }

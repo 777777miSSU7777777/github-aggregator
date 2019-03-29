@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -37,11 +36,7 @@ func TestEncode__DifferentStrings__Failed(t *testing.T) {
 
 	encoded := Encode(byteData)
 
-	anotherBytes, err := randutil.GenerateRandomBytes(16)
-
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
+	anotherBytes, _ := randutil.GenerateRandomBytes(16)
 
 	anotherString := Encode(anotherBytes)
 
@@ -53,11 +48,7 @@ func TestEncode__DifferentStrings__Failed(t *testing.T) {
 func TestDecode__SameBytes__Successful(t *testing.T) {
 	tearUp()
 
-	decoded, err := Decode(stringData)
-
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
+	decoded, _ := Decode(stringData)
 
 	assert.Equal(t, byteData, decoded)
 
@@ -67,17 +58,9 @@ func TestDecode__SameBytes__Successful(t *testing.T) {
 func TestDecode__DifferentBytes__Failed(t *testing.T) {
 	tearUp()
 
-	anotherDecoded, err := base64.StdEncoding.DecodeString("YWJjMTIzIT8kKiYoKSctPUB+")
+	anotherDecoded, _ := base64.StdEncoding.DecodeString("YWJjMTIzIT8kKiYoKSctPUB+")
 
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
-
-	decoded, err := Decode(stringData)
-
-	if err != nil {
-		log.Error.Fatalln(err)
-	}
+	decoded, _ := Decode(stringData)
 
 	assert.NotEqual(t, anotherDecoded, decoded)
 
