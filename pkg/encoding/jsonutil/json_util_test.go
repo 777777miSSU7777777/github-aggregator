@@ -40,7 +40,7 @@ func TestBytesToMap__SameMap__Successful(t *testing.T) {
 		log.Error.Fatalln(err)
 	}
 
-	assert.Equal(t, m, testMap)
+	assert.Equal(t, testMap, m)
 }
 
 func TestBytesToMap__DifferentMaps__Failed(t *testing.T) {
@@ -63,7 +63,7 @@ func TestBytesToMap__DifferentMaps__Failed(t *testing.T) {
 		log.Error.Fatalln(err)
 	}
 
-	assert.NotEqual(t, m, testMap)
+	assert.NotEqual(t, testMap, m)
 }
 
 func TestBytesToMap__RandomBytes__Error(t *testing.T) {

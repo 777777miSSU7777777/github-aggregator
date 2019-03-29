@@ -27,7 +27,7 @@ func TestEncode__SameString__Successful(t *testing.T) {
 
 	encoded := Encode(byteData)
 
-	assert.Equal(t, encoded, stringData)
+	assert.Equal(t, stringData, encoded)
 
 	tearDown()
 }
@@ -45,7 +45,7 @@ func TestEncode__DifferentStrings__Failed(t *testing.T) {
 
 	anotherString := Encode(anotherBytes)
 
-	assert.NotEqual(t, encoded, anotherString)
+	assert.NotEqual(t, anotherString, encoded)
 
 	tearDown()
 }
@@ -59,7 +59,7 @@ func TestDecode__SameBytes__Successful(t *testing.T) {
 		log.Error.Fatalln(err)
 	}
 
-	assert.Equal(t, decoded, byteData)
+	assert.Equal(t, byteData, decoded)
 
 	tearDown()
 }
@@ -79,7 +79,7 @@ func TestDecode__DifferentBytes__Failed(t *testing.T) {
 		log.Error.Fatalln(err)
 	}
 
-	assert.NotEqual(t, decoded, anotherDecoded)
+	assert.NotEqual(t, anotherDecoded, decoded)
 
 	tearDown()
 }
