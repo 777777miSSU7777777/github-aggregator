@@ -12,8 +12,8 @@ type AES struct {
 	// Correct key is byte array with length 16, 24 or 32.
 	key []byte
 
-	// initiliazationVector is private field for IV.
-	initializationVector []byte
+	// iv is private field for IV.
+	iv []byte
 }
 
 // SetKey sets secret key for AES instance.
@@ -25,7 +25,7 @@ func (a *AES) SetKey(key []byte) {
 // SetIV sets IV for AES instance.
 // IV should be presented as byte array.
 func (a *AES) SetIV(IV []byte) {
-	a.initializationVector = IV
+	a.iv = IV
 }
 
 // Encrypt encrypts data using AES with CTR block mode.
@@ -38,11 +38,12 @@ func (a AES) Encrypt(data []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	
+	enData := make([]byte, len(data))
+	stream := cipher.NewCTR(block, a.iv)
+	stream.XORKeyStream(enData, data)
 
-	stream := cipher.NewCTR(block, a.initializationVector)
-	stream.XORKeyStream(data, data)
-
-	return data, nil
+	return enData, nil
 }
 
 // Decrypt decrypts encrypted data using AES with CTR block mode.
@@ -56,8 +57,9 @@ func (a AES) Decrypt(data []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	stream := cipher.NewCTR(block, a.initializationVector)
-	stream.XORKeyStream(data, data)
+	deData := make([]byte, len(data))
+	stream := cipher.NewCTR(block, a.iv)
+	stream.XORKeyStream(deData, data)
 
-	return data, nil
+	return deData, nil
 }
