@@ -7,6 +7,8 @@ import (
 	"net/http"
 )
 
+var ioutilReadAll = ioutil.ReadAll
+
 // ReadRequestBody returns body of req.
 // Body is presented as byte array.
 // Returns error if any occurs during the body reading.
@@ -24,7 +26,7 @@ func ReadResponseBody(resp *http.Response) ([]byte, error) {
 func readBody(body io.ReadCloser) ([]byte, error) {
 	defer body.Close()
 
-	bodyBytes, err := ioutil.ReadAll(body)
+	bodyBytes, err := ioutilReadAll(body)
 
 	if err != nil {
 		return nil, err
