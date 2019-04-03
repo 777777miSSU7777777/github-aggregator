@@ -11,7 +11,6 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
-
 // Auth authenticates user with provided Github API access token.
 func Auth(rw http.ResponseWriter, req *http.Request) {
 	tkn := req.FormValue(constants.AccessToken)
