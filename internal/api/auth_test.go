@@ -13,14 +13,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func recoverToken() {
+func recoverRedirect() {
 	if r := recover(); r != nil {
 		log.Info.Println("recovered from", r)
 	}
 }
 
 func TestAuth__ValidToken__Saved(t *testing.T) {
-	defer recoverToken()
+	defer recoverRedirect()
 
 	webtokenservice.SetCryptoService("aes")
 
@@ -59,7 +59,7 @@ func TestAuth__ValidToken__Saved(t *testing.T) {
 }
 
 func TestAuth__InvalidToken__NotSaved(t *testing.T) {
-	defer recoverToken()
+	defer recoverRedirect()
 
 	webtokenservice.SetCryptoService("aes")
 
