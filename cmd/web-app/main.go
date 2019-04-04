@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/encoding/base64util"
@@ -32,6 +34,7 @@ func init() {
 	flag.StringVar(&duration, "d", "1h", "Defines cookie expiration duration")
 	encryptionInitSetup()
 	flag.Parse()
+	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
 }
 
 func encryptionInitSetup() {

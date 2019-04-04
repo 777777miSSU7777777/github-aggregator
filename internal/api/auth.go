@@ -14,7 +14,7 @@ import (
 // Auth authenticates user with provided Github API access token.
 func Auth(rw http.ResponseWriter, req *http.Request) {
 	tkn := req.FormValue(constants.AccessToken)
-	resp, err := http.Get(fmt.Sprintf("%s%s?%s%s", constants.GHApiURL, constants.User, constants.AccessTokenParam, tkn))
+	resp, err := httpGet(fmt.Sprintf("%s%s?%s%s", constants.GHApiURL, constants.User, constants.AccessTokenParam, tkn))
 
 	if err != nil {
 		log.Error.Println(err)
