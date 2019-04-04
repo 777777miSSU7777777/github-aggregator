@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
