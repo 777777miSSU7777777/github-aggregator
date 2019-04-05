@@ -11,43 +11,43 @@ sudo: true
 jobs:
     include:
         - stage: preparation
-            install:
-                - go get -u golang.org/x/lint/golint
-                - go get github.com/securego/gosec/cmd/gosec/...
-                - go get golang.org/x/tools/cmd/goimports
+          install:
+          - go get -u golang.org/x/lint/golint
+          - go get github.com/securego/gosec/cmd/gosec/...
+          - go get golang.org/x/tools/cmd/goimports
 
         - stage: check
-            script:
-                - gofmt -d ./
-                - bash build/gofmt_check.sh
+          script:
+          - gofmt -d ./
+          - bash build/gofmt_check.sh
 
-                - golint ./...
+          - golint ./...
 
-                - gosec ./...
+          - gosec ./...
 
-                - goimports -d ./
-                - bash build/goimports_check.sh
+          - goimports -d ./
+          - bash build/goimports_check.sh
 
         - stage: test
-            script:
-                - go test -race -coverprofile=coverage.out -covermode=atomic ./...
+          script:
+          - go test -race -coverprofile=coverage.out -covermode=atomic ./...
 
-            after_success:
-                - bash <(curl -s https://codecov.io/bash)
+          after_success:
+          - bash <(curl -s https://codecov.io/bash)
 
 
         - stage: build
-            script:
-                - go build cmd/web-app/main.go
+          script:
+          - go build cmd/web-app/main.go
 
-                - docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" .
+          - docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" .
 
-            after_success:
-                - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
+          after_success:
+          - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
 
-                - docker tag $WEB_TAG:tag $DOCKER_LOGIN/$WEB_TAG:tag
+          - docker tag $WEB_TAG:tag $DOCKER_LOGIN/$WEB_TAG:tag
 
-                - docker push $DOCKER_LOGIN/$WEB_TAG:version
+          - docker push $DOCKER_LOGIN/$WEB_TAG:version
 
 stages:
     - preparation
