@@ -10,13 +10,11 @@ sudo: true
 
 jobs:
     include:
-        - stage: preparation
+        - stage: check
           install:
           - go get -u golang.org/x/lint/golint
           - go get github.com/securego/gosec/cmd/gosec/...
           - go get golang.org/x/tools/cmd/goimports
-
-        - stage: check
           script:
           - gofmt -d ./
           - bash build/gofmt_check.sh
@@ -50,7 +48,6 @@ jobs:
           - docker push $DOCKER_LOGIN/$WEB_TAG:tag
 
 stages:
-    - preparation
     - checks
     - test
     - name: build
