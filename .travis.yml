@@ -51,4 +51,4 @@ stages:
     - checks
     - test
     - name: build
-      if: $TRAVIS_TAG ~= /\d(.\d)+/
+      if: tag ~= /\d(.\d)+/
