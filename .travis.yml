@@ -8,35 +8,54 @@ services:
 
 sudo: true
 
-before_install: 
-    - go get -u golang.org/x/lint/golint
-    - go get github.com/securego/gosec/cmd/gosec/...
-    - go get golang.org/x/tools/cmd/goimports
+jobs: 
+    include:
+        - stage: preparation
+            install:
+                - go get -u golang.org/x/lint/golint
+                - go get github.com/securego/gosec/cmd/gosec/...
+                - go get golang.org/x/tools/cmd/goimports
 
-script:
-    - gofmt -d ./
-    - bash build/gofmt_check.sh
+        - stage: check
+            script:
+                - gofmt -d ./
+                - bash build/gofmt_check.sh
 
-    - golint ./...
+                - golint ./...
 
-    - gosec ./...
+                - gosec ./...
 
-    - goimports -d ./
-    - bash build/goimports_check.sh
+                - goimports -d ./
+                - bash build/goimports_check.sh
+        
+        - stage: test
+            script:
+                - go test -race -coverprofile=coverage.out -covermode=atomic ./...
 
-    - go test -race -coverprofile=coverage.out -covermode=atomic ./...
+            after_success:
+                - bash <(curl -s https://codecov.io/bash) 
 
-    - go build cmd/web-app/main.go
+        
+        - stage: build
+            script:
+                - go build cmd/web-app/main.go
 
-    - docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
+                - docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
 
-    - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
+            after_success:
+                - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
 
-    - docker tag $DEFAULT_TAG $DOCKER_LOGIN/$DEFAULT_TAG
+                - docker tag $WEB_TAG:tag $DOCKER_LOGIN/$WEB_TAG:tag
 
-    - docker push $DOCKER_LOGIN/$DEFAULT_TAG
+                - docker push $DOCKER_LOGIN/$WEB_TAG:version
 
-after_success:
-    - bash <(curl -s https://codecov.io/bash) 
+stages:
+    - preparation
+    - checks
+    - test
+    - name: build
+      if: tag ~= /\d(.\d)+/
 
+
+    
     
