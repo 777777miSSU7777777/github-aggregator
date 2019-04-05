@@ -47,7 +47,7 @@ jobs:
 
           - docker tag $WEB_TAG:tag $DOCKER_LOGIN/$WEB_TAG:tag
 
-          - docker push $DOCKER_LOGIN/$WEB_TAG:version
+          - docker push $DOCKER_LOGIN/$WEB_TAG:tag
 
 stages:
     - preparation
