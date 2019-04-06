@@ -1,5 +1,5 @@
 #!/bin/bash
-diff=$(gofmt -d ./..)
+diff=$(gofmt -d $(find . -type f -name '*.go' -not -path "./vendor/*"))
 
 if [ "$diff" != "" ]; then 
     echo "Gofmt check has failed";  exit 1; 

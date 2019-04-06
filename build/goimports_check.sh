@@ -1,5 +1,5 @@
 #!/bin/bash
-diff=$(goimports -d ./..)
+diff=$(goimports -d $(find . -type f -name '*.go' -not -path "./vendor/*"))
 
 if [ "$diff" != "" ]; then 
     echo "Goimports check has failed";  exit 1; 
