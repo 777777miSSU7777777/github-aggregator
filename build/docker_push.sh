@@ -4,7 +4,7 @@ VERSION_REGEX="/\d(.\d)+/"
 
 IMAGE_TAG="latest"
 
-if [ $TRAVIS_TAG =~ $VERSION_REGEX ]; then
+if [[ $TRAVIS_TAG =~ $VERSION_REGEX ]]; then
     IMAGE_TAG=$TRAVIS_TAG
 fi;
 
