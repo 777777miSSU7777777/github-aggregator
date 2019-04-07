@@ -40,11 +40,9 @@ jobs:
           deploy:
             provider: script
             script: bash build/docker_push.sh
-            on: 
-              tags: true
 
 stages:
     - checks
     - test
     - name: build
-      if: type = pull_request
+      if: type = pull_request || tag ~= /\d(.\d)+/
