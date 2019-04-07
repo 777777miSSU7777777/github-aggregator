@@ -37,8 +37,11 @@ jobs:
           script:
           - go build cmd/web-app/main.go
 
-          after_success:
-          - bash build/docker_push.sh
+          deploy:
+            provider: script
+            script: bash build/docker_push.sh
+            on: 
+              tags: true
 
 stages:
     - checks
