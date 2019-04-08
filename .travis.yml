@@ -1,42 +1,47 @@
-language: go 
+language: go
 
-go: 
+go:
     - 1.12.x
 
-services: 
+services:
     - docker
 
 sudo: true
 
-before_install: 
-    - go get -u golang.org/x/lint/golint
-    - go get github.com/securego/gosec/cmd/gosec/...
-    - go get golang.org/x/tools/cmd/goimports
+jobs:
+    include:
+        - stage: check
+          install:
+          - go get -u golang.org/x/lint/golint
+          - go get github.com/securego/gosec/cmd/gosec/...
+          - go get golang.org/x/tools/cmd/goimports
+          script:
+          - gofmt -d $(find . -type f -name '*.go' -not -path "./vendor/*")
+          - bash build/gofmt_check.sh
 
-script:
-    - gofmt -d ./
-    - bash build/gofmt_check.sh
+          - go list ./... | grep -v /vendor/ | xargs -n 1 golint
 
-    - golint ./...
+          - gosec $(find . -type f -name '*.go' -not -path "./vendor/*")
 
-    - gosec ./...
+          - goimports -d $(find . -type f -name '*.go' -not -path "./vendor/*")
+          - bash build/goimports_check.sh
 
-    - goimports -d ./
-    - bash build/goimports_check.sh
+        - stage: test
+          script:
+          - go test -race -coverprofile=coverage.out -covermode=atomic ./...
 
-    - go test -race -coverprofile=coverage.out -covermode=atomic ./...
+          after_success:
+          - bash <(curl -s https://codecov.io/bash)
 
-    - go build cmd/web-app/main.go
+        - stage: build
+          script:
+          - go build cmd/web-app/main.go
 
-    - docker build -f docker/web-app/Dockerfile -t "github-aggregator-web" . 
+          after_success:
+          - bash build/docker_push.sh
 
-    - echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_LOGIN --password-stdin
-
-    - docker tag $DEFAULT_TAG $DOCKER_LOGIN/$DEFAULT_TAG
-
-    - docker push $DOCKER_LOGIN/$DEFAULT_TAG
-
-after_success:
-    - bash <(curl -s https://codecov.io/bash) 
-
-    
+stages:
+    - checks
+    - test
+    - name: build
+      if: type = pull_request || tag ~= /^v\d(.\d)+$/
