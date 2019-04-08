@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION_REGEX="^[0-9](.[0-9])+$"
+VERSION_REGEX="^v[0-9](.[0-9])+$"
 
 IMAGE_TAG="latest"
 

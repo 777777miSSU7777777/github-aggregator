@@ -44,4 +44,4 @@ stages:
     - checks
     - test
     - name: build
-      if: type = pull_request || tag ~= /\d(.\d)+/
+      if: type = pull_request || tag ~= /^v\d(.\d)+$/
