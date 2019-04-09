@@ -82,7 +82,7 @@ func main() {
 
 	router := mux.NewRouter()
 
-	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("." + STATIC_DIR))))
+	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
 	router.HandleFunc("/", index.Render).Methods("GET")
 	router.HandleFunc("/auth", api.Auth).Methods("POST")
