@@ -25,6 +25,8 @@ var algorithm string
 var key string
 var iv string
 
+const STATIC_DIR = "/web/static/"
+
 func init() {
 	flag.StringVar(&host, "host", "127.0.0.1", "Defines host ip")
 	flag.StringVar(&host, "h", "127.0.0.1", "Defines host ip")
@@ -79,6 +81,8 @@ func main() {
 	encryptionSetup()
 
 	router := mux.NewRouter()
+
+	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
 	router.HandleFunc("/", index.Render).Methods("GET")
 	router.HandleFunc("/auth", api.Auth).Methods("POST")
