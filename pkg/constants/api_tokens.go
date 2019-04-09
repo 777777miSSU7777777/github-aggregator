@@ -9,6 +9,9 @@ const (
 	// User user query token.
 	User = "user"
 
+	// Organizations organizations query token.
+	Organizations = "organizations"
+
 	// AccessTokenParam Access token param token.
 	AccessTokenParam = "access_token="
 )
