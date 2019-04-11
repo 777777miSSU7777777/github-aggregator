@@ -33,5 +33,9 @@ func Profile(rw http.ResponseWriter, req *http.Request) {
 		log.Error.Println(err)
 	}
 
-	json.NewEncoder(rw).Encode(profile)
+	err = json.NewEncoder(rw).Encode(profile)
+
+	if err != nil {
+		log.Error.Println(err)
+	}
 }

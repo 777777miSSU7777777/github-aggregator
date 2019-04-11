@@ -33,5 +33,9 @@ func Orgs(rw http.ResponseWriter, req *http.Request) {
 		log.Error.Println(err)
 	}
 
-	json.NewEncoder(rw).Encode(orgs)
+	err = json.NewEncoder(rw).Encode(orgs)
+
+	if err != nil {
+		log.Error.Println(err)
+	}
 }

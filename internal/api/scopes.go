@@ -25,5 +25,9 @@ func Scopes(rw http.ResponseWriter, req *http.Request) {
 
 	scopesMap := map[string]string{"scopes": strings.Join(scopesArr, ",")}
 
-	json.NewEncoder(rw).Encode(scopesMap)
+	err = json.NewEncoder(rw).Encode(scopesMap)
+
+	if err != nil {
+		log.Error.Println(err)
+	}
 }
