@@ -12,8 +12,8 @@ import (
 // Access token should be presented as string.
 // Body is presented as byte array.
 // If http.Get or bodyutil.ReadResponseBody occurs any error, this will be returned.
-func GetOrganizations(tkn string) ([]byte, error) {
-	resp, err := httpGet(fmt.Sprintf("%s%s?%s%s", constants.GHApiURL, constants.Organizations, constants.AccessTokenParam, tkn))
+func GetOrgs(tkn string) ([]byte, error) {
+	resp, err := httpGet(fmt.Sprintf("%s%s%s?%s%s", constants.GHApiURL, constants.User, constants.Organizations, constants.AccessTokenParam, tkn))
 
 	if err != nil {
 		return nil, err

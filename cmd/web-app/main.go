@@ -10,6 +10,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
+	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/encoding/base64util"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
@@ -85,8 +86,15 @@ func main() {
 	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
 	router.HandleFunc("/", index.Render).Methods("GET")
+	router.HandleFunc("/login", login.Render).Methods("GET")
+
 	router.HandleFunc("/auth", api.Auth).Methods("POST")
 	router.HandleFunc("/logout", api.Logout).Methods("POST")
+
+	router.HandleFunc("/profile", api.Profile).Methods("GET")
+	router.HandleFunc("/scopes", api.Scopes).Methods("GET")
+	router.HandleFunc("/orgs", api.Orgs).Methods("GET")
+
 	http.Handle("/", router)
 
 	log.Info.Printf("Server started on %s:%s", host, port)
