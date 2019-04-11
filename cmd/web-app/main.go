@@ -85,17 +85,15 @@ func main() {
 
 	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
-	apiRouter := router.PathPrefix("/api").Subrouter()
-
 	router.HandleFunc("/", index.Render).Methods("GET")
 	router.HandleFunc("/login", login.Render).Methods("GET")
 
-	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
-	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
+	router.HandleFunc("/auth", api.Auth).Methods("POST")
+	router.HandleFunc("/logout", api.Logout).Methods("POST")
 
-	apiRouter.HandleFunc("/profile", api.Profile).Methods("GET")
-	apiRouter.HandleFunc("/scopes", api.Scopes).Methods("GET")
-	apiRouter.HandleFunc("/orgs", api.Orgs).Methods("GET")
+	router.HandleFunc("/profile", api.Profile).Methods("GET")
+	router.HandleFunc("/scopes", api.Scopes).Methods("GET")
+	router.HandleFunc("/orgs", api.Orgs).Methods("GET")
 
 	http.Handle("/", router)
 
