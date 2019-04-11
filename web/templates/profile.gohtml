@@ -1,13 +1,17 @@
 {{ define "profile" }}
+    <div class="profile" id="profile">
+        <div class="dropdown">
 
-    <div class="card" style="width:50%">
-        <img class="card-img-top" src="{{ .AvatarURL }}" alt="Card image">
-        <div class="card-body">
-            <h4 class="card-title">{{ .Username }}</h4>
-            <a href="{{ .ProfileURL }}" class="btn btn-primary">See Profile</a>
-            {{ template "scopes" . }}
-            {{ template "logout-button" }}
+            <button class="btn dropdown-toggle" type="button" id="profileDropdownButton" data-toggle="dropdown"></button>
+
+            <div class="dropdown-menu w-100" id="profileDropdownMenu" aria-labelledby="profileDropdownButton">
+                <a class="dropdown-item" id="see-profile-button">See profile</a>
+                {{ template "scopes" }}
+                <a class="dropdown-item" id="logout-button">Logout</a>
+            </div>
+
         </div>
+        
+        <script src="/web/static/js/profile.js"></script>
     </div>
-    
 {{ end }}
