@@ -5,9 +5,8 @@
             
             {{ if .Auth }}
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Organizations</a>
-                    </li>
+                
+                    {{ template "orgs-dropdown" }}
                     
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Pull requests</a>
