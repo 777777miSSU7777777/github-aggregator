@@ -27,8 +27,6 @@ function renderScopes(response){
 
         listItem.appendChild(pItem);
 
-        console.log(scope);
-
         return listItem;
     })
 
