@@ -1,13 +1,13 @@
 "use strict";
 
-var dropdownButton;
+var profileDropdownButton;
 
-var dropdownMenu;
+var profileDropdownMenu;
 
 $(document).ready(() => {
-    dropdownButton = document.getElementById("profileDropdownButton");
+    profileDropdownButton = document.getElementById("profile-dropdown-button");
 
-    dropdownMenu = document.getElementById("profileDropdownMenu");
+    profileDropdownMenu = document.getElementById("profile-dropdown-menu");
     
     profile();
 })
@@ -16,7 +16,6 @@ function profile(){
     fetch("/profile",{method: "GET"})
         .then(response => response.json())
         .then(data => renderProfile(data));
-    console.log("123");
 }
 
 function renderProfile(profileData){
@@ -24,15 +23,12 @@ function renderProfile(profileData){
     profilePic.className = "profile-pic"
     profilePic.src = profileData["avatar_url"];
 
-    dropdownButton.appendChild(profilePic);
-    dropdownButton.append(profileData["login"]);
+    profileDropdownButton.appendChild(profilePic);
+    profileDropdownButton.append(profileData["login"]);
 
     let seeProfileButton = document.getElementById("see-profile-button");
 
     seeProfileButton.addEventListener("click", () => window.open(profileData["html_url"]));
-
-    // let scopesButton = document.getElementById("scopes-button");
-    // scopesButton.addEventListener("click", () => console.log(scopes()));
 
     let logoutButton = document.getElementById("logout-button");
     logoutButton.addEventListener("click", logoutAction);
