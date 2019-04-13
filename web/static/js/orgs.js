@@ -22,7 +22,7 @@ function orgs(){
 }
 
 function renderOrgs(orgsData){
-    let liOrgsList = orgsData.map((org) => {
+    let liOrgsList = orgsData.map(org => {
         let listItem = document.createElement("div");
         listItem.id = "org-" + org["login"];
         

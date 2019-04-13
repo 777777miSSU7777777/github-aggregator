@@ -18,7 +18,7 @@ function scopes(){
 function renderScopes(response){
     let splitScopes = response["scopes"].split(",");
     
-    let liScopesList = splitScopes.map((scope) => {
+    let liScopesList = splitScopes.map(scope => {
         let listItem = document.createElement("li");
         listItem.className = "list-group-item list-group-item-success";
 
