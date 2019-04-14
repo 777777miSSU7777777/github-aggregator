@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 	"github.com/stretchr/testify/assert"
 )
@@ -23,11 +24,9 @@ func TestNew__CorrectBytes__Equal(t *testing.T) {
 }
 
 func TestNew__IncorrectBytes__Error(t *testing.T) {
-	// randomBytes, _ := randutil.GenerateRandomBytes(16)
+	randomBytes, _ := randutil.GenerateRandomBytes(16)
 
-	// testScopes := []string{"user", "repository"}
+	_, err := New(randomBytes)
 
-	// _, err := New(randomBytes, testScopes)
-
-	// assert.Error(t, err)
+	assert.Error(t, err)
 }
