@@ -51,7 +51,7 @@ func TestGetUser__DifferentBytes__NotEqual(t *testing.T) {
 	assert.NotEqual(t, randomBytes, responseBytes)
 }
 
-func TestUser__HttpGetOccursError__Error(t *testing.T) {
+func TestGetUser__HttpGetOccursError__Error(t *testing.T) {
 	original := httpGet
 
 	defer func() {
@@ -67,7 +67,7 @@ func TestUser__HttpGetOccursError__Error(t *testing.T) {
 	assert.Error(t, err)
 }
 
-func TestUser__ReadResponseBodyOccursError_Error(t *testing.T) {
+func TestGetUser__ReadResponseBodyOccursError_Error(t *testing.T) {
 	original := readResponseBody
 
 	defer func() {
