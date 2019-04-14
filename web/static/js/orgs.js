@@ -11,30 +11,9 @@ const disabledOrgClass = "list-group-item-secondary";
 $(document).ready(() => {
     orgsDropdownButton = document.getElementById("orgs-dropdown-button");
 
-    orgsDropdownMenu = document.getElementById("orgs-dropdown-menu");
-
-    $("#orgs-dropdown-button").click(() => {
-        orgs();
-        $(orgsDropdownMenu).toggleClass("show");
-    });
-
-    $(document).on("click", ".org-item", event => {
-        const toggleOrg = $(event.target);
-
-        let org = toggleOrg.text();
-
-        if ( $(toggleOrg).hasClass(disabledOrgClass) ){
-            $(toggleOrg)
-                .removeClass(disabledOrgClass)
-                .addClass(enabledOrgClass);
-            addOrg(org)
-        } else if ( $(toggleOrg).hasClass(enabledOrgClass)){
-            $(toggleOrg)
-                .removeClass(enabledOrgClass)
-                .addClass(disabledOrgClass);
-            delOrg(org);
-        }
-    });
+    fetch("/scopes", {method: "GET"})
+        .then(response => response.json())
+        .then(data => checkTokenPermissions(data, tokenHasPermits, tokeHasntPermits));
 });
 
 function orgs(){
@@ -55,10 +34,8 @@ function renderOrgs(orgsData){
 
         if (org["login"] in orgsChoice){
             $(pElem).addClass(enabledOrgClass);
-            console.log("en")
         } else {
             $(pElem).addClass(disabledOrgClass);
-            console.log("di")
         }
 
         pElem.innerHTML = org["login"];
@@ -93,6 +70,60 @@ function delOrg(org){
     localStorage.setItem("orgs_choice", JSON.stringify(orgsChoice));
 }
 
+function checkTokenPermissions(scopes, enough, notEnough){
+    let splitScopes = scopes["scopes"].split(",");
+
+    splitScopes = splitScopes.map(scope => scope.trim());
+    
+    if ( (splitScopes.indexOf("user")  != -1) && ((splitScopes.indexOf("read:org") != -1) || (splitScopes.indexOf("admin:org") != -1 )) ){
+        enough();
+    } else {
+        notEnough();
+    }
+}
+
+function tokenHasPermits(){
+    $(orgsDropdownButton).parent().addClass("active").attr("data-toggle","dropdown");
+
+    orgsDropdownMenu = document.getElementById("orgs-dropdown-menu");
+
+    $("#orgs-dropdown-button").click(() => {
+        orgs();
+        $(orgsDropdownMenu).toggleClass("show");
+    });
+
+    $(document).on("click", ".org-item", event => {
+        const toggleOrg = $(event.target);
+
+        let org = toggleOrg.text();
+
+        if ( $(toggleOrg).hasClass(disabledOrgClass) ){
+            $(toggleOrg)
+                .removeClass(disabledOrgClass)
+                .addClass(enabledOrgClass);
+            addOrg(org)
+        } else if ( $(toggleOrg).hasClass(enabledOrgClass)){
+            $(toggleOrg)
+                .removeClass(enabledOrgClass)
+                .addClass(disabledOrgClass);
+            delOrg(org);
+        }
+    });
+}
+
+function tokeHasntPermits(){
+    $(orgsDropdownButton).parent()
+    .addClass("inactive")
+    .attr("data-toggle", "popover")
+    .attr("data-placement", "bottom")
+    .attr("data-trigger", "hover")
+    .attr("title", "Provides scopes are not enough")
+    .attr("data-content", "Organizations functionality requires at least 'user' and 'read:org' scopes.");
+    
+    $(document).ready(() => {
+        $('[data-toggle="popover"]').popover();
+    })
+}
 
 
 
