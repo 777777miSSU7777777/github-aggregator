@@ -7,7 +7,7 @@ $(document).ready(() => {
         scopes();
         $("#providedScopes").modal("show");
     });
-})
+});
 
 function scopes(){
     fetch('/scopes')

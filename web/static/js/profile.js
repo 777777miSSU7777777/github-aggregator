@@ -10,7 +10,7 @@ $(document).ready(() => {
     profileDropdownMenu = document.getElementById("profile-dropdown-menu");
     
     profile();
-})
+});
 
 function profile(){
     fetch("/profile",{method: "GET"})
@@ -20,7 +20,7 @@ function profile(){
 
 function renderProfile(profileData){
     let profilePic = document.createElement("img");
-    profilePic.className = "profile-pic"
+    profilePic.className = "profile-pic";
     profilePic.src = profileData["avatar_url"];
 
     profileDropdownButton.appendChild(profilePic);
