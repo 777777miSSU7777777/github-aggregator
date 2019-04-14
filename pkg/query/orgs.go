@@ -8,7 +8,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/constants"
 )
 
-// GetOrganizations returns body of request to "https://api.github.com/organizations" for provided Github API access token.
+// GetOrgs returns body of request to "https://api.github.com/organizations" for provided Github API access token.
 // Access token should be presented as string.
 // Body is presented as byte array.
 // If http.Get or bodyutil.ReadResponseBody occurs any error, this will be returned.
