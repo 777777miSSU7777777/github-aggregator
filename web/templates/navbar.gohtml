@@ -1,0 +1,52 @@
+{{ define "navbar" }}
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+            <a class="navbar-brand" href="#">Github Aggregator</a>
+            
+            {{ if .Auth }}
+                <ul class="navbar-nav mr-auto">
+                
+                    {{ template "orgs-dropdown" }}
+                    
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Pull requests</a>
+                    </li>
+                </ul>
+            {{ else }}
+            {{ end }}
+            
+            <ul class="navbar-nav ml-auto">
+                {{ if .Auth }}
+                    {{ template "profile" }}
+                {{ else }}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                {{ end }}
+            </ul>
+        </nav>
+        <div id="hidden-data">
+            <div id="providedScopes" class="modal"role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Provided scopes</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <ul class="list-group" id="scopes-list">
+                            </ul>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+{{ end}}

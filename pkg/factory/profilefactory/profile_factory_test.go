@@ -16,13 +16,9 @@ func TestNew__CorrectBytes__Equal(t *testing.T) {
 	testProfile.ProfileURL = "test.com/user"
 	testProfile.AvatarURL = "test/user/profile_pic"
 
-	testScopes := []string{"user", "repository"}
-
-	testProfile.Scopes = testScopes
-
 	jsonBytes, _ := json.Marshal(testProfile)
 
-	factoryProfile, _ := New(jsonBytes, testScopes)
+	factoryProfile, _ := New(jsonBytes)
 
 	assert.ObjectsAreEqual(testProfile, factoryProfile)
 }
@@ -30,9 +26,7 @@ func TestNew__CorrectBytes__Equal(t *testing.T) {
 func TestNew__IncorrectBytes__Error(t *testing.T) {
 	randomBytes, _ := randutil.GenerateRandomBytes(16)
 
-	testScopes := []string{"user", "repository"}
-
-	_, err := New(randomBytes, testScopes)
+	_, err := New(randomBytes)
 
 	assert.Error(t, err)
 }

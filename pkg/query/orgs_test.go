@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetUser__SameBytes__Equal(t *testing.T) {
+func TestGetOrgs__SameBytes__Equal(t *testing.T) {
 	original := httpGet
 
 	defer func() {
@@ -25,12 +25,12 @@ func TestGetUser__SameBytes__Equal(t *testing.T) {
 		return response, nil
 	}
 
-	responseBytes, _ := GetUser("123")
+	responseBytes, _ := GetOrgs("123")
 
 	assert.Equal(t, randomBytes, responseBytes)
 }
 
-func TestGetUser__DifferentBytes__NotEqual(t *testing.T) {
+func TestGetOrgs__DifferentBytes__NotEqual(t *testing.T) {
 	original := httpGet
 
 	defer func() {
@@ -44,14 +44,14 @@ func TestGetUser__DifferentBytes__NotEqual(t *testing.T) {
 		return response, nil
 	}
 
-	responseBytes, _ := GetUser("123")
+	responseBytes, _ := GetOrgs("123")
 
 	randomBytes, _ = randutil.GenerateRandomBytes(16)
 
 	assert.NotEqual(t, randomBytes, responseBytes)
 }
 
-func TestGetUser__HttpGetOccursError__Error(t *testing.T) {
+func TestGetOrgs__HttpGetOccursError__Error(t *testing.T) {
 	original := httpGet
 
 	defer func() {
@@ -62,12 +62,12 @@ func TestGetUser__HttpGetOccursError__Error(t *testing.T) {
 		return nil, errors.New("HTTP GET ERROR")
 	}
 
-	_, err := GetUser("123")
+	_, err := GetOrgs("123")
 
 	assert.Error(t, err)
 }
 
-func TestGetUser__ReadResponseBodyOccursError_Error(t *testing.T) {
+func TestGetOrgs__ReadResponseBodyOccursError_Error(t *testing.T) {
 	original := readResponseBody
 
 	defer func() {
@@ -78,7 +78,7 @@ func TestGetUser__ReadResponseBodyOccursError_Error(t *testing.T) {
 		return nil, errors.New("HTTP response body read error")
 	}
 
-	_, err := GetUser("123")
+	_, err := GetOrgs("123")
 
 	assert.Error(t, err)
 }
