@@ -24,7 +24,12 @@ function renderProfile(profileData){
     profilePic.src = profileData["avatar_url"];
 
     profileDropdownButton.appendChild(profilePic);
-    profileDropdownButton.append(profileData["login"]);
+
+    let profileName = document.createElement("p");
+    profileName.className = "profile-name";
+    profileName.innerHTML = profileData["login"];
+    
+    profileDropdownButton.append(profileName);
 
     let seeProfileButton = document.getElementById("see-profile-button");
 

@@ -8,8 +8,24 @@
     border-radius:50%;
 }
 
+.profile-name {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 1%;
+    font-family: 'acherusgrotesque-regita';
+    color: white;
+}
+
 .btn .dropdown-toggle {
     color: white;
+}
+
+#profile-dropdown-button {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 form { 

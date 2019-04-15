@@ -6,8 +6,6 @@ var orgsDropdownMenu;
 
 const enabledOrgClass = "list-group-item-success";
 
-const disabledOrgClass = "list-group-item-secondary";
-
 $(document).ready(() => {
     orgsDropdownButton = document.getElementById("orgs-dropdown-button");
 
@@ -34,8 +32,6 @@ function renderOrgs(orgsData){
 
         if (org["login"] in orgsChoice){
             $(pElem).addClass(enabledOrgClass);
-        } else {
-            $(pElem).addClass(disabledOrgClass);
         }
 
         pElem.innerHTML = org["login"];
@@ -97,15 +93,11 @@ function tokenHasPermits(){
 
         let org = toggleOrg.text();
 
-        if ( $(toggleOrg).hasClass(disabledOrgClass) ){
-            $(toggleOrg)
-                .removeClass(disabledOrgClass)
-                .addClass(enabledOrgClass);
+        if ( !$(toggleOrg).hasClass(enabledOrgClass) ){
+            $(toggleOrg).addClass(enabledOrgClass);
             addOrg(org)
         } else if ( $(toggleOrg).hasClass(enabledOrgClass)){
-            $(toggleOrg)
-                .removeClass(enabledOrgClass)
-                .addClass(disabledOrgClass);
+            $(toggleOrg).removeClass(enabledOrgClass)
             delOrg(org);
         }
     });
