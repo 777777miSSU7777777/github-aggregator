@@ -51,10 +51,6 @@ function renderOrgs(orgsData){
 }
 
 function addOrg(org){
-    if (localStorage.getItem("orgs_choice") === undefined){
-        localStorage.setItem("orgs_choice","{}");
-    }
-
     let orgsChoice = JSON.parse(localStorage.getItem("orgs_choice"));
     orgsChoice[org] = org;
     localStorage.setItem("orgs_choice", JSON.stringify(orgsChoice));
@@ -79,6 +75,10 @@ function checkTokenPermissions(scopes, enough, notEnough){
 }
 
 function tokenHasPermits(){
+    if (localStorage.getItem("orgs_choice") == undefined){
+        localStorage.setItem("orgs_choice","{}");
+    }
+
     $(orgsDropdownButton).parent().addClass("active").attr("data-toggle","dropdown");
 
     orgsDropdownMenu = document.getElementById("orgs-dropdown-menu");
