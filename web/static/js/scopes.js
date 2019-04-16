@@ -11,8 +11,6 @@ const requiredOrgsScopes = ["user", "read:org"];
 const requiredOrgsScopesOpt = "admin:org";
 
 
-
-
 $(document).ready(() => {
     $("#scopes-button").click(() => {
         scopes();
