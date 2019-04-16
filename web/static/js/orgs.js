@@ -109,7 +109,7 @@ function tokeHasntPermits(){
     .attr("data-toggle", "popover")
     .attr("data-placement", "bottom")
     .attr("data-trigger", "hover")
-    .attr("title", "Provides scopes are not enough")
+    .attr("title", "Provided scopes are not enough")
     .attr("data-content", "Organizations functionality requires at least 'user' and 'read:org' scopes.");
     
     $(document).ready(() => {
