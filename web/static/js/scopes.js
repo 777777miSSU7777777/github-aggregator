@@ -1,11 +1,22 @@
 "use strict";
 
-let scopesButton = document.getElementById("scopes-button");
+var scopesButton = document.getElementById("scopes-button");
+
+const presentScopeClass = "list-group-item-success";
+
+const missingScopeClass = "list-group-item-danger";
+
+const requiredOrgsScopes = ["user", "read:org"];
+
+const requiredOrgsScopesOpt = "admin:org";
+
+
+
 
 $(document).ready(() => {
     $("#scopes-button").click(() => {
         scopes();
-        $("#providedScopes").modal("show");
+        $("#provided-scopes").modal("show");
     });
 });
 
@@ -17,24 +28,58 @@ function scopes(){
 
 function renderScopes(response){
     let splitScopes = response["scopes"].split(",");
+
+    splitScopes = splitScopes.map(scope => scope.trim())
     
-    let liScopesList = splitScopes.map(scope => {
-        let listItem = document.createElement("li");
-        listItem.className = "list-group-item list-group-item-success";
+    let ScopesList = document.getElementById("functionality-scopes-list");
+
+    while (ScopesList.firstChild) {
+        ScopesList.removeChild(ScopesList.firstChild);
+    }
+
+    ScopesList.appendChild( getOrgsScopesList(splitScopes) );
+}
+
+function getOrgsScopesList(scopes){
+    let orgsScopesDiv = document.createElement("div");
+    orgsScopesDiv.className = "orgs-scopes";
+    orgsScopesDiv.id = "orgs-scopes";
+
+    let orgsScopesListHeader = document.createElement("h2");
+    orgsScopesListHeader.innerHTML = "Organizations";
+    orgsScopesDiv.appendChild(orgsScopesListHeader);
+
+    let scopesList = document.createElement("ul");
+    scopesList.className = "list-group";
+    scopesList.id = "orgs-scopes-list";
+
+    let liScopesList = requiredOrgsScopes.map(scope => {
+        let liItem = document.createElement("li");
+        $(liItem).addClass("list-group-item");
 
         let pItem = document.createElement("p");
         pItem.innerHTML = scope;
+        liItem.appendChild(pItem);
 
-        listItem.appendChild(pItem);
+        if (scopes.includes(scope)){
+            $(liItem).addClass(presentScopeClass);
+        } else {
+            $(liItem).addClass(missingScopeClass);
+        }
 
-        return listItem;
-    })
+        if (scope == "read:org" && $(liItem).hasClass(missingScopeClass)){
+            if (scopes.includes(requiredOrgsScopesOpt)){
+                $(liItem)
+                    .removeClass(missingScopeClass)
+                    .addClass(presentScopeClass)
+            }
+        }
 
-    let ulScopesList = document.getElementById("scopes-list");
+        return liItem;
+    });
 
-    while (ulScopesList.firstChild) {
-        ulScopesList.removeChild(ulScopesList.firstChild);
-    }
+    liScopesList.forEach(scope => scopesList.appendChild(scope));
+    orgsScopesDiv.append(scopesList);
 
-    liScopesList.forEach(scopeItem => ulScopesList.appendChild(scopeItem));
+    return orgsScopesDiv;
 }
