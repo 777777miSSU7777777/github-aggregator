@@ -1,15 +1,13 @@
 [![Build Status](https://travis-ci.org/777777miSSU7777777/github-aggregator.svg?branch=master)](https://travis-ci.org/777777miSSU7777777/github-aggregator)
+[![](https://images.microbadger.com/badges/version/777777missu7777777/github-aggregator-web.svg)](https://hub.docker.com/r/777777missu7777777/github-aggregator-web/)
+[![](https://images.microbadger.com/badges/image/777777missu7777777/github-aggregator-web.svg)](https://microbadger.com/images/777777missu7777777/github-aggregator-web)
 [![codecov](https://codecov.io/gh/777777miSSU7777777/github-aggregator/branch/master/graph/badge.svg)](https://codecov.io/gh/777777miSSU7777777/github-aggregator) 
 [![Go Report Card](https://goreportcard.com/badge/github.com/777777miSSU7777777/github-aggregator)](https://goreportcard.com/report/github.com/777777miSSU7777777/github-aggregator) 
-[![GoDoc](https://godoc.org/github.com/777777miSSU7777777/github-aggregator?status.svg)](https://godoc.org/github.com/777777miSSU7777777/github-aggregator)
+[![GoDoc](https://godoc.org/github.com/777777miSSU7777777/github-aggregator?status.svg)](https://godoc.org/github.com/777777miSSU7777777/github-aggregator) 
 
 # Github Aggregator
 Aggregator is an application that represents GitHub Pull Requests and Activity stream in a more configurable and detailed way.
 It helps organize code review process by monitoring events from organizations and projects, structuring and aggregating them in the fashion that fits a user best.
-
-# Docker image (WEB)
-[![](https://images.microbadger.com/badges/version/777777missu7777777/github-aggregator-web.svg)](https://microbadger.com/images/777777missu7777777/github-aggregator-web)
-[![](https://images.microbadger.com/badges/image/777777missu7777777/github-aggregator-web.svg)](https://microbadger.com/images/777777missu7777777/github-aggregator-web "Get your own image badge on microbadger.com")
 
 # Installation
 
