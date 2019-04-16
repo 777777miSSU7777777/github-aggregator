@@ -29,8 +29,8 @@ var iv string
 const STATIC_DIR = "/web/static/"
 
 func init() {
-	flag.StringVar(&host, "host", "127.0.0.1", "Defines host ip")
-	flag.StringVar(&host, "h", "127.0.0.1", "Defines host ip")
+	flag.StringVar(&host, "host", "0.0.0.0", "Defines host ip")
+	flag.StringVar(&host, "h", "0.0.0.0", "Defines host ip")
 	flag.StringVar(&port, "port", "8080", "Defines host port")
 	flag.StringVar(&port, "p", "8080", "Defines host port")
 	flag.StringVar(&duration, "duration", "1h", "Defines cookie expiration duration")

@@ -55,7 +55,7 @@ Then go to localhost:8080 (default address) in browser to use application.
 **Notice: you need browser with ES6 support.**
 
 # Supported cmd flags
-- **-host -h** - defines host ip (default is 127.0.0.1(localhost)).
+- **-host -h** - defines host ip (default is 0.0.0.0).
 -  **-port -p** - defines host port  (default is 8080).
 - **-duration -d** - defines cookie expiration duration (default is 1h).
 - **-algorithm -a** - defines token encryption algorithm (default is aes).
