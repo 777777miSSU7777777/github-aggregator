@@ -45,10 +45,10 @@ Run compiled binary:
 ## Docker
 Run pulled image in container:
 
-    docker run 777777miSSU7777777/github-aggregator-web
+    docker run -p 8080:8080 777777missu7777777/github-aggregator-web
 
 ## Common
-Then go to localhost:8080 (default address) in browser to use application.  
+Then go to 0.0.0.0:8080 (default address) in browser to use application.  
 
 **Notice: you need browser with ES6 support.**
 
