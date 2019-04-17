@@ -11,8 +11,8 @@ type LogRecord struct {
 	// LogTime is a field for log time.
 	LogTime string `json:"time"`
 
-	// FileShortcut is a field for file shortcut.
-	FileShortcut string `json:"file_shortcut"`
+	// CallPlace is a field for call place.
+	CallPlace string `json:"call_place"`
 
 	// Msg is a field for log message.
 	Msg string `json:"message"`

@@ -22,13 +22,13 @@ func GetLogDepth() int {
 // New returns an instance of LogRecord.
 func New(v ...interface{}) *logutil.LogRecord {
 	s := fmt.Sprint(v...)
-	logRecord := &logutil.LogRecord{LogTime: logutil.GetCurrentTime(), FileShortcut: logutil.GetCallPlace(logDepth), Msg: s}
+	logRecord := &logutil.LogRecord{LogTime: logutil.GetCurrentTime(), CallPlace: logutil.GetCallPlace(logDepth), Msg: s}
 	return logRecord
 }
 
 // NewF returns an instance of LogRecord with formatted message.
 func NewF(format string, a ...interface{}) *logutil.LogRecord {
 	s := fmt.Sprintf(format, a...)
-	logRecord := &logutil.LogRecord{LogTime: logutil.GetCurrentTime(), FileShortcut: logutil.GetCallPlace(logDepth), Msg: s}
+	logRecord := &logutil.LogRecord{LogTime: logutil.GetCurrentTime(), CallPlace: logutil.GetCallPlace(logDepth), Msg: s}
 	return logRecord
 }

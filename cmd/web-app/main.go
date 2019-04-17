@@ -15,6 +15,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/encoding/base64util"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/cookieutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
 
 	"github.com/gorilla/mux"
 )
@@ -38,6 +39,7 @@ func init() {
 	encryptionInitSetup()
 	flag.Parse()
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
+	logutil.SetProjectName("github-aggregator")
 }
 
 func encryptionInitSetup() {
