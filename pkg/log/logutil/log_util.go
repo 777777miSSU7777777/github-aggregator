@@ -32,7 +32,7 @@ func getFnAndLineNumber(depth int) (string, int) {
 	return fn, line
 }
 
-// GetCurrentTime returns string reprentation of current time.
+// GetCurrentTime returns string representation of current time.
 func GetCurrentTime() string {
 	now := time.Now()
 	return now.Format(timeFormat)
