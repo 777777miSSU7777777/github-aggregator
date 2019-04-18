@@ -9,6 +9,7 @@ package logutil
 import (
 	"fmt"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -19,14 +20,19 @@ const DefaultLogDepth int = 4
 // Pattern looks like "dd-mm-yyyy HH-mm-ss".
 const timeFormat string = "02-01-2006 15:04:05"
 
-// GetFnAndLineNumber returns function and code line number where it was called.
-// Int param "depth" defines depth for runtime.Caller.
-func GetFnAndLineNumber(depth int) (string, int) {
+var projectName string
+
+// SetProjectName sets name of project to get call place without environment dirs.
+func SetProjectName(projName string) {
+	projectName = projName
+}
+
+func getFnAndLineNumber(depth int) (string, int) {
 	_, fn, line, _ := runtime.Caller(depth)
 	return fn, line
 }
 
-// GetCurrentTime returns string reprentation of current time.
+// GetCurrentTime returns string representation of current time.
 func GetCurrentTime() string {
 	now := time.Now()
 	return now.Format(timeFormat)
@@ -35,6 +41,7 @@ func GetCurrentTime() string {
 // GetCallPlace returns shortcut to file and code line number using GetFnAndLineNumber.
 // Int param "depth" defines depth for GetFnAndLineNumber.
 func GetCallPlace(depth int) string {
-	fn, line := GetFnAndLineNumber(depth)
-	return fmt.Sprintf("%s:%d", fn, line)
+	fn, line := getFnAndLineNumber(depth)
+	callPlace := fmt.Sprintf("%s:%d", fn, line)
+	return callPlace[strings.Index(callPlace, projectName):]
 }
