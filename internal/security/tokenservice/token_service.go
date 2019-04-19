@@ -13,7 +13,7 @@ const TOKEN_FILE = ".token"
 
 // TryLoadToken tries to load token from .token file in $HOME or current dir.
 func TryLoadToken() {
-	homeDir := os.Getenv("$HOME")
+	homeDir := os.Getenv("HOME")
 	token, err := fileutil.ReadStringFromFile(homeDir + "/" + TOKEN_FILE)
 
 	if err != nil {
@@ -25,13 +25,7 @@ func TryLoadToken() {
 		return
 	}
 
-	currentDir, err := os.Getwd()
-
-	if err != nil {
-		log.Warning.Println(err)
-	}
-
-	token, err = fileutil.ReadStringFromFile(currentDir + "/" + TOKEN_FILE)
+	token, err = fileutil.ReadStringFromFile(TOKEN_FILE)
 
 	if err != nil {
 		log.Warning.Println(err)
@@ -46,13 +40,7 @@ func TryLoadToken() {
 }
 
 func saveTokenFile() {
-	currentDir, err := os.Getwd()
-
-	if err != nil {
-		log.Warning.Println(err)
-	}
-
-	err = fileutil.WriteStringToFile(currentDir+"/"+TOKEN_FILE, apiToken)
+	err := fileutil.WriteStringToFile(TOKEN_FILE, apiToken)
 
 	if err != nil {
 		log.Warning.Println(err)
@@ -60,13 +48,7 @@ func saveTokenFile() {
 }
 
 func deleteTokenFile() {
-	currentDir, err := os.Getwd()
-
-	if err != nil {
-		log.Warning.Println(err)
-	}
-
-	err = os.Remove(currentDir + "/" + TOKEN_FILE)
+	err := os.Remove(TOKEN_FILE)
 
 	if err != nil {
 		log.Warning.Println(err)
