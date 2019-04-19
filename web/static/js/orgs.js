@@ -1,6 +1,6 @@
 "use strict";
 
-var orgsDropdownButton
+var orgsDropdownButton;
 
 var orgsDropdownMenu;
 
@@ -11,16 +11,16 @@ $(document).ready(() => {
 
     fetch("/api/scopes", {method: "GET"})
         .then(response => response.json())
-        .then(data => checkTokenPermissions(data, tokenHasPermits, tokeHasntPermits));
+        .then(data => orgsCheckTokenPermissions(data, orgsTokenHasPermits, orgsTokenHasntPermits));
 });
 
-function orgs(){
+const orgs = () => {
     fetch("/api/orgs", {method: "GET"})
         .then(response => response.json())
         .then(data => renderOrgs(data));
 }
 
-function renderOrgs(orgsData){
+const renderOrgs = (orgsData) => {
     let orgsChoice = JSON.parse(localStorage.getItem("orgs_choice"));
 
     let liOrgsList = orgsData.map(org => {
@@ -50,19 +50,19 @@ function renderOrgs(orgsData){
     liOrgsList.forEach(orgItem => divOrgsList.appendChild(orgItem));
 }
 
-function addOrg(org){
+const addOrg = (org) => {
     let orgsChoice = JSON.parse(localStorage.getItem("orgs_choice"));
     orgsChoice[org] = org;
     localStorage.setItem("orgs_choice", JSON.stringify(orgsChoice));
 }
 
-function delOrg(org){
+const delOrg = (org) =>{
     let orgsChoice = JSON.parse(localStorage.getItem("orgs_choice"));
     delete orgsChoice[org];
     localStorage.setItem("orgs_choice", JSON.stringify(orgsChoice));
 }
 
-function checkTokenPermissions(scopes, enough, notEnough){
+const orgsCheckTokenPermissions = () => (scopes, enough, notEnough){
     let splitScopes = scopes["scopes"].split(",");
 
     splitScopes = splitScopes.map(scope => scope.trim());
@@ -74,7 +74,7 @@ function checkTokenPermissions(scopes, enough, notEnough){
     }
 }
 
-function tokenHasPermits(){
+const orgsTokenHasPermits = () => {
     if (localStorage.getItem("orgs_choice") == undefined){
         localStorage.setItem("orgs_choice","{}");
     }
@@ -103,7 +103,7 @@ function tokenHasPermits(){
     });
 }
 
-function tokeHasntPermits(){
+const orgsTokenHasntPermits = () => {
     $(orgsDropdownButton).parent()
     .addClass("inactive")
     .attr("data-toggle", "popover")

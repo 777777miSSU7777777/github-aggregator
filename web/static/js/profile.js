@@ -4,6 +4,7 @@ var profileDropdownButton;
 
 var profileDropdownMenu;
 
+
 $(document).ready(() => {
     profileDropdownButton = document.getElementById("profile-dropdown-button");
 
@@ -12,13 +13,13 @@ $(document).ready(() => {
     profile();
 });
 
-function profile(){
+const profile = () => {
     fetch("/api/profile",{method: "GET"})
         .then(response => response.json())
         .then(data => renderProfile(data));
 }
 
-function renderProfile(profileData){
+const renderProfile = (profileData) => {
     let profilePic = document.createElement("img");
     profilePic.className = "profile-pic";
     profilePic.src = profileData["avatar_url"];
@@ -40,7 +41,7 @@ function renderProfile(profileData){
 }
 
 
-function logoutAction(){
+const logoutAction = () => {
     let req = new XMLHttpRequest();
     req.open("POST", "/api/logout");
     req.send(null);
