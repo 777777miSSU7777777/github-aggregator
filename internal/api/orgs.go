@@ -5,7 +5,7 @@ import (
 
 	"encoding/json"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/orgsfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
@@ -15,11 +15,7 @@ import (
 func Orgs(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
-	tkn, err := webtokenservice.GetToken(req)
-
-	if err != nil {
-		log.Warning.Println(err)
-	}
+	tkn := tokenservice.GetToken()
 
 	orgsBytes, err := query.GetOrgs(tkn)
 

@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/encoding/base64util"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
@@ -21,16 +21,6 @@ func recoverRedirect() {
 
 func TestAuth__ValidToken__Saved(t *testing.T) {
 	defer recoverRedirect()
-
-	webtokenservice.SetCryptoService("aes")
-
-	key, _ := randutil.GenerateRandomBytes(16)
-
-	webtokenservice.SetCryptoServiceKey(key)
-
-	IV, _ := randutil.GenerateRandomBytes(16)
-
-	webtokenservice.SetCryptoServiceIV(IV)
 
 	original := httpGet
 
@@ -53,23 +43,13 @@ func TestAuth__ValidToken__Saved(t *testing.T) {
 
 	Auth(rw, req)
 
-	cookieToken, _ := webtokenservice.GetToken(req)
+	token := tokenservice.GetToken()
 
-	assert.Equal(t, testToken, cookieToken)
+	assert.Equal(t, testToken, token)
 }
 
 func TestAuth__InvalidToken__NotSaved(t *testing.T) {
 	defer recoverRedirect()
-
-	webtokenservice.SetCryptoService("aes")
-
-	key, _ := randutil.GenerateRandomBytes(16)
-
-	webtokenservice.SetCryptoServiceKey(key)
-
-	IV, _ := randutil.GenerateRandomBytes(16)
-
-	webtokenservice.SetCryptoServiceIV(IV)
 
 	original := httpGet
 
@@ -92,7 +72,7 @@ func TestAuth__InvalidToken__NotSaved(t *testing.T) {
 
 	Auth(rw, req)
 
-	_, err := webtokenservice.GetToken(req)
+	token := tokenservice.GetToken()
 
-	assert.Error(t, err)
+	assert.Empty(t, token)
 }

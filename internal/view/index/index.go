@@ -4,7 +4,7 @@ package index
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
@@ -19,13 +19,9 @@ type IndexState struct {
 // button for pop-up window with scopes for provided token  and logout button.
 // If occurs any error (besides cookie not found) to client will be returned "Internal server error".
 func Render(rw http.ResponseWriter, req *http.Request) {
-	tkn, err := webtokenservice.GetToken(req)
+	tkn := tokenservice.GetToken()
 
-	if err != nil {
-		log.Error.Println(err)
-	}
-
-	err = view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", IndexState{Auth: tkn != ""})
+	err := view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", IndexState{Auth: tkn != ""})
 
 	if err != nil {
 		log.Error.Println(err)

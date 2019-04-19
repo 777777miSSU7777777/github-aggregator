@@ -6,7 +6,7 @@ import (
 
 	"encoding/json"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 )
@@ -15,7 +15,7 @@ import (
 func Scopes(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
-	tkn, _ := webtokenservice.GetToken(req)
+	tkn := tokenservice.GetToken()
 
 	scopesArr, err := query.GetScopes(tkn)
 
