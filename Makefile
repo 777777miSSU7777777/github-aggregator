@@ -22,3 +22,8 @@ build: check test
 .PHONY: run
 run: build
 	./main
+
+.PHONY: fmt
+fmt:
+	gofmt -w ./
+	goimports -w ./
