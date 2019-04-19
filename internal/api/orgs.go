@@ -1,9 +1,9 @@
 package api
 
 import (
-	"net/http"
-
+	"context"
 	"encoding/json"
+	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/orgsfactory"
@@ -17,7 +17,7 @@ func Orgs(rw http.ResponseWriter, req *http.Request) {
 
 	tkn := tokenservice.GetToken()
 
-	orgsBytes, err := query.GetOrgs(tkn)
+	orgsBytes, err := query.GetDataSource().GetOrgs(context.Background(), tkn)
 
 	if err != nil {
 		log.Error.Println(err)

@@ -1,10 +1,10 @@
 package api
 
 import (
+	"context"
+	"encoding/json"
 	"net/http"
 	"strings"
-
-	"encoding/json"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
@@ -17,7 +17,7 @@ func Scopes(rw http.ResponseWriter, req *http.Request) {
 
 	tkn := tokenservice.GetToken()
 
-	scopesArr, err := query.GetScopes(tkn)
+	scopesArr, err := query.GetDataSource().GetScopes(context.Background(), tkn)
 
 	if err != nil {
 		log.Error.Println(err)

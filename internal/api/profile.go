@@ -1,9 +1,9 @@
 package api
 
 import (
-	"net/http"
-
+	"context"
 	"encoding/json"
+	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/profilefactory"
@@ -17,7 +17,7 @@ func Profile(rw http.ResponseWriter, req *http.Request) {
 
 	tkn := tokenservice.GetToken()
 
-	userBytes, err := query.GetUser(tkn)
+	userBytes, err := query.GetDataSource().GetUser(context.Background(), tkn)
 
 	if err != nil {
 		log.Error.Println(err)

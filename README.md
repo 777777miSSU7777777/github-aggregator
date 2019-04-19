@@ -55,3 +55,4 @@ Then go to 0.0.0.0:8080 (default address) in browser to use application.
 # Supported cmd flags
 - **-host -h** - defines host ip (default is 0.0.0.0).
 -  **-port -p** - defines host port  (default is 8080).
+-  **-data-source** - defines data source (default is "rest-api").
