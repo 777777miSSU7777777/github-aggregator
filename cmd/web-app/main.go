@@ -6,24 +6,22 @@ import (
 	"html/template"
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
-
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 
 	"github.com/gorilla/mux"
 )
 
 var host string
 var port string
-var duration string
-var algorithm string
-var key string
-var iv string
+var dataSrc string
 
 const STATIC_DIR = "/web/static/"
 
@@ -32,9 +30,11 @@ func init() {
 	flag.StringVar(&host, "h", "0.0.0.0", "Defines host ip")
 	flag.StringVar(&port, "port", "8080", "Defines host port")
 	flag.StringVar(&port, "p", "8080", "Defines host port")
+	flag.StringVar(&dataSrc, "data-source", "rest-api", "Defines data source")
 	flag.Parse()
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
 	logutil.SetProjectName("github-aggregator")
+	query.SetDataSource(datasrcfactory.New(dataSrc))
 	tokenservice.TryLoadToken()
 }
 
