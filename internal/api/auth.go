@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/constants"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
@@ -21,10 +21,7 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if resp.StatusCode == 200 {
-		err = webtokenservice.SaveToken(rw, tkn)
-		if err != nil {
-			log.Error.Println(err)
-		}
+		tokenservice.SaveToken(tkn)
 		log.Info.Println("Authentication is successful")
 	} else if resp.StatusCode == 401 {
 		log.Info.Println("Authentication is failed")

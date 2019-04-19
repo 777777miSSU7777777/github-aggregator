@@ -5,16 +5,13 @@ package api
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/webtokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
 // Logout logs out user from app.
 func Logout(rw http.ResponseWriter, req *http.Request) {
-	err := webtokenservice.DeleteToken(rw, req)
-	if err != nil {
-		log.Error.Println(err)
-	}
+	tokenservice.DeleteToken()
 
 	log.Info.Println("Logout")
 
