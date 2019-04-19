@@ -11,6 +11,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/headerutil"
 )
 
+// GithubRESTAPI is an implentation of data source for REST Github API v3.
 type GithubRESTAPI struct {
 }
 

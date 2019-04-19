@@ -7,10 +7,12 @@ import (
 
 var dataSrc datasource.DataSource
 
+// SetDataSource sets data source for query layer.
 func SetDataSource(dataSource datasource.DataSource) {
 	dataSrc = dataSource
 }
 
+// GetDataSource returns data source for query layer.
 func GetDataSource() datasource.DataSource {
 	return dataSrc
 }
