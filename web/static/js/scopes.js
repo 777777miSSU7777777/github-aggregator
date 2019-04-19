@@ -19,7 +19,7 @@ $(document).ready(() => {
 });
 
 function scopes(){
-    fetch('/scopes')
+    fetch('/api/scopes')
         .then(response => response.json())
         .then(data => renderScopes(data));
 }

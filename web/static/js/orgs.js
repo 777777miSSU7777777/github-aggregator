@@ -9,13 +9,13 @@ const enabledOrgClass = "list-group-item-success";
 $(document).ready(() => {
     orgsDropdownButton = document.getElementById("orgs-dropdown-button");
 
-    fetch("/scopes", {method: "GET"})
+    fetch("/api/scopes", {method: "GET"})
         .then(response => response.json())
         .then(data => checkTokenPermissions(data, tokenHasPermits, tokeHasntPermits));
 });
 
 function orgs(){
-    fetch("/orgs", {method: "GET"})
+    fetch("/api/orgs", {method: "GET"})
         .then(response => response.json())
         .then(data => renderOrgs(data));
 }

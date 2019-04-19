@@ -13,7 +13,7 @@ $(document).ready(() => {
 });
 
 function profile(){
-    fetch("/profile",{method: "GET"})
+    fetch("/api/profile",{method: "GET"})
         .then(response => response.json())
         .then(data => renderProfile(data));
 }
@@ -42,7 +42,7 @@ function renderProfile(profileData){
 
 function logoutAction(){
     let req = new XMLHttpRequest();
-    req.open("POST", "/logout");
+    req.open("POST", "/api/logout");
     req.send(null);
     localStorage.removeItem("orgs_choice");
     document.location.reload();

@@ -41,17 +41,19 @@ func init() {
 func main() {
 	router := mux.NewRouter()
 
+	apiRouter := router.PathPrefix("/api").Subrouter()
+
 	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
 	router.HandleFunc("/", index.Render).Methods("GET")
 	router.HandleFunc("/login", login.Render).Methods("GET")
 
-	router.HandleFunc("/auth", api.Auth).Methods("POST")
-	router.HandleFunc("/logout", api.Logout).Methods("POST")
+	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
+	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
 
-	router.HandleFunc("/profile", api.Profile).Methods("GET")
-	router.HandleFunc("/scopes", api.Scopes).Methods("GET")
-	router.HandleFunc("/orgs", api.Orgs).Methods("GET")
+	apiRouter.HandleFunc("/profile", api.Profile).Methods("GET")
+	apiRouter.HandleFunc("/scopes", api.Scopes).Methods("GET")
+	apiRouter.HandleFunc("/orgs", api.Orgs).Methods("GET")
 
 	http.Handle("/", router)
 
