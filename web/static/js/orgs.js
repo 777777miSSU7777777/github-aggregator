@@ -62,7 +62,7 @@ const delOrg = (org) =>{
     localStorage.setItem("orgs_choice", JSON.stringify(orgsChoice));
 }
 
-const orgsCheckTokenPermissions = () => (scopes, enough, notEnough){
+const orgsCheckTokenPermissions = (scopes, enough, notEnough) => {
     let splitScopes = scopes["scopes"].split(",");
 
     splitScopes = splitScopes.map(scope => scope.trim());
