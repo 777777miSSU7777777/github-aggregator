@@ -1,4 +1,4 @@
-package userfactory
+package profilefactory
 
 import (
 	"encoding/json"
@@ -10,18 +10,20 @@ import (
 )
 
 func TestNew__CorrectBytes__Equal(t *testing.T) {
-	testUser := entity.User{}
+	testProfile := entity.Profile{}
 
-	testUser.ID = 123
+	testProfile.Username = "test user"
+	testProfile.ProfileURL = "test.com/user"
+	testProfile.AvatarURL = "test/user/profile_pic"
 
-	jsonBytes, _ := json.Marshal(testUser)
+	jsonBytes, _ := json.Marshal(testProfile)
 
-	factoryUser, _ := New(jsonBytes)
+	factoryProfile, _ := New(jsonBytes)
 
-	assert.ObjectsAreEqual(testUser, factoryUser)
+	assert.ObjectsAreEqual(testProfile, factoryProfile)
 }
 
-func TestNew__IncorrectBytes__Equal(t *testing.T) {
+func TestNew__IncorrectBytes__Error(t *testing.T) {
 	randomBytes, _ := randutil.GenerateRandomBytes(16)
 
 	_, err := New(randomBytes)
