@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
+
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
@@ -36,6 +38,10 @@ func init() {
 	logutil.SetProjectName("github-aggregator")
 	query.SetDataSource(datasrcfactory.New(dataSrc))
 	tokenservice.TryLoadToken()
+	token := tokenservice.GetToken()
+	if token != "" {
+		session.GetSessionService().StartSession(token)
+	}
 }
 
 func main() {
