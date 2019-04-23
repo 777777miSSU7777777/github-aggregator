@@ -48,7 +48,7 @@ Run pulled image in container:
     docker run -p 8080:8080 777777missu7777777/github-aggregator-web
 
 ## Common
-Then go to 0.0.0.0:8080 (default address) in browser to use application.  
+Then go to 127.0.0.1:8080 in browser to use application.  
 
 **Notice: you need browser with ES6 support.**
 
