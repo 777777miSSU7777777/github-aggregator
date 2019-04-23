@@ -12,7 +12,7 @@ import (
 func TestNew__CorrectBytes__Equal(t *testing.T) {
 	testUser := entity.User{}
 
-	testUser.ID = 123
+	testUser.Login = "test_user"
 
 	jsonBytes, _ := json.Marshal(testUser)
 
