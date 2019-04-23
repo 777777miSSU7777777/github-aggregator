@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/profilefactory"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/userfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 )
@@ -23,7 +23,7 @@ func Profile(rw http.ResponseWriter, req *http.Request) {
 		log.Error.Println(err)
 	}
 
-	profile, err := profilefactory.New(userBytes)
+	profile, err := userfactory.New(userBytes)
 
 	if err != nil {
 		log.Error.Println(err)
