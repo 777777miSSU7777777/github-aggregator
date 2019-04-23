@@ -9,7 +9,6 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/constants"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 )
 
 // Auth authenticates user with provided Github API access token.
@@ -23,7 +22,6 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 
 	if resp.StatusCode == 200 {
 		tokenservice.SaveToken(tkn)
-		session.GetSessionService().StartSession(tkn)
 		log.Info.Println("Authentication is successful")
 	} else if resp.StatusCode == 401 {
 		log.Info.Println("Authentication is failed")
