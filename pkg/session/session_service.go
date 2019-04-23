@@ -69,6 +69,6 @@ func (s *SessionService) UpdateSession(session Session) {
 }
 
 // CloseSession closes current session.
-func (s *SessionService) CloseSession(token string) {
+func (s *SessionService) CloseSession() {
 	s.currentSession = nil
 }
