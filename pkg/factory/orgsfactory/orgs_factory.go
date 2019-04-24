@@ -10,7 +10,7 @@ import (
 // New returns and array of Organizations.
 // Byte array param "orgsBytes" responsible for organizations data from organizations query.
 // If json.Unmarshal occurs any error, this will be returned.
-func New(orgsBytes []byte) (*[]entity.Organization, error) {
+func New(orgsBytes []byte) ([]entity.Organization, error) {
 	orgs := []entity.Organization{}
 
 	err := json.Unmarshal(orgsBytes, &orgs)
@@ -19,5 +19,5 @@ func New(orgsBytes []byte) (*[]entity.Organization, error) {
 		return nil, err
 	}
 
-	return &orgs, nil
+	return orgs, nil
 }
