@@ -55,7 +55,7 @@ func (s *SessionService) StartSession(token string) {
 		log.Error.Println(err)
 	}
 
-	s.currentSession.SetUserOrgs(*orgs)
+	s.currentSession.SetUserOrgs(orgs)
 }
 
 // GetSession return a copy of current session.
