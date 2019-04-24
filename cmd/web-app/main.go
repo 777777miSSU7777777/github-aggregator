@@ -60,6 +60,7 @@ func main() {
 	apiRouter.HandleFunc("/profile", api.Profile).Methods("GET")
 	apiRouter.HandleFunc("/scopes", api.Scopes).Methods("GET")
 	apiRouter.HandleFunc("/orgs", api.Orgs).Methods("GET")
+	apiRouter.HandleFunc("/pull-requests", api.PullRequests).Methods("GET")
 
 	http.Handle("/", router)
 
