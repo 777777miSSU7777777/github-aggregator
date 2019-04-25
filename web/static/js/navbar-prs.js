@@ -26,7 +26,7 @@ const prsCheckTokenPermissions = (scopes, enough, notEnough) => {
 const prsTokenHasPermits = () => {
     $(prsTabLink).parent().addClass("active");
 
-    prsTabLink.href = "/pull-requests"
+    prsTabLink.href = "/pulls"
 }
 
 const prsTokeHasntPermits = () => {
