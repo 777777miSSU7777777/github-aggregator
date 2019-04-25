@@ -10,13 +10,18 @@ import (
 // New returns and array of Pull Requests.
 // Byte array param "orgsBytes" responsible for pull requests data from pull requests query.
 // If json.Unmarshal occurs any error, this will be returned.
-func New(prsBytes []byte) ([]entity.PullRequest, error) {
+func New(prsBytes [][]byte) ([]entity.PullRequest, error) {
 	prs := []entity.PullRequest{}
 
-	err := json.Unmarshal(prsBytes, &prs)
+	for _, repoPRsBytes := range prsBytes {
+		repoPRs := []entity.PullRequest{}
+		err := json.Unmarshal(repoPRsBytes, &repoPRs)
 
-	if err != nil {
-		return nil, err
+		if err != nil {
+			return nil, err
+		}
+
+		prs = append(prs, repoPRs...)
 	}
 
 	return prs, nil

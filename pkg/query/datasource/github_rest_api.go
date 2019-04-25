@@ -76,8 +76,8 @@ func (ds GithubRESTAPI) GetOrgs(ctx context.Context, token string) ([]byte, erro
 // Access token should be presented as string.
 // Body is presented as byte array.
 // If http.Get or bodyutil.ReadResponseBody occurs any error, this will be returned.
-func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []entity.Organization) ([]byte, error) {
-	resultSetBytes := []byte{}
+func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []entity.Organization) ([][]byte, error) {
+	resultSetBytes := [][]byte{}
 
 	for _, org := range orgs {
 		resp, err := http.Get(org.ReposURL)
@@ -92,15 +92,15 @@ func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []e
 			return nil, err
 		}
 
-		resultSetBytes = append(resultSetBytes, reposBody...)
+		resultSetBytes = append(resultSetBytes, reposBody)
 	}
 
 	return resultSetBytes, nil
 }
 
 // GetOrgsPullRequests blank
-func (ds GithubRESTAPI) GetOrgsPullRequests(ctx context.Context, token string, repos []entity.Repository) ([]byte, error) {
-	resultSetBytes := []byte{}
+func (ds GithubRESTAPI) GetOrgsPullRequests(ctx context.Context, token string, repos []entity.Repository) ([][]byte, error) {
+	resultSetBytes := [][]byte{}
 
 	for _, repo := range repos {
 		resp, err := http.Get(trimPullsURL(repo.PullsURL))
@@ -115,7 +115,7 @@ func (ds GithubRESTAPI) GetOrgsPullRequests(ctx context.Context, token string, r
 			return nil, err
 		}
 
-		resultSetBytes = append(resultSetBytes, pullsBody...)
+		resultSetBytes = append(resultSetBytes, pullsBody)
 	}
 
 	return resultSetBytes, nil

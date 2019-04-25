@@ -53,10 +53,6 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 		log.Error.Println(err)
 	}
 
-	if err != nil {
-		log.Error.Println(err)
-	}
-
 	pullRequestsBytes, err := query.GetDataSource().GetOrgsPullRequests(context.Background(), token, repos)
 
 	if err != nil {
@@ -79,8 +75,6 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 	case REVIEWER:
 		pullRequests = prfilter.FilterByReviewer(pullRequests, entity.Reviewer(user))
 	}
-
-	log.Info.Println(pullRequests)
 
 	err = json.NewEncoder(rw).Encode(pullRequests)
 
