@@ -13,6 +13,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
+	"github.com/777777miSSU7777777/github-aggregator/internal/view/pulls"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
@@ -53,6 +54,7 @@ func main() {
 
 	router.HandleFunc("/", index.Render).Methods("GET")
 	router.HandleFunc("/login", login.Render).Methods("GET")
+	router.HandleFunc("/pulls", pulls.Render).Methods("GET")
 
 	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
 	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
@@ -60,7 +62,7 @@ func main() {
 	apiRouter.HandleFunc("/profile", api.Profile).Methods("GET")
 	apiRouter.HandleFunc("/scopes", api.Scopes).Methods("GET")
 	apiRouter.HandleFunc("/orgs", api.Orgs).Methods("GET")
-	apiRouter.HandleFunc("/pull-requests", api.PullRequests).Methods("GET")
+	apiRouter.HandleFunc("/pulls", api.PullRequests).Methods("GET")
 
 	http.Handle("/", router)
 
