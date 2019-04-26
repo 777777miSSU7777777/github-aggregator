@@ -40,6 +40,18 @@ func FilterByParticipation(prs []entity.PullRequest, user entity.User) []entity.
 	return resultSet
 }
 
+func FilterByState(prs []entity.PullRequest, state string) []entity.PullRequest {
+	resultSet := []entity.PullRequest{}
+
+	for _, pr := range prs {
+		if pr.State == state {
+			resultSet = append(resultSet, pr)
+		}
+	}
+
+	return resultSet
+}
+
 func assigneeIndex(pr entity.PullRequest, assignee entity.Assignee) int {
 	for i, a := range pr.Assignees {
 		if a == assignee {

@@ -23,6 +23,7 @@ const (
 	ALL               = "all"
 	ASSIGNEE          = "assignee"
 	REVIEWER          = "reviewer"
+	OPEN              = "open"
 )
 
 // PullRequests returns repsonse with pull requests for chosen filter.
@@ -60,6 +61,8 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	pullRequests, err := prsfactory.New(pullRequestsBytes)
+
+	pullRequests = prfilter.FilterByState(pullRequests, OPEN)
 
 	if err != nil {
 		log.Error.Println(err)
