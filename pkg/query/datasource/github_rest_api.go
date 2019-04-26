@@ -2,11 +2,9 @@ package datasource
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"strings"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/constants"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/bodyutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/headerutil"
@@ -14,14 +12,40 @@ import (
 
 // GithubRESTAPI is an implentation of data source for REST Github API v3.
 type GithubRESTAPI struct {
+	client *http.Client
 }
+
+// NewGithubRESTAPI constructor for GithubRESTAPI struct.
+func NewGithubRESTAPI() *GithubRESTAPI {
+	return &GithubRESTAPI{client: &http.Client{}}
+}
+
+const (
+	OAUTH2_HEADER = "Authorization"
+
+	OAUTH2_PREFIX = "Bearer "
+
+	SCOPES_HEADER = "X-Oauth-Scopes"
+
+	USER_QUERY = "https://api.github.com/user"
+
+	ORGS_QUERY = "https://api.github.com/user/orgs"
+)
 
 // GetUser returns body of request to "https://api.github.com/user" for provided Github API access token.
 // Access token should be presented as string.
 // Body is presented as byte array.
 // If http.Get or bodyutil.ReadResponseBody occurs any error, this will be returned.
 func (ds GithubRESTAPI) GetUser(ctx context.Context, token string) ([]byte, error) {
-	resp, err := http.Get(fmt.Sprintf("%s%s?%s%s", constants.GHApiURL, constants.User, constants.AccessTokenParam, token))
+	req, err := http.NewRequest("GET", USER_QUERY, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+	resp, err := ds.client.Do(req)
 
 	if err != nil {
 		return nil, err
@@ -41,7 +65,15 @@ func (ds GithubRESTAPI) GetUser(ctx context.Context, token string) ([]byte, erro
 // Scopes is presented as string array.
 // If http.Get or headerutil.ReadResponseHeader occurs any error, this will be returned.
 func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, error) {
-	resp, err := http.Get(fmt.Sprintf("%s%s?%s%s", constants.GHApiURL, constants.User, constants.AccessTokenParam, token))
+	req, err := http.NewRequest("GET", USER_QUERY, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+	resp, err := ds.client.Do(req)
 
 	if err != nil {
 		return nil, err
@@ -49,7 +81,7 @@ func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, 
 
 	respHeader := headerutil.ReadResponseHeader(resp)
 
-	return strings.Split(respHeader[constants.Scopes][0], ","), nil
+	return strings.Split(respHeader[SCOPES_HEADER][0], ","), nil
 }
 
 // GetOrgs returns body of request to "https://api.github.com/organizations" for provided Github API access token.
@@ -57,7 +89,15 @@ func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, 
 // Body is presented as byte array.
 // If http.Get or bodyutil.ReadResponseBody occurs any error, this will be returned.
 func (ds GithubRESTAPI) GetOrgs(ctx context.Context, token string) ([]byte, error) {
-	resp, err := http.Get(fmt.Sprintf("%s%s%s?%s%s", constants.GHApiURL, constants.User, constants.Organizations, constants.AccessTokenParam, token))
+	req, err := http.NewRequest("GET", ORGS_QUERY, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+	resp, err := ds.client.Do(req)
 
 	if err != nil {
 		return nil, err
@@ -80,7 +120,15 @@ func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []e
 	resultSetBytes := [][]byte{}
 
 	for _, org := range orgs {
-		resp, err := http.Get(org.ReposURL)
+		req, err := http.NewRequest("GET", org.ReposURL, nil)
+
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+		resp, err := ds.client.Do(req)
 
 		if err != nil {
 			return nil, err
@@ -103,7 +151,15 @@ func (ds GithubRESTAPI) GetOrgsPullRequests(ctx context.Context, token string, r
 	resultSetBytes := [][]byte{}
 
 	for _, repo := range repos {
-		resp, err := http.Get(trimPullsURL(repo.PullsURL))
+		req, err := http.NewRequest("GET", trimPullsURL(repo.PullsURL), nil)
+
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+		resp, err := ds.client.Do(req)
 
 		if err != nil {
 			return nil, err

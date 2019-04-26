@@ -15,6 +15,7 @@ func New(reposBytes [][]byte) ([]entity.Repository, error) {
 
 	for _, orgsReposBytes := range reposBytes {
 		orgRepos := []entity.Repository{}
+
 		err := json.Unmarshal(orgsReposBytes, &orgRepos)
 
 		if err != nil {

@@ -9,8 +9,8 @@ import (
 func New(dataSrcType string) datasource.DataSource {
 	switch dataSrcType {
 	case "rest-api":
-		return &datasource.GithubRESTAPI{}
+		return datasource.NewGithubRESTAPI()
 	default:
-		return &datasource.GithubRESTAPI{}
+		return datasource.NewGithubRESTAPI()
 	}
 }

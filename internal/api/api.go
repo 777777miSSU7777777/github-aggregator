@@ -6,3 +6,9 @@ import (
 )
 
 var httpGet = http.Get
+
+var client *http.Client
+
+func init() {
+	client = &http.Client{}
+}
