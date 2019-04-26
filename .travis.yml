@@ -32,7 +32,7 @@ jobs:
           - cat coverage.out.tmp | grep -v "internal/api" | grep -v "pkg/query/datasource" > coverage.out
 
           after_success:
-          - bash <(curl -f coverage.out https://codecov.io/bash)
+          - bash <(curl -S https://codecov.io/bash) -f coverage.out
 
         - stage: build
           script:
