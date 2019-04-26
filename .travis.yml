@@ -28,10 +28,11 @@ jobs:
 
         - stage: test
           script:
-          - go test -race -coverprofile=coverage.out -covermode=atomic ./...
+          - go test -race -coverprofile=coverage.out.tmp -covermode=atomic ./...
+          - cat coverage.out.tmp | grep -v "internal/\(view\|api\)" | grep -v "pkg/query/datasource" > coverage.out
 
           after_success:
-          - bash <(curl -s https://codecov.io/bash)
+          - bash <(curl -S https://codecov.io/bash) -f coverage.out
 
         - stage: build
           script:

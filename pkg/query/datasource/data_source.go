@@ -12,5 +12,5 @@ type DataSource interface {
 	GetScopes(context.Context, string) ([]string, error)
 	GetOrgs(context.Context, string) ([]byte, error)
 	GetOrgsRepos(context.Context, string, []entity.Organization) ([][]byte, error)
-	GetOrgsPullRequests(context.Context, string, []entity.Repository) ([][]byte, error)
+	GetReposPullRequests(context.Context, string, []entity.Repository) ([][]byte, error)
 }
