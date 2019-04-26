@@ -6,8 +6,6 @@ import (
 )
 
 // BytesToMap transforms jsonBytes to map.
-// Map stores interface{} values.
-// If json.Unmarshal occurs any error, this will be returned.
 func BytesToMap(jsonBytes []byte) (map[string]interface{}, error) {
 	jsonMap := make(map[string]interface{})
 	err := json.Unmarshal(jsonBytes, &jsonMap)

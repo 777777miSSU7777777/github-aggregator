@@ -1,6 +1,6 @@
 package entity
 
-// User is an entity for navbar with user info.
+// User is an entity which represents github user.
 type User struct {
 	Login      string `json:"login"`
 	AvatarURL  string `json:"avatar_url"`

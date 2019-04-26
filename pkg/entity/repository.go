@@ -3,7 +3,7 @@ package entity
 // Owner alias to user entity.
 type Owner User
 
-// Repository is entity which represents github repository.
+// Repository is an entity which represents github repository.
 type Repository struct {
 	Name     string `json:"name"`
 	FullName string `json:"full_name"`

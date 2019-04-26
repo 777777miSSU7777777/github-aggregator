@@ -7,9 +7,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 )
 
-// New returns and array of Pull Requests.
-// Byte array param "orgsBytes" responsible for pull requests data from pull requests query.
-// If json.Unmarshal occurs any error, this will be returned.
+// New returns an array of Pull Requests.
 func New(prsBytes [][]byte) ([]entity.PullRequest, error) {
 	prs := []entity.PullRequest{}
 

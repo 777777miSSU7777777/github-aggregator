@@ -10,7 +10,6 @@ import (
 )
 
 // Render renders pull requests page.
-// If occurs any error (besides cookie not found) to client will be returned "Internal server error".
 func Render(rw http.ResponseWriter, req *http.Request) {
 	tkn := tokenservice.GetToken()
 

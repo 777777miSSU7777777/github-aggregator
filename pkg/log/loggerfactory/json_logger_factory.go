@@ -8,7 +8,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logger"
 )
 
-// NewJSON returns an intstance of JSONLogger.
+// NewJSON returns an instance of JSONLogger.
 func NewJSON(level string, stream io.Writer) *logger.JSONLogger {
 	JSONLogger := &logger.JSONLogger{}
 	JSONLogger.SetLevel(level)

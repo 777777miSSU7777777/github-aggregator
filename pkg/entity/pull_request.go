@@ -6,7 +6,7 @@ type Assignee User
 // Reviewer alias to user entity.
 type Reviewer User
 
-// PullRequest is entity which represents github pull request.
+// PullRequest is an entity which represents github pull request.
 type PullRequest struct {
 	HTMLURL            string     `json:"html_url"`
 	State              string     `json:"state"`
