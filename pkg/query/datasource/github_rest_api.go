@@ -152,7 +152,7 @@ func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []e
 }
 
 // GetOrgsPullRequests blank
-func (ds GithubRESTAPI) GetOrgsPullRequests(ctx context.Context, token string, repos []entity.Repository) ([][]byte, error) {
+func (ds GithubRESTAPI) GetReposPullRequests(ctx context.Context, token string, repos []entity.Repository) ([][]byte, error) {
 	resultSetBytes := [][]byte{}
 
 	for _, repo := range repos {

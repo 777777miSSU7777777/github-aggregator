@@ -65,7 +65,7 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 		log.Error.Println(err)
 	}
 
-	pullRequestsBytes, err := query.GetDataSource().GetOrgsPullRequests(context.Background(), token, repos)
+	pullRequestsBytes, err := query.GetDataSource().GetReposPullRequests(context.Background(), token, repos)
 
 	if err != nil {
 		log.Error.Println(err)
