@@ -20,9 +20,7 @@ func ReadStringFromFile(filePath string) (string, error) {
 	return string(bytes), nil
 }
 
-// WriteStringToFile creates new file with specified path
-// and writes string to it.
-// If os.Create or File.WriteString occurs any error, this will be returned.
+// WriteStringToFile creates new file with specified path and writes string to it.
 func WriteStringToFile(filePath string, str string) error {
 	file, err := os.Create(filePath)
 

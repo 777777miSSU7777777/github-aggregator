@@ -11,7 +11,6 @@ func Encode(b []byte) string {
 }
 
 // Decode decodes string with base64 encoding into byte array.
-// Returns error if any occurs during the string decoding.
 func Decode(s string) ([]byte, error) {
 	data, err := base64.StdEncoding.DecodeString(s)
 	if err != nil {

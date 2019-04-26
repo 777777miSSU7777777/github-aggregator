@@ -9,6 +9,7 @@ import (
 
 var apiToken string
 
+// TOKEN_FILE name of file which stores personal access token.
 const TOKEN_FILE = ".token"
 
 // TryLoadToken tries to load token from .token file in $HOME or current dir.

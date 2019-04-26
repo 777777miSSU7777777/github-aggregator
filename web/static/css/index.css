@@ -33,6 +33,14 @@ form {
     text-align:center;
 }
 
+.tab-item {
+    padding: 1%;
+}
+
+a {
+    text-decoration: none !important;
+}
+
 .jumbotron {
     background-color: #ffffff !important;
 }

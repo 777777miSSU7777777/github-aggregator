@@ -5,14 +5,15 @@ check:
 
 	go list ./... | grep -v /vendor/ | xargs -n 1 golint
 
-	gosec ./... $(find . -type f -name '*.go' -not -path "./vendor/*")
+	gosec ./...
 
 	goimports -d ./$(find . -type f -name '*.go' -not -path "./vendor/*")
 	bash build/goimports_check.sh
 
 .PHONY: test
 test:
-	go test -race -coverprofile=coverage.out -covermode=atomic ./...
+	go test -race -coverprofile=coverage.out.tmp -covermode=atomic ./...
+	cat coverage.out.tmp | grep -v "internal/\(view\|api\)" | grep -v "pkg/query/datasource" > coverage.out
 	go tool cover -html=coverage.out
 
 .PHONY: build

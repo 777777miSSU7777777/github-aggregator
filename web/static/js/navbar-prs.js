@@ -16,7 +16,7 @@ const prsCheckTokenPermissions = (scopes, enough, notEnough) => {
 
     splitScopes = splitScopes.map(scope => scope.trim());
 
-    if ( splitScopes.indexOf("read:org") != -1 || splitScopes.indexOf("admin:org") != -1){
+    if ( ( splitScopes.indexOf("read:org") != -1 ) || ( splitScopes.indexOf("admin:org") != -1 ) ){
         enough();
     } else {
         notEnough();
@@ -24,9 +24,9 @@ const prsCheckTokenPermissions = (scopes, enough, notEnough) => {
 }
 
 const prsTokenHasPermits = () => {
-    $(prsTabLink).parent("active");
+    $(prsTabLink).parent().addClass("active");
 
-    prsTabLink.href = "/pull-requests"
+    prsTabLink.href = "/pulls"
 }
 
 const prsTokeHasntPermits = () => {

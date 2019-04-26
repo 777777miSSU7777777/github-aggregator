@@ -37,7 +37,8 @@ func TestAuth__ValidToken__Saved(t *testing.T) {
 	randomBytes, _ := randutil.GenerateRandomBytes(16)
 	testToken := base64util.Encode(randomBytes)
 	req := &http.Request{Form: url.Values{}}
-	req.Form.Add("access_token", testToken)
+
+	req.Header.Set("access_token", testToken)
 
 	rw := httptest.NewRecorder()
 
@@ -66,7 +67,7 @@ func TestAuth__InvalidToken__NotSaved(t *testing.T) {
 	randomBytes, _ := randutil.GenerateRandomBytes(16)
 	testToken := base64util.Encode(randomBytes)
 	req := &http.Request{Form: url.Values{}}
-	req.Form.Add("access_token", testToken)
+	req.Header.Set("access_token", testToken)
 
 	rw := httptest.NewRecorder()
 
