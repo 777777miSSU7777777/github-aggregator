@@ -9,10 +9,6 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
-type LoginState struct {
-	Auth bool
-}
-
 // Render renders login page.
 func Render(rw http.ResponseWriter, req *http.Request) {
 	tkn := tokenservice.GetToken()
@@ -22,7 +18,7 @@ func Render(rw http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	err := view.GetTemplates().ExecuteTemplate(rw, "login.gohtml", LoginState{Auth: tkn != ""})
+	err := view.GetTemplates().ExecuteTemplate(rw, "login.gohtml", view.AuthState{Auth: tkn != ""})
 
 	if err != nil {
 		log.Error.Println(err)

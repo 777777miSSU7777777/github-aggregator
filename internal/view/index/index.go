@@ -9,10 +9,6 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
-type IndexState struct {
-	Auth bool
-}
-
 // Render renders index page.
 // If user not authenticated, will be rendered form with token field and submit button.
 // If user is authenticated, will be rendered user avatar, link to profile,
@@ -21,7 +17,7 @@ type IndexState struct {
 func Render(rw http.ResponseWriter, req *http.Request) {
 	tkn := tokenservice.GetToken()
 
-	err := view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", IndexState{Auth: tkn != ""})
+	err := view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", view.AuthState{Auth: tkn != ""})
 
 	if err != nil {
 		log.Error.Println(err)

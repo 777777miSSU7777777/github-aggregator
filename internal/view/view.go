@@ -8,6 +8,11 @@ import (
 
 var templates *template.Template
 
+// AuthState struct which represents auth state of user.
+type AuthState struct {
+	Auth bool
+}
+
 // SetTemplates sets templates for rendering.
 func SetTemplates(tpls *template.Template) {
 	templates = tpls

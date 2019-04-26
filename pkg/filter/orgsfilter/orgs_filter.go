@@ -4,6 +4,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 )
 
+// FilterByChoice filter given organizations according chosen.
 func FilterByChoice(orgs []entity.Organization, orgsChoice []string) []entity.Organization {
 	resultSet := []entity.Organization{}
 

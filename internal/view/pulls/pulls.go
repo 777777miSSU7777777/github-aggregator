@@ -1,4 +1,4 @@
-// Package index implements function for pull requests page render.
+// Package pulls implements function for pull requests page render.
 package pulls
 
 import (
@@ -9,16 +9,12 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
-type AuthState struct {
-	Auth bool
-}
-
 // Render renders pull requests page.
 // If occurs any error (besides cookie not found) to client will be returned "Internal server error".
 func Render(rw http.ResponseWriter, req *http.Request) {
 	tkn := tokenservice.GetToken()
 
-	err := view.GetTemplates().ExecuteTemplate(rw, "pulls.gohtml", AuthState{Auth: tkn != ""})
+	err := view.GetTemplates().ExecuteTemplate(rw, "pulls.gohtml", view.AuthState{Auth: tkn != ""})
 
 	if err != nil {
 		log.Error.Println(err)

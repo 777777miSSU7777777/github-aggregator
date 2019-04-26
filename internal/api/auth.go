@@ -11,12 +11,16 @@ import (
 )
 
 const (
+	// OAUTH2_HEADER key for Oauth token in request header.
 	OAUTH2_HEADER = "Authorization"
 
+	// OAUTH2_PREFIX prefix for Oauth token.
 	OAUTH2_PREFIX = "Bearer "
 
+	// AUTH_URL url to get token auth status.
 	AUTH_URL = "https://api.github.com/user"
 
+	// ACCESS_TOKEN key for access token value.
 	ACCESS_TOKEN = "access_token"
 )
 

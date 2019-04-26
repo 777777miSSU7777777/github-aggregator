@@ -4,6 +4,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 )
 
+// FilterByAssignee filters given pulls according assignee.
 func FilterByAssignee(prs []entity.PullRequest, assignee entity.Assignee) []entity.PullRequest {
 	resultSet := []entity.PullRequest{}
 
@@ -16,6 +17,7 @@ func FilterByAssignee(prs []entity.PullRequest, assignee entity.Assignee) []enti
 	return resultSet
 }
 
+// FilterByReviewer filters given pulls according reviewer.
 func FilterByReviewer(prs []entity.PullRequest, reviewer entity.Reviewer) []entity.PullRequest {
 	resultSet := []entity.PullRequest{}
 
@@ -28,6 +30,7 @@ func FilterByReviewer(prs []entity.PullRequest, reviewer entity.Reviewer) []enti
 	return resultSet
 }
 
+// FilterByParticipation filters given pulls according user participation.
 func FilterByParticipation(prs []entity.PullRequest, user entity.User) []entity.PullRequest {
 	resultSet := []entity.PullRequest{}
 
@@ -40,6 +43,7 @@ func FilterByParticipation(prs []entity.PullRequest, user entity.User) []entity.
 	return resultSet
 }
 
+// FilterByState filters given pulls according pull state.
 func FilterByState(prs []entity.PullRequest, state string) []entity.PullRequest {
 	resultSet := []entity.PullRequest{}
 

@@ -18,12 +18,23 @@ import (
 )
 
 const (
-	FILTER_PARAM      = "filter"
+	// FILTER_PARAM pulls filter param.
+	FILTER_PARAM = "filter"
+
+	// ORGS_CHOICE_PARAM param for chosen orgs.
 	ORGS_CHOICE_PARAM = "orgs_choice"
-	ALL               = "all"
-	ASSIGNEE          = "assignee"
-	REVIEWER          = "reviewer"
-	OPEN              = "open"
+
+	// ALL filter type for pulls assigned or review requested to user.
+	ALL = "all"
+
+	// ASSIGNEE filter type for pulls assigned to user.
+	ASSIGNEE = "assignee"
+
+	// REVIEWER type for pulls review requested to user.
+	REVIEWER = "reviewer"
+
+	// OPEN type for open pulls.
+	OPEN = "open"
 )
 
 // PullRequests returns repsonse with pull requests for chosen filter.

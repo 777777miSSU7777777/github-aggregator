@@ -21,14 +21,19 @@ func NewGithubRESTAPI() *GithubRESTAPI {
 }
 
 const (
+	// OAUTH2_HEADER key for Oauth token in request header.
 	OAUTH2_HEADER = "Authorization"
 
+	// OAUTH2_PREFIX Prefix for Oauth token.
 	OAUTH2_PREFIX = "Bearer "
 
+	// SCOPES_HEADER key for github oauth scopes in request header.
 	SCOPES_HEADER = "X-Oauth-Scopes"
 
+	// USER_QUERY api url for current user.
 	USER_QUERY = "https://api.github.com/user"
 
+	// ORGS_QUERY api url for orgs of current user.
 	ORGS_QUERY = "https://api.github.com/user/orgs"
 )
 

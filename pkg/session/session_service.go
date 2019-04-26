@@ -63,7 +63,7 @@ func (s SessionService) GetSession() Session {
 	return *s.currentSession
 }
 
-// TODO
+// UpdateSession TODO.
 func (s *SessionService) UpdateSession(session Session) {
 
 }
