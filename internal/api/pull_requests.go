@@ -37,7 +37,7 @@ const (
 	OPEN = "open"
 )
 
-// PullRequests returns repsonse with pull requests for chosen filter.
+// PullRequests returns response with pull requests for chosen filter.
 func PullRequests(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 

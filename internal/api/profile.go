@@ -8,7 +8,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 )
 
-// Profile returns repsonse with current profile info in json format.
+// Profile returns response with current profile info in json format.
 func Profile(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
