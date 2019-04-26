@@ -7,13 +7,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFilterByChoice__OrgsChoiceNotEmpty__Equal(t *testing.T) {
-	allOrgs := []entity.Organization{}
+var allOrgs []entity.Organization
 
+func init() {
 	for i := 0; i < 10; i++ {
 		allOrgs = append(allOrgs, entity.Organization{Login: string(i)})
 	}
+}
 
+func TestFilterByChoice__OrgsChoiceNotEmpty__Equal(t *testing.T) {
 	orgsChoice := []string{}
 
 	for i := 0; i < 10; i++ {
@@ -36,12 +38,6 @@ func TestFilterByChoice__OrgsChoiceNotEmpty__Equal(t *testing.T) {
 }
 
 func TestFilterByChoice__OrgsChoiceEmpty__Equal(t *testing.T) {
-	allOrgs := []entity.Organization{}
-
-	for i := 0; i < 10; i++ {
-		allOrgs = append(allOrgs, entity.Organization{Login: string(i)})
-	}
-
 	orgsChoice := []string{}
 
 	testOrgs := []entity.Organization{}
