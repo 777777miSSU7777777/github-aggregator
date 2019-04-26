@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
+
 	"github.com/777777miSSU7777777/github-aggregator/pkg/crypto/randutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -29,6 +31,18 @@ func (ds TestDataSource) GetOrgs(ctx context.Context, token string) ([]byte, err
 	args := ds.Called(ctx, token)
 
 	return args.Get(0).([]byte), args.Error(1)
+}
+
+func (ds TestDataSource) GetOrgsRepos(ctx context.Context, token string, orgs []entity.Organization) ([][]byte, error) {
+	args := ds.Called(ctx, token, orgs)
+
+	return args.Get(0).([][]byte), args.Error(1)
+}
+
+func (ds TestDataSource) GetReposPullRequests(ctx context.Context, token string, repos []entity.Repository) ([][]byte, error) {
+	args := ds.Called(ctx, token, repos)
+
+	return args.Get(0).([][]byte), args.Error(1)
 }
 
 func TestGetUser__SameBytes__Equals(t *testing.T) {
@@ -107,4 +121,56 @@ func TestGetOrgs__DifferentBytes__NotEquals(t *testing.T) {
 	randomBytes, _ = randutil.GenerateRandomBytes(16)
 
 	assert.NotEqual(t, randomBytes, testBytes)
+}
+
+func TestGetOrgsRepos__SameBytes__Equals(t *testing.T) {
+	dataSrc := new(TestDataSource)
+
+	randomBytes, _ := randutil.GenerateRandomBytes(16)
+
+	dataSrc.On("GetOrgsRepos", context.Background(), "123", []entity.Organization{}).Return([][]byte{randomBytes}, nil)
+
+	testBytes, _ := dataSrc.GetOrgsRepos(context.Background(), "123", []entity.Organization{})
+
+	assert.Equal(t, [][]byte{randomBytes}, testBytes)
+}
+
+func TestGetOrgsRepos__DifferentBytes__NotEquals(t *testing.T) {
+	dataSrc := new(TestDataSource)
+
+	randomBytes, _ := randutil.GenerateRandomBytes(16)
+
+	dataSrc.On("GetOrgsRepos", context.Background(), "123", []entity.Organization{}).Return([][]byte{randomBytes}, nil)
+
+	testBytes, _ := dataSrc.GetOrgsRepos(context.Background(), "123", []entity.Organization{})
+
+	randomBytes, _ = randutil.GenerateRandomBytes(16)
+
+	assert.NotEqual(t, [][]byte{randomBytes}, testBytes)
+}
+
+func TestGetReposPullRequests__SameBytes__Equals(t *testing.T) {
+	dataSrc := new(TestDataSource)
+
+	randomBytes, _ := randutil.GenerateRandomBytes(16)
+
+	dataSrc.On("GetReposPullRequests", context.Background(), "123", []entity.Repository{}).Return([][]byte{randomBytes}, nil)
+
+	testBytes, _ := dataSrc.GetReposPullRequests(context.Background(), "123", []entity.Repository{})
+
+	assert.Equal(t, [][]byte{randomBytes}, testBytes)
+}
+
+func TestGetReposPullRequests__DifferentBytes__NotEquals(t *testing.T) {
+	dataSrc := new(TestDataSource)
+
+	randomBytes, _ := randutil.GenerateRandomBytes(16)
+
+	dataSrc.On("GetReposPullRequests", context.Background(), "123", []entity.Repository{}).Return([][]byte{randomBytes}, nil)
+
+	testBytes, _ := dataSrc.GetReposPullRequests(context.Background(), "123", []entity.Repository{})
+
+	randomBytes, _ = randutil.GenerateRandomBytes(16)
+
+	assert.NotEqual(t, [][]byte{randomBytes}, testBytes)
 }
