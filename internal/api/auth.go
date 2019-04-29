@@ -34,12 +34,14 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Info.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
 	resp, err := client.Do(req)
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
 	if resp.StatusCode == 200 {

@@ -18,5 +18,8 @@ func Orgs(rw http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
+	} else {
+		log.Info.Printf("Sent %s", orgs)
 	}
 }
