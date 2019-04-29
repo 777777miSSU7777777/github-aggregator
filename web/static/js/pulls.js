@@ -11,6 +11,8 @@ $(document).ready(() => {
     $(document).on("click", "#review-requested-tab", () => {
         ReviewRequestedPulls();
     });
+
+    $("#all-tab").click();
 });
 
 const AllPulls = () => {

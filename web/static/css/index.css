@@ -45,3 +45,29 @@ a {
     background-color: #ffffff !important;
 }
 
+.pull-requests-header {
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.nav.nav-tabs {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom: 2%;
+}
+
+.tab-item > a {
+    color: #000;
+}
+
+.tab-item > a.active {
+    border: #000 solid 10px;
+    border-radius: 10px;
+    background-color: #000;
+    color: #fff;
+}
+
+.tab-content {
+    text-align: center;
+}
