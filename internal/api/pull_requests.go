@@ -53,6 +53,7 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
 	orgs = orgsfilter.FilterByChoice(orgs, orgsChoice)
@@ -63,12 +64,14 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
 	pullRequestsBytes, err := query.GetDataSource().GetReposPullRequests(context.Background(), token, repos)
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
 	pullRequests, err := prsfactory.New(pullRequestsBytes)
@@ -77,6 +80,7 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
 	user := session.GetSessionService().GetSession().GetCurrentUser()
@@ -94,5 +98,8 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		log.Error.Println(err)
+		http.Error(rw, "Internal server error", http.StatusInternalServerError)
+	} else {
+		log.Info.Printf("Filtered by %s and sent %s", req.FormValue(FILTER_PARAM), pullRequests)
 	}
 }
