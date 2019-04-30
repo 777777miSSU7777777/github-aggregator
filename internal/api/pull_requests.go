@@ -32,9 +32,6 @@ const (
 
 	// REVIEWER type for pulls review requested to user.
 	REVIEWER = "reviewer"
-
-	// OPEN type for open pulls.
-	OPEN = "open"
 )
 
 // PullRequests returns response with pull requests for chosen filter.
@@ -75,8 +72,6 @@ func PullRequests(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	pullRequests, err := prsfactory.New(pullRequestsBytes)
-
-	pullRequests = prfilter.FilterByState(pullRequests, OPEN)
 
 	if err != nil {
 		log.Error.Println(err)
