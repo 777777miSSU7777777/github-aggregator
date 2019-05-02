@@ -59,10 +59,10 @@ func main() {
 	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
 	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
 
-	apiRouter.HandleFunc("/profile", api.Profile).Methods("GET")
-	apiRouter.HandleFunc("/scopes", api.Scopes).Methods("GET")
-	apiRouter.HandleFunc("/orgs", api.Orgs).Methods("GET")
-	apiRouter.HandleFunc("/pulls", api.PullRequests).Methods("GET")
+	apiRouter.HandleFunc("/profile", api.WithAuthCheck(api.Profile)).Methods("GET")
+	apiRouter.HandleFunc("/scopes", api.WithAuthCheck(api.Scopes)).Methods("GET")
+	apiRouter.HandleFunc("/orgs", api.WithAuthCheck(api.Orgs)).Methods("GET")
+	apiRouter.HandleFunc("/pulls", api.WithAuthCheck(api.PullRequests)).Methods("GET")
 
 	http.Handle("/", router)
 

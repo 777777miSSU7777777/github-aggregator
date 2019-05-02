@@ -63,6 +63,10 @@ func (s SessionService) GetSession() Session {
 	return *s.currentSession
 }
 
+func (s SessionService) HasActiveSession() bool {
+	return s.currentSession != nil
+}
+
 // UpdateSession TODO.
 func (s *SessionService) UpdateSession(session Session) {
 
