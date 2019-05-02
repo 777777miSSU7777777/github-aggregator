@@ -2,6 +2,8 @@
     {{ template "navbar" . }}
 
     <div class="jumbotron">
+        {{ if .Auth }}
+
         <h2 class="pull-requests-header">Pull Requests</h2>
         <ul class="nav nav-tabs">
             <li class="tab-item"><a id="all-tab" data-toggle="tab" href="#all">All</a></li>
@@ -17,6 +19,13 @@
             </div>
         </div>
         <script src="/web/static/js/pulls.js"></script>
+
+        {{ else }}
+
+        <p style="text-align:center;">You are not authorized to see pulls.</p>
+        
+        {{ end }}
+
     </div>
     
 {{ template "footer" }}
