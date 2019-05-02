@@ -14,7 +14,12 @@ func WithAuthCheck(apiHandler httpHandlerFunc) httpHandlerFunc {
 		if session.GetSessionService().HasActiveSession() {
 			apiHandler(rw, req)
 		} else {
-			rw.Write([]byte("You are not authorized"))
+			_, err := rw.Write([]byte("You are not authorized"))
+
+			if err != nil {
+				log.Error.Println(err)
+			}
+			
 			rw.WriteHeader(401)
 			log.Warning.Println("Anauthorized request to api")
 		}
