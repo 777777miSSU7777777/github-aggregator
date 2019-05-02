@@ -9,6 +9,7 @@ import (
 
 type httpHandlerFunc = func(http.ResponseWriter, *http.Request)
 
+// WithAuthCheck decorator for api, which checks auth state before handle.
 func WithAuthCheck(apiHandler httpHandlerFunc) httpHandlerFunc {
 	return func(rw http.ResponseWriter, req *http.Request) {
 		if session.GetSessionService().HasActiveSession() {

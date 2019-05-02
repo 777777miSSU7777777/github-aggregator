@@ -10,6 +10,7 @@ import (
 // TOKEN_FILE name of file which stores personal access token.
 const TOKEN_FILE = ".token"
 
+// TokenService is service for working with access token.
 type TokenService struct {
 	apiToken     string
 	tokenChecker tokenChecker
@@ -21,6 +22,7 @@ func init() {
 	tokenService = &TokenService{tokenChecker: tokenChecker{}}
 }
 
+// GetTokenService returns token service.
 func GetTokenService() *TokenService {
 	return tokenService
 }

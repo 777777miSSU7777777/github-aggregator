@@ -63,6 +63,7 @@ func (s SessionService) GetSession() Session {
 	return *s.currentSession
 }
 
+// HasActiveSession returns state of session state (active/inactive).
 func (s SessionService) HasActiveSession() bool {
 	return s.currentSession != nil
 }
