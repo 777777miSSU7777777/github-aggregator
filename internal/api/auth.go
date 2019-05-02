@@ -44,13 +44,15 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	}
 
-	if resp.StatusCode == 200 {
-		tokenservice.GetTokenService().SaveToken(tkn)
+	tokenservice.GetTokenService().SaveToken(tkn)
+
+	if tokenservice.GetTokenService().GetToken() != "" {
 		session.GetSessionService().StartSession(tkn)
 		log.Info.Println("Authentication is successful")
-	} else if resp.StatusCode == 401 {
+		http.Redirect(rw, req, "/", 301)
+	} else {
 		log.Info.Println("Authentication is failed")
+		http.Redirect(rw, req, "/login", 301)
 	}
 
-	http.Redirect(rw, req, "/", 301)
 }
