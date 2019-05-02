@@ -18,5 +18,5 @@ func Logout(rw http.ResponseWriter, req *http.Request) {
 
 	log.Info.Println("Logout")
 
-	http.Redirect(rw, req, "/", 301)
+	http.Redirect(rw, req, "/login", 301)
 }
