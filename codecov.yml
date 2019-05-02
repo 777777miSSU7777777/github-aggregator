@@ -7,6 +7,9 @@ coverage:
  range: “50…75”
 status:
  project: yes
+ default:
+  target: 50%
+  treshtold: 20%
  patch: yes
  changes: no
 comment:
