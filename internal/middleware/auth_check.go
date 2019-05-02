@@ -20,8 +20,7 @@ func WithAuthCheck(apiHandler httpHandlerFunc) httpHandlerFunc {
 			}
 
 			rw.WriteHeader(401)
-			log.Warning.Println("Anauthorized request to api")
+			log.Warning.Println("Unauthorized request to api")
 		}
-		log.Info.Println(session.GetSessionService().HasActiveSession())
 	}
 }
