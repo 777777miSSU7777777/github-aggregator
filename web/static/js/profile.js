@@ -46,5 +46,5 @@ const logoutAction = () => {
     req.open("POST", "/api/logout");
     req.send(null);
     localStorage.removeItem("orgs_choice");
-    document.location.reload();
+    document.location.replace("/login");
 }
