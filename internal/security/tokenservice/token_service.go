@@ -36,7 +36,6 @@ func (ts *TokenService) TryLoadToken() {
 
 	if token != "" {
 		ts.SaveToken(token)
-		return
 	}
 
 	token, err = fileutil.ReadStringFromFile(TOKEN_FILE)
