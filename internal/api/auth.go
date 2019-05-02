@@ -28,22 +28,6 @@ const (
 func Auth(rw http.ResponseWriter, req *http.Request) {
 	tkn := req.FormValue(ACCESS_TOKEN)
 
-	req, err := http.NewRequest("GET", AUTH_URL, nil)
-
-	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+tkn)
-
-	if err != nil {
-		log.Info.Println(err)
-		http.Error(rw, "Internal server error", http.StatusInternalServerError)
-	}
-
-	resp, err := client.Do(req)
-
-	if err != nil {
-		log.Error.Println(err)
-		http.Error(rw, "Internal server error", http.StatusInternalServerError)
-	}
-
 	tokenservice.GetTokenService().SaveToken(tkn)
 
 	if tokenservice.GetTokenService().GetToken() != "" {
