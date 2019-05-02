@@ -19,7 +19,7 @@ func WithAuthCheck(apiHandler httpHandlerFunc) httpHandlerFunc {
 			if err != nil {
 				log.Error.Println(err)
 			}
-			
+
 			rw.WriteHeader(401)
 			log.Warning.Println("Anauthorized request to api")
 		}
