@@ -27,6 +27,11 @@ func GetTokenService() *TokenService {
 	return tokenService
 }
 
+// SetTokenService sets token service.
+func SetTokenService(ts *TokenService) {
+	tokenService = ts
+}
+
 // TryLoadToken tries to load token from .token file in $HOME or current dir.
 func (ts *TokenService) TryLoadToken() {
 	homeDir := os.Getenv("HOME")
