@@ -1,4 +1,4 @@
-package api
+package middleware
 
 import (
 	"net/http"
@@ -6,8 +6,6 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 )
-
-type httpHandlerFunc = func(http.ResponseWriter, *http.Request)
 
 // WithAuthCheck decorator for api, which checks auth state before handle.
 func WithAuthCheck(apiHandler httpHandlerFunc) httpHandlerFunc {
@@ -24,5 +22,6 @@ func WithAuthCheck(apiHandler httpHandlerFunc) httpHandlerFunc {
 			rw.WriteHeader(401)
 			log.Warning.Println("Anauthorized request to api")
 		}
+		log.Info.Println(session.GetSessionService().HasActiveSession())
 	}
 }
