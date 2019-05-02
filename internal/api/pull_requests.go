@@ -38,7 +38,7 @@ const (
 func PullRequests(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
-	token := tokenservice.GetToken()
+	token := tokenservice.GetTokenService().GetToken()
 
 	orgs := session.GetSessionService().GetSession().GetUserOrgs()
 

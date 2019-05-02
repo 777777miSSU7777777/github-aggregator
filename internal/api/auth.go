@@ -45,7 +45,7 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 	}
 
 	if resp.StatusCode == 200 {
-		tokenservice.SaveToken(tkn)
+		tokenservice.GetTokenService().SaveToken(tkn)
 		session.GetSessionService().StartSession(tkn)
 		log.Info.Println("Authentication is successful")
 	} else if resp.StatusCode == 401 {

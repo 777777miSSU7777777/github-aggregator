@@ -38,8 +38,8 @@ func init() {
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
 	logutil.SetProjectName("github-aggregator")
 	query.SetDataSource(datasrcfactory.New(dataSrc))
-	tokenservice.TryLoadToken()
-	token := tokenservice.GetToken()
+	tokenservice.GetTokenService().TryLoadToken()
+	token := tokenservice.GetTokenService().GetToken()
 	if token != "" {
 		session.GetSessionService().StartSession(token)
 	}

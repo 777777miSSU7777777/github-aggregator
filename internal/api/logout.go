@@ -12,7 +12,7 @@ import (
 
 // Logout logs out user from app.
 func Logout(rw http.ResponseWriter, req *http.Request) {
-	tokenservice.DeleteToken()
+	tokenservice.GetTokenService().DeleteToken()
 
 	session.GetSessionService().CloseSession()
 
