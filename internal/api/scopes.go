@@ -15,7 +15,7 @@ import (
 func Scopes(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
-	tkn := tokenservice.GetToken()
+	tkn := tokenservice.GetTokenService().GetToken()
 
 	scopesArr, err := query.GetDataSource().GetScopes(context.Background(), tkn)
 

@@ -11,7 +11,7 @@ import (
 
 // Render renders index page.
 func Render(rw http.ResponseWriter, req *http.Request) {
-	tkn := tokenservice.GetToken()
+	tkn := tokenservice.GetTokenService().GetToken()
 
 	err := view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", view.AuthState{Auth: tkn != ""})
 

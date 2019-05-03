@@ -9,6 +9,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
+	"github.com/777777miSSU7777777/github-aggregator/internal/middleware"
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
@@ -38,8 +39,8 @@ func init() {
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
 	logutil.SetProjectName("github-aggregator")
 	query.SetDataSource(datasrcfactory.New(dataSrc))
-	tokenservice.TryLoadToken()
-	token := tokenservice.GetToken()
+	tokenservice.GetTokenService().TryLoadToken()
+	token := tokenservice.GetTokenService().GetToken()
 	if token != "" {
 		session.GetSessionService().StartSession(token)
 	}
@@ -59,10 +60,10 @@ func main() {
 	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
 	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
 
-	apiRouter.HandleFunc("/profile", api.Profile).Methods("GET")
-	apiRouter.HandleFunc("/scopes", api.Scopes).Methods("GET")
-	apiRouter.HandleFunc("/orgs", api.Orgs).Methods("GET")
-	apiRouter.HandleFunc("/pulls", api.PullRequests).Methods("GET")
+	apiRouter.HandleFunc("/profile", middleware.ChainMiddleware(api.Profile)).Methods("GET")
+	apiRouter.HandleFunc("/scopes", middleware.ChainMiddleware(api.Scopes)).Methods("GET")
+	apiRouter.HandleFunc("/orgs", middleware.ChainMiddleware(api.Orgs)).Methods("GET")
+	apiRouter.HandleFunc("/pulls", middleware.ChainMiddleware(api.PullRequests)).Methods("GET")
 
 	http.Handle("/", router)
 

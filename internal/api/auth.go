@@ -28,29 +28,15 @@ const (
 func Auth(rw http.ResponseWriter, req *http.Request) {
 	tkn := req.FormValue(ACCESS_TOKEN)
 
-	req, err := http.NewRequest("GET", AUTH_URL, nil)
+	tokenservice.GetTokenService().SaveToken(tkn)
 
-	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+tkn)
-
-	if err != nil {
-		log.Info.Println(err)
-		http.Error(rw, "Internal server error", http.StatusInternalServerError)
-	}
-
-	resp, err := client.Do(req)
-
-	if err != nil {
-		log.Error.Println(err)
-		http.Error(rw, "Internal server error", http.StatusInternalServerError)
-	}
-
-	if resp.StatusCode == 200 {
-		tokenservice.SaveToken(tkn)
+	if tokenservice.GetTokenService().GetToken() != "" {
 		session.GetSessionService().StartSession(tkn)
 		log.Info.Println("Authentication is successful")
-	} else if resp.StatusCode == 401 {
+		http.Redirect(rw, req, "/", 301)
+	} else {
 		log.Info.Println("Authentication is failed")
+		http.Redirect(rw, req, "/login", 301)
 	}
 
-	http.Redirect(rw, req, "/", 301)
 }

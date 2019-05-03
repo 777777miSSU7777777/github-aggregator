@@ -11,7 +11,7 @@ import (
 
 // Render renders login page.
 func Render(rw http.ResponseWriter, req *http.Request) {
-	tkn := tokenservice.GetToken()
+	tkn := tokenservice.GetTokenService().GetToken()
 
 	if tkn != "" {
 		http.Redirect(rw, req, "/", 301)

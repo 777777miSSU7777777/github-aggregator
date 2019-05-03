@@ -7,13 +7,33 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
-var apiToken string
-
 // TOKEN_FILE name of file which stores personal access token.
 const TOKEN_FILE = ".token"
 
+// TokenService is service for working with access token.
+type TokenService struct {
+	apiToken     string
+	tokenChecker tokenChecker
+}
+
+var tokenService *TokenService
+
+func init() {
+	tokenService = &TokenService{tokenChecker: tokenChecker{}}
+}
+
+// GetTokenService returns token service.
+func GetTokenService() *TokenService {
+	return tokenService
+}
+
+// SetTokenService sets token service.
+func SetTokenService(ts *TokenService) {
+	tokenService = ts
+}
+
 // TryLoadToken tries to load token from .token file in $HOME or current dir.
-func TryLoadToken() {
+func (ts *TokenService) TryLoadToken() {
 	homeDir := os.Getenv("HOME")
 	token, err := fileutil.ReadStringFromFile(homeDir + "/" + TOKEN_FILE)
 
@@ -22,8 +42,7 @@ func TryLoadToken() {
 	}
 
 	if token != "" {
-		apiToken = token
-		return
+		ts.SaveToken(token)
 	}
 
 	token, err = fileutil.ReadStringFromFile(TOKEN_FILE)
@@ -33,22 +52,22 @@ func TryLoadToken() {
 	}
 
 	if token != "" {
-		apiToken = token
+		ts.SaveToken(token)
 		return
 	}
 
-	apiToken = ""
+	ts.apiToken = ""
 }
 
-func saveTokenFile() {
-	err := fileutil.WriteStringToFile(TOKEN_FILE, apiToken)
+func (ts *TokenService) saveTokenFile() {
+	err := fileutil.WriteStringToFile(TOKEN_FILE, ts.apiToken)
 
 	if err != nil {
 		log.Warning.Println(err)
 	}
 }
 
-func deleteTokenFile() {
+func (ts *TokenService) deleteTokenFile() {
 	err := os.Remove(TOKEN_FILE)
 
 	if err != nil {
@@ -57,20 +76,27 @@ func deleteTokenFile() {
 }
 
 // SaveToken saves token to memory.
-func SaveToken(token string) {
-	apiToken = token
+func (ts *TokenService) SaveToken(token string) {
+	valid, err := ts.tokenChecker.checkValidity(token)
 
-	saveTokenFile()
+	if err != nil {
+		log.Warning.Println(err)
+		return
+	} else if valid {
+		ts.apiToken = token
+
+		ts.saveTokenFile()
+	}
 }
 
 // GetToken return token.
-func GetToken() string {
-	return apiToken
+func (ts TokenService) GetToken() string {
+	return ts.apiToken
 }
 
 // DeleteToken deletes token from memory.
-func DeleteToken() {
-	apiToken = ""
+func (ts *TokenService) DeleteToken() {
+	ts.apiToken = ""
 
-	deleteTokenFile()
+	ts.deleteTokenFile()
 }
