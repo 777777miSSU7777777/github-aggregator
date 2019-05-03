@@ -1,18 +1,22 @@
 codecov:
- notify:
- require_ci_to_pass: yes
+  notify:
+    require_ci_to_pass: yes
+    
 coverage:
- precision: 2
- round: down
- range: “50…75”
-status:
- project: yes
- default:
-  target: 50%
-  treshtold: 20%
- patch: yes
- changes: no
+  precision: 2
+  round: down
+  range: "50...75"
+  status:
+    project:
+      default:
+        target: 50%
+        treshtold: 20%
+        patch: yes
+        changes: no
+    patch: yes
+    changes: no
+
 comment:
- layout: “reach, diff, flags, files, footer”
- behavior: default
- require_changes: no
+  layout: "header, diff"
+  behavior: default
+  require_changes: no
