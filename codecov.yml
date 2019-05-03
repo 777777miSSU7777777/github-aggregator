@@ -1,7 +1,7 @@
 codecov:
   notify:
     require_ci_to_pass: yes
-    
+
 coverage:
   precision: 2
   round: down
@@ -10,7 +10,7 @@ coverage:
     project:
       default:
         target: 50%
-        treshtold: 20%
+        treshtold: null
         patch: yes
         changes: no
     patch: yes
