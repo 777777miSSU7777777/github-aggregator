@@ -11,10 +11,6 @@ coverage:
       default:
         target: 50%
         treshtold: null
-        patch: yes
-        changes: no
-    patch: yes
-    changes: no
 
 comment:
   layout: "header, diff"
