@@ -11,6 +11,11 @@ coverage:
       default:
         target: 50%
         treshtold: null
+    patch:
+      default:
+        enabled: no
+    changes:
+      default:
         enabled: no
 
 comment:
