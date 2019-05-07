@@ -112,22 +112,12 @@ func (ds GithubRESTAPI) GetOrgs(ctx context.Context, token string) ([]byte, erro
 func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []entity.Organization) ([][]byte, error) {
 	resultSetBytes := [][]byte{}
 
+	orgChan := make(chan entity.Organization, len(orgs))
+
 	for _, org := range orgs {
-		req, err := http.NewRequest("GET", org.ReposURL, nil)
+		orgChan <- org
 
-		if err != nil {
-			return nil, err
-		}
-
-		req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
-
-		resp, err := ds.client.Do(req)
-
-		if err != nil {
-			return nil, err
-		}
-
-		reposBody, err := bodyutil.ReadResponseBody(resp)
+		reposBody, err := ds.getOrgRepos(ctx, token, orgChan)
 
 		if err != nil {
 			return nil, err
@@ -137,6 +127,31 @@ func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []e
 	}
 
 	return resultSetBytes, nil
+}
+
+func (ds GithubRESTAPI) getOrgRepos(ctx context.Context, token string, orgChan chan entity.Organization) ([]byte, error) {
+	org := <-orgChan
+	req, err := http.NewRequest("GET", org.ReposURL, nil)
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+	resp, err := ds.client.Do(req)
+
+	if err != nil {
+		return nil, err
+	}
+
+	reposBody, err := bodyutil.ReadResponseBody(resp)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return reposBody, nil
 }
 
 // GetReposPullRequests returns body with orgs repos pulls.
