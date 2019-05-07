@@ -35,7 +35,7 @@ const (
 )
 
 // PullRequests returns response with pull requests for chosen filter.
-func PullRequests(rw http.ResponseWriter, req *http.Request) {
+var PullRequests = func(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
 	token := tokenservice.GetTokenService().GetToken()
