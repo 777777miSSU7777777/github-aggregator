@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 	"strings"
+	"sync"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/http/bodyutil"
@@ -172,22 +173,21 @@ func (ds GithubRESTAPI) getOrgRepos(ctx context.Context, token string, orgChan c
 func (ds GithubRESTAPI) GetReposPullRequests(ctx context.Context, token string, repos []entity.Repository) ([][]byte, error) {
 	resultSetBytes := [][]byte{}
 
+	repoChan := make(chan entity.Repository, len(repos))
+	pullsBytesChan := make(chan []byte, 1)
+	errorsChan := make(chan error, 1)
+
+	var wg sync.WaitGroup
+	wg.Add(len(repos))
+
 	for _, repo := range repos {
-		req, err := http.NewRequest("GET", trimPullsURL(repo.PullsURL), nil)
+		repoChan <- repo
 
-		if err != nil {
-			return nil, err
-		}
+		go ds.getReposPulls(ctx, token, repoChan, pullsBytesChan, errorsChan, &wg)
 
-		req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+		pullsBody := <-pullsBytesChan
 
-		resp, err := ds.client.Do(req)
-
-		if err != nil {
-			return nil, err
-		}
-
-		pullsBody, err := bodyutil.ReadResponseBody(resp)
+		err := <-errorsChan
 
 		if err != nil {
 			return nil, err
@@ -197,6 +197,40 @@ func (ds GithubRESTAPI) GetReposPullRequests(ctx context.Context, token string, 
 	}
 
 	return resultSetBytes, nil
+}
+
+func (ds GithubRESTAPI) getReposPulls(ctx context.Context, token string, repoChan chan entity.Repository,
+	pullsBytesChan chan []byte, errorsChan chan error, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	repo := <-repoChan
+
+	req, err := http.NewRequest("GET", trimPullsURL(repo.PullsURL), nil)
+
+	if err != nil {
+		pullsBytesChan <- nil
+		errorsChan <- err
+		return
+	}
+
+	req.Header.Set(OAUTH2_HEADER, OAUTH2_PREFIX+token)
+
+	resp, err := ds.client.Do(req)
+
+	if err != nil {
+		pullsBytesChan <- nil
+		errorsChan <- err
+	}
+
+	pullsBody, err := bodyutil.ReadResponseBody(resp)
+
+	if err != nil {
+		pullsBytesChan <- nil
+		errorsChan <- err
+	}
+
+	pullsBytesChan <- pullsBody
+	errorsChan <- nil
 }
 
 func trimPullsURL(pullsUrls string) string {
