@@ -196,6 +196,8 @@ func (ds GithubRESTAPI) GetReposPullRequests(ctx context.Context, token string, 
 		resultSetBytes = append(resultSetBytes, pullsBody)
 	}
 
+	wg.Wait()
+
 	return resultSetBytes, nil
 }
 
