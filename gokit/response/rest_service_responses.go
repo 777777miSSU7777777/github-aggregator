@@ -18,6 +18,6 @@ type UserOrgsResponse struct {
 }
 
 type FilteredPullsResponse struct {
-	FilteredPulls entity.PullRequest `json:"filtered_pulls"`
-	Error         string             `json:"error"`
+	FilteredPulls []entity.PullRequest `json:"filtered_pulls"`
+	Error         string               `json:"error"`
 }
