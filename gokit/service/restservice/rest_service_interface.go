@@ -8,5 +8,5 @@ type RESTService interface {
 	CurrentUser() entity.User
 	TokenScopes() []entity.Scope
 	UserOrgs() []entity.Organization
-	FilteredPulls(string, []entity.Organization) []entity.PullRequest
+	FilteredPulls(string, []string) []entity.PullRequest
 }
