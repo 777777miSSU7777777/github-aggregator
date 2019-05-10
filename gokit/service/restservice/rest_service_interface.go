@@ -4,7 +4,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 )
 
-type RestService interface {
+type RESTService interface {
 	CurrentUser() entity.User
 	TokenScopes() []entity.Scope
 	UserOrgs() []entity.Organization
