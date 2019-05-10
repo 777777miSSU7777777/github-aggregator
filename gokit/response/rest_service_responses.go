@@ -10,6 +10,7 @@ type CurrentUserResponse struct {
 
 type TokenScopesResponse struct {
 	TokenScopes []entity.Scope `json:"token_scopes"`
+	Error       string         `json:"error"`
 }
 
 type UserOrgsResponse struct {
@@ -18,4 +19,5 @@ type UserOrgsResponse struct {
 
 type FilteredPullsResponse struct {
 	FilteredPulls entity.PullRequest `json:"filtered_pulls"`
+	Error         string             `json:"error"`
 }
