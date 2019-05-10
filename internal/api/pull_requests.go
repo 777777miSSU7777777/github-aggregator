@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/prsfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/reposfactory"

@@ -4,9 +4,9 @@ package pulls
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
 
 // Render renders pull requests page.

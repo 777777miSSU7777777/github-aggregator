@@ -14,12 +14,11 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/pulls"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
-	
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 
 	"github.com/gorilla/mux"
 )

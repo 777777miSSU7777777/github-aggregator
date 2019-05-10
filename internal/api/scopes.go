@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
 
 // Scopes returns response with current scopes for provided token in json format.
