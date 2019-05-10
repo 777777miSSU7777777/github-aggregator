@@ -10,15 +10,16 @@ import (
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
 	"github.com/777777miSSU7777777/github-aggregator/internal/middleware"
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/pulls"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
+	
 
 	"github.com/gorilla/mux"
 )
@@ -39,8 +40,8 @@ func init() {
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
 	logutil.SetProjectName("github-aggregator")
 	query.SetDataSource(datasrcfactory.New(dataSrc))
-	tokenservice.GetTokenService().TryLoadToken()
-	token := tokenservice.GetTokenService().GetToken()
+	token.GetTokenService().TryLoadToken()
+	token := token.GetTokenService().GetToken()
 	if token != "" {
 		session.GetSessionService().StartSession(token)
 	}

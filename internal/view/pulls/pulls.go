@@ -4,14 +4,14 @@ package pulls
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
 // Render renders pull requests page.
 func Render(rw http.ResponseWriter, req *http.Request) {
-	tkn := tokenservice.GetTokenService().GetToken()
+	tkn := token.GetTokenService().GetToken()
 
 	err := view.GetTemplates().ExecuteTemplate(rw, "pulls.gohtml", view.AuthState{Auth: tkn != ""})
 

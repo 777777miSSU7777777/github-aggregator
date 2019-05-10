@@ -5,7 +5,7 @@ package api
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 )
@@ -28,9 +28,9 @@ const (
 func Auth(rw http.ResponseWriter, req *http.Request) {
 	tkn := req.FormValue(ACCESS_TOKEN)
 
-	tokenservice.GetTokenService().SaveToken(tkn)
+	token.GetTokenService().SaveToken(tkn)
 
-	if tokenservice.GetTokenService().GetToken() != "" {
+	if token.GetTokenService().GetToken() != "" {
 		session.GetSessionService().StartSession(tkn)
 		log.Info.Println("Authentication is successful")
 		http.Redirect(rw, req, "/", 301)

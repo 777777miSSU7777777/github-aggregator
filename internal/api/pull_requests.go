@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/prsfactory"
@@ -38,7 +38,7 @@ const (
 var PullRequests = func(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
-	token := tokenservice.GetTokenService().GetToken()
+	token := token.GetTokenService().GetToken()
 
 	orgs := session.GetSessionService().GetSession().GetUserOrgs()
 

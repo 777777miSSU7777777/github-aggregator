@@ -4,14 +4,14 @@ package index
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
 // Render renders index page.
 func Render(rw http.ResponseWriter, req *http.Request) {
-	tkn := tokenservice.GetTokenService().GetToken()
+	tkn := token.GetTokenService().GetToken()
 
 	err := view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", view.AuthState{Auth: tkn != ""})
 

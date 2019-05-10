@@ -1,4 +1,4 @@
-package tokenservice
+package token
 
 import (
 	"net/http"

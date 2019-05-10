@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
@@ -16,7 +16,7 @@ import (
 func Scopes(rw http.ResponseWriter, req *http.Request) {
 	rw.Header().Set("Content-Type", "application/json")
 
-	tkn := tokenservice.GetTokenService().GetToken()
+	tkn := token.GetTokenService().GetToken()
 
 	scopesArr, err := query.GetDataSource().GetScopes(context.Background(), tkn)
 
