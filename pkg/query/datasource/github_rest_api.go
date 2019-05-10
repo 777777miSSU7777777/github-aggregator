@@ -64,7 +64,7 @@ func (ds GithubRESTAPI) GetUser(ctx context.Context, token string) ([]byte, erro
 }
 
 // GetScopes returns scopes for provided token.
-func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, error) {
+func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]entity.Scope, error) {
 	req, err := http.NewRequest("GET", USER_QUERY, nil)
 
 	if err != nil {
@@ -81,7 +81,7 @@ func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, 
 
 	respHeader := headerutil.ReadResponseHeader(resp)
 
-	return strings.Split(respHeader[SCOPES_HEADER][0], ","), nil
+	return []entity.Scope(strings.Split(respHeader[SCOPES_HEADER][0], ",")), nil
 }
 
 // GetOrgs returns body with user orgs.

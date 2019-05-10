@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 )
@@ -23,7 +24,7 @@ func Scopes(rw http.ResponseWriter, req *http.Request) {
 		log.Error.Println(err)
 	}
 
-	scopesMap := map[string]string{"scopes": strings.Join(scopesArr, ",")}
+	scopesMap := map[string]entity.Scope{"scopes": strings.Join(scopesArr, ",")}
 
 	err = json.NewEncoder(rw).Encode(scopesMap)
 
