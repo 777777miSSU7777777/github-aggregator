@@ -6,7 +6,7 @@ import (
 
 type RESTService interface {
 	CurrentUser() entity.User
-	TokenScopes() []entity.Scope
+	TokenScopes() ([]entity.Scope, error)
 	UserOrgs() []entity.Organization
-	FilteredPulls(string, []string) []entity.PullRequest
+	FilteredPulls(string, []string) ([]entity.PullRequest, error)
 }
