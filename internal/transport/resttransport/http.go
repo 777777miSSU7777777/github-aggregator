@@ -19,7 +19,7 @@ func MakeCurrentUserHandler(svc restservice.RESTService) *httptransport.Server {
 func MakeTokenScopesHandler(svc restservice.RESTService) *httptransport.Server {
 	return httptransport.NewServer(
 		endpoints.MakeTokenScopesEndpoint(svc),
-		encoding.DecodeCurrentUser,
+		encoding.DecodeTokenScopes,
 		encoding.EncodeResponse,
 	)
 }
@@ -27,7 +27,7 @@ func MakeTokenScopesHandler(svc restservice.RESTService) *httptransport.Server {
 func MakeUserOrgsHandler(svc restservice.RESTService) *httptransport.Server {
 	return httptransport.NewServer(
 		endpoints.MakeUserOrgsEndpoint(svc),
-		encoding.DecodeCurrentUser,
+		encoding.DecodeUserOrgs,
 		encoding.EncodeResponse,
 	)
 }
@@ -35,7 +35,7 @@ func MakeUserOrgsHandler(svc restservice.RESTService) *httptransport.Server {
 func MakeFilteredPullsHandler(svc restservice.RESTService) *httptransport.Server {
 	return httptransport.NewServer(
 		endpoints.MakeFilteredPullsEndpoint(svc),
-		encoding.DecodeCurrentUser,
+		encoding.DecodeFilteredPulls,
 		encoding.EncodeResponse,
 	)
 }
