@@ -25,9 +25,9 @@ const scopes = () =>{
 }
 
 const renderScopes = (response) => {
-    let splitScopes = response["scopes"].split(",");
+    let splitScopes = response["token_scopes"];
 
-    splitScopes = splitScopes.map(scope => scope.trim())
+    splitScopes = splitScopes.map(scope => scope.trim());
     
     let ScopesList = document.getElementById("functionality-scopes-list");
 

@@ -20,7 +20,9 @@ const orgs = () => {
         .then(data => renderOrgs(data));
 }
 
-const renderOrgs = (orgsData) => {
+const renderOrgs = (data) => {
+    let orgsData = data["user_orgs"];
+
     let orgsChoice = JSON.parse(localStorage.getItem("orgs_choice"));
 
     let liOrgsList = orgsData.map(org => {
@@ -63,7 +65,7 @@ const delOrg = (org) =>{
 }
 
 const orgsCheckTokenPermissions = (scopes, enough, notEnough) => {
-    let splitScopes = scopes["scopes"].split(",");
+    let splitScopes = scopes["token_scopes"];
 
     splitScopes = splitScopes.map(scope => scope.trim());
     

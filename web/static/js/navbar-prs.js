@@ -12,7 +12,7 @@ $(document).ready(() => {
 })
 
 const prsCheckTokenPermissions = (scopes, enough, notEnough) => {
-    let splitScopes = scopes["scopes"].split(",");
+    let splitScopes = scopes["token_scopes"];
 
     splitScopes = splitScopes.map(scope => scope.trim());
 
