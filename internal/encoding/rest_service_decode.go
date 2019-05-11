@@ -8,42 +8,33 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/request"
 )
 
+const (
+	FILTER_PARAM        = "filter"
+	SELECTED_ORGS_PARAM = "selected_orgs"
+)
+
 func DecodeCurrentUser(_ context.Context, r *http.Request) (interface{}, error) {
-	var req request.CurrentUserRequest
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		return nil, err
-	}
-
-	return req, nil
+	return request.CurrentUserRequest{}, nil
 }
 
 func DecodeTokenScopes(_ context.Context, r *http.Request) (interface{}, error) {
-	var req request.TokenScopesRequest
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		return nil, err
-	}
-
-	return req, nil
+	return request.TokenScopesRequest{}, nil
 }
 
 func DecodeUserOrgs(_ context.Context, r *http.Request) (interface{}, error) {
-	var req request.UserOrgsRequest
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		return nil, err
-	}
-
-	return req, nil
+	return request.UserOrgsRequest{}, nil
 }
 
 func DecodeFilteredPulls(_ context.Context, r *http.Request) (interface{}, error) {
-	var req request.FilteredPullsReq
+	filter := r.FormValue(FILTER_PARAM)
 
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	var selectedOrgs []string
+
+	err := json.Unmarshal([]byte(r.FormValue(SELECTED_ORGS_PARAM)), &selectedOrgs)
+
+	if err != nil {
 		return nil, err
 	}
 
-	return req, nil
+	return request.FilteredPullsReq{filter, selectedOrgs}, nil
 }
