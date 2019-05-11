@@ -8,6 +8,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/go-kit/kit"
+  packages = ["endpoint"]
+  revision = "12210fb6ace19e0496167bb3e667dcd91fa9f69b"
+  version = "v0.8.0"
+
+[[projects]]
   name = "github.com/gorilla/mux"
   packages = ["."]
   revision = "a7962380ca08b5a188038c69871b8d3fbdf31e89"
@@ -34,6 +40,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "cd8e9cd523729a10564289127fa1ae0342f82625137617bc9a14332aaa0736b4"
+  inputs-digest = "241d20dea61b1cf0b64c406fdd348b5d62e45b412410abd9a9c53ac047cec488"
   solver-name = "gps-cdcl"
   solver-version = 1
