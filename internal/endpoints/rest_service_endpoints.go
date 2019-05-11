@@ -3,9 +3,9 @@ package endpoints
 import (
 	"context"
 
-	servicereq "github.com/777777miSSU7777777/github-aggregator/gokit/request"
-	serviceresp "github.com/777777miSSU7777777/github-aggregator/gokit/response"
-	"github.com/777777miSSU7777777/github-aggregator/gokit/service/restservice"
+	servicereq "github.com/777777miSSU7777777/github-aggregator/internal/request"
+	serviceresp "github.com/777777miSSU7777777/github-aggregator/internal/response"
+	"github.com/777777miSSU7777777/github-aggregator/internal/service/restservice"
 
 	"github.com/go-kit/kit/endpoint"
 )
