@@ -8,7 +8,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/reposfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/filter/orgsfilter"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/filter/prfilter"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/query/datasource"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
@@ -25,6 +25,13 @@ const (
 )
 
 type RESTServiceImpl struct {
+	repository datasource.DataSource
+}
+
+func NewRestServiceImpl() RESTService {
+	return &RESTServiceImpl{
+		repository: datasource.NewGithubRESTAPI(),
+	}
 }
 
 func (s RESTServiceImpl) CurrentUser() entity.User {
@@ -33,7 +40,7 @@ func (s RESTServiceImpl) CurrentUser() entity.User {
 
 func (s RESTServiceImpl) TokenScopes() ([]entity.Scope, error) {
 	tkn := token.GetTokenService().GetToken()
-	scopes, err := query.GetDataSource().GetScopes(context.Background(), tkn)
+	scopes, err := s.repository.GetScopes(context.Background(), tkn)
 
 	if err != nil {
 		return nil, err
@@ -53,7 +60,7 @@ func (s RESTServiceImpl) FilteredPulls(filter string, orgsChoice []string) ([]en
 
 	tkn := token.GetTokenService().GetToken()
 
-	reposBytes, err := query.GetDataSource().GetOrgsRepos(context.Background(), tkn, orgs)
+	reposBytes, err := s.repository.GetOrgsRepos(context.Background(), tkn, orgs)
 
 	if err != nil {
 		return nil, err
@@ -65,7 +72,7 @@ func (s RESTServiceImpl) FilteredPulls(filter string, orgsChoice []string) ([]en
 		return nil, err
 	}
 
-	pullsBytes, err := query.GetDataSource().GetReposPullRequests(context.Background(), tkn, repos)
+	pullsBytes, err := s.repository.GetReposPullRequests(context.Background(), tkn, repos)
 
 	if err != nil {
 		return nil, err

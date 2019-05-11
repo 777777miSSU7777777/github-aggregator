@@ -61,7 +61,7 @@ func main() {
 	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
 	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
 
-	restService := restservice.RESTServiceImpl{}
+	restService := restservice.NewRestServiceImpl()
 
 	currentUserHandler := resttransport.MakeCurrentUserHandler(restService)
 	tokenScopesHandler := resttransport.MakeTokenScopesHandler(restService)
