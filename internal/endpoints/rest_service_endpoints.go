@@ -10,7 +10,7 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
-func makeCurrentUserEndpoint(svc restservice.RESTService) endpoint.Endpoint {
+func MakeCurrentUserEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		_ = request.(servicereq.CurrentUserRequest)
 		val := svc.CurrentUser()
@@ -19,7 +19,7 @@ func makeCurrentUserEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	}
 }
 
-func makeTokenScopesEndpoint(svc restservice.RESTService) endpoint.Endpoint {
+func MakeTokenScopesEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		_ = request.(servicereq.TokenScopesRequest)
 		val, err := svc.TokenScopes()
@@ -32,7 +32,7 @@ func makeTokenScopesEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	}
 }
 
-func makeUserOrgsEndpoint(svc restservice.RESTService) endpoint.Endpoint {
+func MakeUserOrgsEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		_ = request.(servicereq.UserOrgsRequest)
 		val := svc.UserOrgs()
@@ -41,7 +41,7 @@ func makeUserOrgsEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	}
 }
 
-func makeFilteredPullsEndpoint(svc restservice.RESTService) endpoint.Endpoint {
+func MakeFilteredPullsEndpoint(svc restservice.RESTService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(servicereq.FilteredPullsReq)
 		val, err := svc.FilteredPulls(req.Filter, req.SelectedOrgs)
