@@ -8,7 +8,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/request"
 )
 
-func decodeCurrentUser(_ context.Context, r *http.Request) (interface{}, error) {
+func DecodeCurrentUser(_ context.Context, r *http.Request) (interface{}, error) {
 	var req request.CurrentUserRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -18,7 +18,7 @@ func decodeCurrentUser(_ context.Context, r *http.Request) (interface{}, error) 
 	return req, nil
 }
 
-func decodeTokenScopes(_ context.Context, r *http.Request) (interface{}, error) {
+func DecodeTokenScopes(_ context.Context, r *http.Request) (interface{}, error) {
 	var req request.TokenScopesRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -28,7 +28,7 @@ func decodeTokenScopes(_ context.Context, r *http.Request) (interface{}, error) 
 	return req, nil
 }
 
-func decodeUserOrgs(_ context.Context, r *http.Request) (interface{}, error) {
+func DecodeUserOrgs(_ context.Context, r *http.Request) (interface{}, error) {
 	var req request.UserOrgsRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
@@ -38,7 +38,7 @@ func decodeUserOrgs(_ context.Context, r *http.Request) (interface{}, error) {
 	return req, nil
 }
 
-func decodeFilteredPulls(_ context.Context, r *http.Request) (interface{}, error) {
+func DecodeFilteredPulls(_ context.Context, r *http.Request) (interface{}, error) {
 	var req request.FilteredPullsReq
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
