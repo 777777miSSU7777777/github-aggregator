@@ -5,8 +5,8 @@ package api
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/time/timeutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
 
@@ -32,10 +32,18 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 
 	if token.GetTokenService().GetToken() != "" {
 		session.GetSessionService().StartSession(tkn)
-		log.Info.Println("Authentication is successful")
+		logger.Log(
+			"method", "Auth",
+			"time", timeutil.GetCurrentTime(),
+			"info", "Authentication is succesful",
+		)
 		http.Redirect(rw, req, "/", 301)
 	} else {
-		log.Info.Println("Authentication is failed")
+		logger.Log(
+			"method", "Auth",
+			"time", timeutil.GetCurrentTime(),
+			"info", "Authentication is failed",
+		)
 		http.Redirect(rw, req, "/login", 301)
 	}
 

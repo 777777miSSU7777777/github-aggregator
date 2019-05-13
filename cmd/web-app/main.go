@@ -5,6 +5,10 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
+	"time"
+
+	"github.com/777777miSSU7777777/github-aggregator/pkg/time/timeutil"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 
@@ -15,17 +19,17 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/pulls"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 
+	"github.com/go-kit/kit/log"
 	"github.com/gorilla/mux"
 )
 
 var host string
 var port string
 var dataSrc string
+var logger log.Logger
 
 const STATIC_DIR = "/web/static/"
 
@@ -36,14 +40,31 @@ func init() {
 	flag.StringVar(&port, "p", "8080", "Defines host port")
 	flag.StringVar(&dataSrc, "data-source", "rest-api", "Defines data source")
 	flag.Parse()
+
+	logger = log.NewJSONLogger(os.Stderr)
+
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
-	logutil.SetProjectName("github-aggregator")
 	query.SetDataSource(datasrcfactory.New(dataSrc))
-	token.GetTokenService().TryLoadToken()
+	err := token.GetTokenService().TryLoadToken()
+
+	if err != nil {
+		logger.Log(
+			"time", timeutil.GetCurrentTime(),
+			"err", err)
+	} else {
+		logger.Log(
+			"time", timeutil.GetCurrentTime(),
+			"info", "Initialized token from .token file.",
+		)
+	}
+
 	token := token.GetTokenService().GetToken()
 	if token != "" {
 		session.GetSessionService().StartSession(token)
 	}
+
+	api.SetLogger(logger)
+	view.SetLogger(logger)
 }
 
 func main() {
@@ -61,6 +82,7 @@ func main() {
 	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
 
 	restService := rest.NewRestServiceImpl()
+	restService = rest.WrapLoggingMiddleware(restService, logger)
 
 	currentUserHandler := rest.MakeCurrentUserHandler(restService)
 	tokenScopesHandler := rest.MakeTokenScopesHandler(restService)
@@ -74,11 +96,20 @@ func main() {
 
 	http.Handle("/", router)
 
-	log.Info.Printf("Server started on %s:%s", host, port)
+	logger.Log(
+		"info", "Server started",
+		"time", time.Now(),
+		"host", host,
+		"port", port,
+	)
 
 	err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
 	if err != nil {
-		log.Error.Fatalln(err)
+		logger.Log(
+			"time", time.Now(),
+			"error", err,
+		)
+		os.Exit(1)
 	}
 
 }

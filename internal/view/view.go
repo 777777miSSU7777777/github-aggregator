@@ -4,9 +4,21 @@ package view
 
 import (
 	"html/template"
+
+	"github.com/go-kit/kit/log"
 )
 
 var templates *template.Template
+
+var logger log.Logger
+
+func SetLogger(newLogger log.Logger) {
+	logger = newLogger
+}
+
+func Logger() log.Logger {
+	return logger
+}
 
 // AuthState struct which represents auth state of user.
 type AuthState struct {
