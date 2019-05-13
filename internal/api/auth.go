@@ -31,13 +31,22 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 	token.GetTokenService().SaveToken(tkn)
 
 	if token.GetTokenService().GetToken() != "" {
-		session.GetSessionService().StartSession(tkn)
-		logger.Log(
-			"method", "Auth",
-			"time", timeutil.GetCurrentTime(),
-			"info", "Authentication is succesful",
-		)
-		http.Redirect(rw, req, "/", 301)
+		err := session.GetSessionService().StartSession(tkn)
+
+		if err != nil {
+			logger.Log(
+				"method", "Auth",
+				"time", timeutil.GetCurrentTime(),
+				"err", err,
+			)
+		} else {
+			logger.Log(
+				"method", "Auth",
+				"time", timeutil.GetCurrentTime(),
+				"info", "Authentication is succesful",
+			)
+			http.Redirect(rw, req, "/", 301)
+		}
 	} else {
 		logger.Log(
 			"method", "Auth",

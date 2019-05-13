@@ -60,7 +60,14 @@ func init() {
 
 	token := token.GetTokenService().GetToken()
 	if token != "" {
-		session.GetSessionService().StartSession(token)
+		err = session.GetSessionService().StartSession(token)
+
+		if err != nil {
+			logger.Log(
+				"time", timeutil.GetCurrentTime(),
+				"err", err,
+			)
+		}
 	}
 
 	api.SetLogger(logger)
