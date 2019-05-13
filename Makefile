@@ -5,7 +5,7 @@ check:
 
 	go list ./... | grep -v /vendor/ | xargs -n 1 golint
 
-	gosec ./...
+	gosec -exclude=G104 ./...
 
 	goimports -d ./$(find . -type f -name '*.go' -not -path "./vendor/*")
 	bash build/goimports_check.sh
