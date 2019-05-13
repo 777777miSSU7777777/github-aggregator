@@ -12,8 +12,7 @@ check:
 
 .PHONY: test
 test:
-	go test -race -coverprofile=coverage.out.tmp -covermode=atomic ./...
-	cat coverage.out.tmp | grep -v "internal/\(view\|api\)" | grep -v "pkg/query/datasource" > coverage.out
+	go test -race -coverprofile=coverage.out -covermode=atomic ./...
 	go tool cover -html=coverage.out
 
 .PHONY: build
