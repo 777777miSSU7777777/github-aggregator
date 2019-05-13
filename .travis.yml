@@ -43,6 +43,6 @@ jobs:
 
 stages:
     - checks
-    - test
+    # - test
     - name: build
       if: type = pull_request || tag ~= /^v\d(.\d)+$/
