@@ -1,11 +1,9 @@
-package encoding
+package rest
 
 import (
 	"context"
 	"encoding/json"
 	"net/http"
-
-	"github.com/777777miSSU7777777/github-aggregator/internal/request"
 )
 
 const (
@@ -14,15 +12,15 @@ const (
 )
 
 func DecodeCurrentUser(_ context.Context, r *http.Request) (interface{}, error) {
-	return request.CurrentUserRequest{}, nil
+	return currentUserRequest{}, nil
 }
 
 func DecodeTokenScopes(_ context.Context, r *http.Request) (interface{}, error) {
-	return request.TokenScopesRequest{}, nil
+	return tokenScopesRequest{}, nil
 }
 
 func DecodeUserOrgs(_ context.Context, r *http.Request) (interface{}, error) {
-	return request.UserOrgsRequest{}, nil
+	return userOrgsRequest{}, nil
 }
 
 func DecodeFilteredPulls(_ context.Context, r *http.Request) (interface{}, error) {
@@ -36,5 +34,9 @@ func DecodeFilteredPulls(_ context.Context, r *http.Request) (interface{}, error
 		return nil, err
 	}
 
-	return request.FilteredPullsReq{filter, selectedOrgs}, nil
+	return filteredPullsReq{filter, selectedOrgs}, nil
+}
+
+func EncodeResponse(_ context.Context, rw http.ResponseWriter, response interface{}) error {
+	return json.NewEncoder(rw).Encode(response)
 }

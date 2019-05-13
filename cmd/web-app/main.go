@@ -9,8 +9,7 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
-	"github.com/777777miSSU7777777/github-aggregator/internal/service/restservice"
-	"github.com/777777miSSU7777777/github-aggregator/internal/transport/resttransport"
+	"github.com/777777miSSU7777777/github-aggregator/internal/gokit/rest"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
@@ -61,12 +60,12 @@ func main() {
 	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
 	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
 
-	restService := restservice.NewRestServiceImpl()
+	restService := rest.NewRestServiceImpl()
 
-	currentUserHandler := resttransport.MakeCurrentUserHandler(restService)
-	tokenScopesHandler := resttransport.MakeTokenScopesHandler(restService)
-	userOrgsHandler := resttransport.MakeUserOrgsHandler(restService)
-	filteredPullsHandler := resttransport.MakeFilteredPullsHandler(restService)
+	currentUserHandler := rest.MakeCurrentUserHandler(restService)
+	tokenScopesHandler := rest.MakeTokenScopesHandler(restService)
+	userOrgsHandler := rest.MakeUserOrgsHandler(restService)
+	filteredPullsHandler := rest.MakeFilteredPullsHandler(restService)
 
 	apiRouter.Handle("/profile", currentUserHandler).Methods("GET")
 	apiRouter.Handle("/scopes", tokenScopesHandler).Methods("GET")

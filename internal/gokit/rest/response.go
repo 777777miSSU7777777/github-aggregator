@@ -1,23 +1,23 @@
-package response
+package rest
 
 import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
 )
 
-type CurrentUserResponse struct {
+type currentUserResponse struct {
 	CurrentUser entity.User `json:"current_user"`
 }
 
-type TokenScopesResponse struct {
+type tokenScopesResponse struct {
 	TokenScopes []entity.Scope `json:"token_scopes"`
 	Error       string         `json:"error"`
 }
 
-type UserOrgsResponse struct {
+type userOrgsResponse struct {
 	UserOrgs []entity.Organization `json:"user_orgs"`
 }
 
-type FilteredPullsResponse struct {
+type filteredPullsResponse struct {
 	FilteredPulls []entity.PullRequest `json:"filtered_pulls"`
 	Error         string               `json:"error"`
 }

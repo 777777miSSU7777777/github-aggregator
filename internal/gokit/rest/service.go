@@ -1,4 +1,4 @@
-package restservice
+package rest
 
 import (
 	"context"
@@ -24,21 +24,28 @@ const (
 	REVIEWER = "reviewer"
 )
 
-type RESTServiceImpl struct {
+type RESTService interface {
+	CurrentUser() entity.User
+	TokenScopes() ([]entity.Scope, error)
+	UserOrgs() []entity.Organization
+	FilteredPulls(string, []string) ([]entity.PullRequest, error)
+}
+
+type service struct {
 	repository datasource.DataSource
 }
 
 func NewRestServiceImpl() RESTService {
-	return &RESTServiceImpl{
+	return &service{
 		repository: datasource.NewGithubRESTAPI(),
 	}
 }
 
-func (s RESTServiceImpl) CurrentUser() entity.User {
+func (s service) CurrentUser() entity.User {
 	return session.GetSessionService().GetSession().GetCurrentUser()
 }
 
-func (s RESTServiceImpl) TokenScopes() ([]entity.Scope, error) {
+func (s service) TokenScopes() ([]entity.Scope, error) {
 	tkn := token.GetTokenService().GetToken()
 	scopes, err := s.repository.GetScopes(context.Background(), tkn)
 
@@ -49,11 +56,11 @@ func (s RESTServiceImpl) TokenScopes() ([]entity.Scope, error) {
 	return scopes, nil
 }
 
-func (s RESTServiceImpl) UserOrgs() []entity.Organization {
+func (s service) UserOrgs() []entity.Organization {
 	return session.GetSessionService().GetSession().GetUserOrgs()
 }
 
-func (s RESTServiceImpl) FilteredPulls(filter string, orgsChoice []string) ([]entity.PullRequest, error) {
+func (s service) FilteredPulls(filter string, orgsChoice []string) ([]entity.PullRequest, error) {
 	orgs := session.GetSessionService().GetSession().GetUserOrgs()
 
 	orgs = orgsfilter.FilterByChoice(orgs, orgsChoice)
