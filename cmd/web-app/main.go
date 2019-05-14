@@ -12,9 +12,6 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
 	"github.com/777777miSSU7777777/github-aggregator/internal/gokit/rest"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
-	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
-	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
-	"github.com/777777miSSU7777777/github-aggregator/internal/view/pulls"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
@@ -64,9 +61,6 @@ func init() {
 			logger.Warnln(err)
 		}
 	}
-
-	api.SetLogger(logger)
-	view.SetLogger(logger)
 }
 
 func main() {
@@ -76,12 +70,19 @@ func main() {
 
 	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
-	router.HandleFunc("/", index.Render).Methods("GET")
-	router.HandleFunc("/login", login.Render).Methods("GET")
-	router.HandleFunc("/pulls", pulls.Render).Methods("GET")
+	indexRender := view.MakeIndexHandler(logger)
+	loginRender := view.MakeLoginRenderHandler(logger)
+	pullsRender := view.MakePullsRenderHandler(logger)
 
-	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
-	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
+	router.HandleFunc("/", indexRender).Methods("GET")
+	router.HandleFunc("/login", loginRender).Methods("GET")
+	router.HandleFunc("/pulls", pullsRender).Methods("GET")
+
+	authAPI := api.MakeAuthAPIHandler(logger)
+	logoutAPI := api.MakeLogoutAPIHandler(logger)
+
+	apiRouter.HandleFunc("/auth", authAPI).Methods("POST")
+	apiRouter.HandleFunc("/logout", logoutAPI).Methods("POST")
 
 	restService := rest.NewRestServiceImpl()
 	restService = rest.WrapLoggingMiddleware(restService, logger)

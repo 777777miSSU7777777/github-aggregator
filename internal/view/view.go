@@ -4,21 +4,9 @@ package view
 
 import (
 	"html/template"
-
-	log "github.com/sirupsen/logrus"
 )
 
 var templates *template.Template
-
-var logger *log.Logger
-
-func SetLogger(newLogger *log.Logger) {
-	logger = newLogger
-}
-
-func Logger() *log.Logger {
-	return logger
-}
 
 // AuthState struct which represents auth state of user.
 type AuthState struct {

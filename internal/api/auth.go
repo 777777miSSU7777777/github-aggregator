@@ -7,6 +7,8 @@ import (
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
+
+	log "github.com/sirupsen/logrus"
 )
 
 const (
@@ -23,24 +25,25 @@ const (
 	ACCESS_TOKEN = "access_token"
 )
 
-// Auth authenticates user with provided Github API access token.
-func Auth(rw http.ResponseWriter, req *http.Request) {
-	tkn := req.FormValue(ACCESS_TOKEN)
+// MakeAuthAPIHandler returns func with logging which authenticates user with provided Github API access token.
+func MakeAuthAPIHandler(logger *log.Logger) http.HandlerFunc {
+	return func(rw http.ResponseWriter, req *http.Request) {
+		tkn := req.FormValue(ACCESS_TOKEN)
 
-	token.GetTokenService().SaveToken(tkn)
+		token.GetTokenService().SaveToken(tkn)
 
-	if token.GetTokenService().GetToken() != "" {
-		err := session.GetSessionService().StartSession(tkn)
+		if token.GetTokenService().GetToken() != "" {
+			err := session.GetSessionService().StartSession(tkn)
 
-		if err != nil {
-			logger.Warnln(err)
+			if err != nil {
+				logger.Warnln(err)
+			} else {
+				logger.Infoln("Authentication is successful")
+				http.Redirect(rw, req, "/", 301)
+			}
 		} else {
-			logger.Infoln("Authentication is successful")
-			http.Redirect(rw, req, "/", 301)
+			logger.Infoln("Authentication is failed")
+			http.Redirect(rw, req, "/login", 301)
 		}
-	} else {
-		logger.Infoln("Authentication is failed")
-		http.Redirect(rw, req, "/login", 301)
 	}
-
 }
