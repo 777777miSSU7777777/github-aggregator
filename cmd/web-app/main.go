@@ -10,9 +10,9 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
-	"github.com/777777miSSU7777777/github-aggregator/internal/gokit/rest"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/gokit/rest"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 
