@@ -4,19 +4,19 @@ package api
 import (
 	"net/http"
 
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 var httpGet = http.Get
 
 var client *http.Client
 
-var logger log.Logger
+var logger *log.Logger
 
 func init() {
 	client = &http.Client{}
 }
 
-func SetLogger(newLogger log.Logger) {
+func SetLogger(newLogger *log.Logger) {
 	logger = newLogger
 }

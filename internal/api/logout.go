@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/time/timeutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
 
@@ -16,9 +15,5 @@ func Logout(rw http.ResponseWriter, req *http.Request) {
 
 	session.GetSessionService().CloseSession()
 
-	logger.Log(
-		"method", "Logout",
-		"time", timeutil.GetCurrentTime(),
-		"info", "Logout",
-	)
+	logger.Infoln("Logout")
 }

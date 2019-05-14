@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/time/timeutil"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
 
@@ -21,18 +20,10 @@ func Render(rw http.ResponseWriter, req *http.Request) {
 	err := view.GetTemplates().ExecuteTemplate(rw, "login.gohtml", view.AuthState{Auth: tkn != ""})
 
 	if err != nil {
-		view.Logger().Log(
-			"method", "login.Render",
-			"time", timeutil.GetCurrentTime(),
-			"err", err,
-		)
+		view.Logger().Warnln(err)
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	} else {
-		view.Logger().Log(
-			"method", "login.Render",
-			"time", timeutil.GetCurrentTime(),
-			"info", "Login page rendered",
-		)
+		view.Logger().Infoln("Login page rendered")
 	}
 
 }

@@ -5,18 +5,18 @@ package view
 import (
 	"html/template"
 
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 var templates *template.Template
 
-var logger log.Logger
+var logger *log.Logger
 
-func SetLogger(newLogger log.Logger) {
+func SetLogger(newLogger *log.Logger) {
 	logger = newLogger
 }
 
-func Logger() log.Logger {
+func Logger() *log.Logger {
 	return logger
 }
 

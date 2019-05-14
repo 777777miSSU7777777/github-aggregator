@@ -6,9 +6,6 @@ import (
 	"html/template"
 	"net/http"
 	"os"
-	"time"
-
-	"github.com/777777miSSU7777777/github-aggregator/pkg/time/timeutil"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 
@@ -22,16 +19,17 @@ import (
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 
-	"github.com/go-kit/kit/log"
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 )
 
 var host string
 var port string
 var dataSrc string
-var logger log.Logger
+var logger *log.Logger
 
 const STATIC_DIR = "/web/static/"
+const timeFormat = "2006-01-02 15:04:05"
 
 func init() {
 	flag.StringVar(&host, "host", "0.0.0.0", "Defines host ip")
@@ -41,21 +39,21 @@ func init() {
 	flag.StringVar(&dataSrc, "data-source", "rest-api", "Defines data source")
 	flag.Parse()
 
-	logger = log.NewJSONLogger(os.Stderr)
+	logger = log.New()
+	jsonFormatter := &log.JSONFormatter{}
+	jsonFormatter.TimestampFormat = timeFormat
+	logger.SetFormatter(jsonFormatter)
+	logger.SetReportCaller(true)
+	logger.SetOutput(os.Stdout)
 
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
 	query.SetDataSource(datasrcfactory.New(dataSrc))
 	err := token.GetTokenService().TryLoadToken()
 
 	if err != nil {
-		logger.Log(
-			"time", timeutil.GetCurrentTime(),
-			"err", err)
+		logger.Warnln(err)
 	} else {
-		logger.Log(
-			"time", timeutil.GetCurrentTime(),
-			"info", "Initialized token from .token file.",
-		)
+		logger.Infoln("Token initalized from .token file")
 	}
 
 	token := token.GetTokenService().GetToken()
@@ -63,10 +61,7 @@ func init() {
 		err = session.GetSessionService().StartSession(token)
 
 		if err != nil {
-			logger.Log(
-				"time", timeutil.GetCurrentTime(),
-				"err", err,
-			)
+			logger.Warnln(err)
 		}
 	}
 
@@ -103,20 +98,11 @@ func main() {
 
 	http.Handle("/", router)
 
-	logger.Log(
-		"info", "Server started",
-		"time", time.Now(),
-		"host", host,
-		"port", port,
-	)
+	logger.Infof("Server started listening on %s:%s", host, port)
 
 	err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
 	if err != nil {
-		logger.Log(
-			"time", time.Now(),
-			"error", err,
-		)
-		os.Exit(1)
+		logger.Fatalln(err)
 	}
 
 }

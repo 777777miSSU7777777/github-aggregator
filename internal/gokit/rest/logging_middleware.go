@@ -1,80 +1,65 @@
 package rest
 
 import (
-	"time"
-
 	"github.com/777777miSSU7777777/github-aggregator/pkg/entity"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/time/timeutil"
 
-	"github.com/go-kit/kit/log"
+	log "github.com/sirupsen/logrus"
 )
 
 type loggingMiddleware struct {
-	logger log.Logger
+	logger *log.Logger
 	next   RESTService
 }
 
-func WrapLoggingMiddleware(svc RESTService, logger log.Logger) loggingMiddleware {
+func WrapLoggingMiddleware(svc RESTService, logger *log.Logger) loggingMiddleware {
 	return loggingMiddleware{logger, svc}
 }
 
 func (mw loggingMiddleware) CurrentUser() (user entity.User) {
-	defer func(begin time.Time) {
-		mw.logger.Log(
-			"method", "CurrentUser",
-			"time", timeutil.GetCurrentTime(),
-			"user", user,
-			"err", nil,
-			"took", time.Since(begin),
-		)
-	}(time.Now())
+	defer func() {
+		mw.logger.WithFields(log.Fields{
+			"user":  user,
+			"error": nil,
+		}).Infoln()
+	}()
 
 	user = mw.next.CurrentUser()
 	return
 }
 
 func (mw loggingMiddleware) TokenScopes() (scopes []entity.Scope, err error) {
-	defer func(begin time.Time) {
-		mw.logger.Log(
-			"method", "TokenScopes",
-			"time", timeutil.GetCurrentTime(),
-			"scopes", scopes,
-			"err", err,
-			"took", time.Since(begin),
-		)
-	}(time.Now())
+	defer func() {
+		mw.logger.WithFields(log.Fields{
+			"scopes": scopes,
+			"error":  err,
+		}).Infoln()
+	}()
 
 	scopes, err = mw.next.TokenScopes()
 	return
 }
 
 func (mw loggingMiddleware) UserOrgs() (orgs []entity.Organization) {
-	defer func(begin time.Time) {
-		mw.logger.Log(
-			"method", "UserOrgs",
-			"time", timeutil.GetCurrentTime(),
-			"orgs", orgs,
-			"err", nil,
-			"took", time.Since(begin),
-		)
-	}(time.Now())
+	defer func() {
+		mw.logger.WithFields(log.Fields{
+			"orgs":  orgs,
+			"error": nil,
+		}).Infoln()
+	}()
 
 	orgs = mw.next.UserOrgs()
 	return
 }
 
 func (mw loggingMiddleware) FilteredPulls(filter string, orgsChoice []string) (pulls []entity.PullRequest, err error) {
-	defer func(begin time.Time) {
-		mw.logger.Log(
-			"method", "FilteredPulls",
-			"time", timeutil.GetCurrentTime(),
-			"filter", filter,
-			"orgs_choice", orgsChoice,
-			"pulls", pulls,
-			"err", err,
-			"took", time.Since(begin),
-		)
-	}(time.Now())
+	defer func() {
+		mw.logger.WithFields(log.Fields{
+			"filter":      filter,
+			"orgs_choice": orgsChoice,
+			"pulls":       pulls,
+			"error":       err,
+		}).Infoln()
+	}()
 
 	pulls, err = mw.next.FilteredPulls(filter, orgsChoice)
 	return
