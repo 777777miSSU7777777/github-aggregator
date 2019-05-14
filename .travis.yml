@@ -21,6 +21,7 @@ jobs:
 
           - go list ./... | grep -v /vendor/ | xargs -n 1 golint
 
+          # Exclude G104 because it fails on logging middleware.
           - gosec -exclude=G104 ./...
 
           - goimports -d ./$(find . -type f -name '*.go' -not -path "./vendor/*")
