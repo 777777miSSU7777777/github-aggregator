@@ -9,9 +9,15 @@
 
 [[projects]]
   name = "github.com/go-kit/kit"
-  packages = ["endpoint"]
+  packages = ["endpoint","log","transport/http"]
   revision = "12210fb6ace19e0496167bb3e667dcd91fa9f69b"
   version = "v0.8.0"
+
+[[projects]]
+  name = "github.com/go-logfmt/logfmt"
+  packages = ["."]
+  revision = "07c9b44f60d7ffdfb7d8efe1ad539965737836dc"
+  version = "v0.4.0"
 
 [[projects]]
   name = "github.com/gorilla/mux"
@@ -20,10 +26,28 @@
   version = "v1.7.0"
 
 [[projects]]
+  name = "github.com/konsorten/go-windows-terminal-sequences"
+  packages = ["."]
+  revision = "f55edac94c9bbba5d6182a4be46d86a2c9b5b50e"
+  version = "v1.0.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/kr/logfmt"
+  packages = ["."]
+  revision = "b84e30acd515aadc4b783ad4ff83aff3299bdfe0"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/sirupsen/logrus"
+  packages = ["."]
+  revision = "8bdbc7bcc01dcbb8ec23dc8a28e332258d25251f"
+  version = "v1.4.1"
 
 [[projects]]
   name = "github.com/stretchr/objx"
@@ -37,9 +61,15 @@
   revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
   version = "v1.3.0"
 
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "a5b02f93d862f065920dd6a40dddc66b60d0dec4"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "241d20dea61b1cf0b64c406fdd348b5d62e45b412410abd9a9c53ac047cec488"
+  inputs-digest = "e13c9bf6f66016b91ac4a57c61214ac1153abe04c332c352e398c2da8c0cfc72"
   solver-name = "gps-cdcl"
   solver-version = 1
