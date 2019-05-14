@@ -85,6 +85,7 @@ func main() {
 	apiRouter.HandleFunc("/logout", logoutAPI).Methods("POST")
 
 	restService := rest.NewRestServiceImpl()
+	restService = rest.WrapRecoverMiddleware(restService, logger)
 	restService = rest.WrapLoggingMiddleware(restService, logger)
 
 	currentUserHandler := rest.MakeCurrentUserHandler(restService)
