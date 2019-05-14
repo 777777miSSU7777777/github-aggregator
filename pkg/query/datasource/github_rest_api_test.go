@@ -74,7 +74,7 @@ func TestGetUser__DifferentBytes__NotEquals(t *testing.T) {
 func TestGetScopes__SameStrings__Equals(t *testing.T) {
 	dataSrc := new(TestDataSource)
 
-	testStringArray := []string{"1", "2", "3"}
+	testStringArray := []entity.Scope{"1", "2", "3"}
 
 	dataSrc.On("GetScopes", context.Background(), "123").Return(testStringArray, nil)
 
@@ -86,13 +86,13 @@ func TestGetScopes__SameStrings__Equals(t *testing.T) {
 func TestGetScopes__DifferentStrings__NotEquals(t *testing.T) {
 	dataSrc := new(TestDataSource)
 
-	testStringArray := []string{"1", "2", "3"}
+	testStringArray := []entity.Scope{"1", "2", "3"}
 
 	dataSrc.On("GetScopes", context.Background(), "123").Return(testStringArray, nil)
 
 	stringArray, _ := dataSrc.GetScopes(context.Background(), "123")
 
-	testStringArray = []string{"3", "2", "1"}
+	testStringArray = []entity.Scope{"3", "2", "1"}
 
 	assert.NotEqual(t, testStringArray, stringArray)
 }

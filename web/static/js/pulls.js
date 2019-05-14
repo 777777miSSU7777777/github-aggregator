@@ -16,20 +16,22 @@ $(document).ready(() => {
 });
 
 const AllPulls = () => {
-    fetch("/api/pulls?filter=all&orgs_choice=" + JSON.stringify( getOrgsChoiceArray() ),  { method: "GET"})
+    fetch("/api/pulls?filter=all&selected_orgs=" + JSON.stringify( getOrgsChoiceArray() ),  { method: "GET"})
         .then(response => response.json())
         .then(data => renderAllPulls(data));
 }
 
 const renderAllPulls = (data) => {
+    let pullsData = data["filtered_pulls"];
+
     let allTabContent = document.getElementById("all");
 
     if (allTabContent.firstElementChild) {
         allTabContent.removeChild(allTabContent.firstElementChild);
     }
 
-    if (data.length) {
-        let pullsTab = createPullsTab(data);
+    if (pullsData.length) {
+        let pullsTab = createPullsTab(pullsData);
     
         allTabContent.appendChild(pullsTab);
     } else {
@@ -41,20 +43,22 @@ const renderAllPulls = (data) => {
 }
 
 const AssignedPulls = () => {
-    fetch("/api/pulls?filter=assignee&orgs_choice=" + JSON.stringify( getOrgsChoiceArray() ),  { method: "GET"})
+    fetch("/api/pulls?filter=assignee&selected_orgs=" + JSON.stringify( getOrgsChoiceArray() ),  { method: "GET"})
     .then(response => response.json())
     .then(data => renderAssignedPulls(data));
 }
 
 const renderAssignedPulls = (data) => {
+    let pullsData = data["filtered_pulls"];
+
     let assignedTabContent = document.getElementById("assigned");
 
     if (assignedTabContent.firstElementChild) {
         assignedTabContent.removeChild(assignedTabContent.firstElementChild);
     }
 
-    if (data.length) {
-        let pullsTab = createPullsTab(data);
+    if (pullsData.length) {
+        let pullsTab = createPullsTab(pullsData);
     
         assignedTabContent.appendChild(pullsTab);
     } else {
@@ -66,20 +70,22 @@ const renderAssignedPulls = (data) => {
 }
 
 const ReviewRequestedPulls = () => {
-    fetch("/api/pulls?filter=reviewer&orgs_choice=" + JSON.stringify( getOrgsChoiceArray() ),  { method: "GET"})
+    fetch("/api/pulls?filter=reviewer&selected_orgs=" + JSON.stringify( getOrgsChoiceArray() ),  { method: "GET"})
         .then(response => response.json())
         .then(data => renderReviewRequestedPulls(data));
 }
 
 const renderReviewRequestedPulls = (data) => {
+    let pullsData = data["filtered_pulls"];
+
     let reviewRequestTabContent = document.getElementById("review-requested");
 
     if (reviewRequestTabContent.firstElementChild) {
         reviewRequestTabContent.removeChild(reviewRequestTabContent.firstElementChild);
     }
 
-    if (data.length) {
-        let pullsTab = createPullsTab(data);
+    if (pullsData.length) {
+        let pullsTab = createPullsTab(pullsData);
     
         reviewRequestTabContent.appendChild(pullsTab);
     } else {

@@ -5,7 +5,6 @@ import (
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/orgsfactory"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/userfactory"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
 )
 
@@ -26,19 +25,19 @@ type SessionService struct {
 }
 
 // StartSession starts new session.
-func (s *SessionService) StartSession(token string) {
+func (s *SessionService) StartSession(token string) error {
 	s.currentSession = &Session{}
 
 	userBytes, err := query.GetDataSource().GetUser(context.Background(), token)
 
 	if err != nil {
-		log.Error.Println(err)
+		return err
 	}
 
 	user, err := userfactory.New(userBytes)
 
 	if err != nil {
-		log.Error.Println(err)
+		return err
 	}
 
 	s.currentSession.SetCurrentUser(*user)
@@ -46,16 +45,18 @@ func (s *SessionService) StartSession(token string) {
 	orgsBytes, err := query.GetDataSource().GetOrgs(context.Background(), token)
 
 	if err != nil {
-		log.Error.Println(err)
+		return err
 	}
 
 	orgs, err := orgsfactory.New(orgsBytes)
 
 	if err != nil {
-		log.Error.Println(err)
+		return err
 	}
 
 	s.currentSession.SetUserOrgs(orgs)
+
+	return nil
 }
 
 // GetSession return a copy of current session.

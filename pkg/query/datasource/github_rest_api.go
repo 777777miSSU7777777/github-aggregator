@@ -64,7 +64,7 @@ func (ds GithubRESTAPI) GetUser(ctx context.Context, token string) ([]byte, erro
 }
 
 // GetScopes returns scopes for provided token.
-func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, error) {
+func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]entity.Scope, error) {
 	req, err := http.NewRequest("GET", USER_QUERY, nil)
 
 	if err != nil {
@@ -81,7 +81,7 @@ func (ds GithubRESTAPI) GetScopes(ctx context.Context, token string) ([]string, 
 
 	respHeader := headerutil.ReadResponseHeader(resp)
 
-	return strings.Split(respHeader[SCOPES_HEADER][0], ","), nil
+	return []entity.Scope(strings.Split(respHeader[SCOPES_HEADER][0], ",")), nil
 }
 
 // GetOrgs returns body with user orgs.
@@ -114,8 +114,12 @@ func (ds GithubRESTAPI) GetOrgsRepos(ctx context.Context, token string, orgs []e
 	resultSetBytes := [][]byte{}
 
 	orgChan := make(chan entity.Organization, len(orgs))
-	reposBytesChan := make(chan []byte, 1)
-	errorsChan := make(chan error, 1)
+	reposBytesChan := make(chan []byte, len(orgs))
+	errorsChan := make(chan error, len(orgs))
+
+	defer close(orgChan)
+	defer close(reposBytesChan)
+	defer close(errorsChan)
 
 	for _, org := range orgs {
 		orgChan <- org
@@ -174,8 +178,12 @@ func (ds GithubRESTAPI) GetReposPullRequests(ctx context.Context, token string, 
 	resultSetBytes := [][]byte{}
 
 	repoChan := make(chan entity.Repository, len(repos))
-	pullsBytesChan := make(chan []byte, 1)
-	errorsChan := make(chan error, 1)
+	pullsBytesChan := make(chan []byte, len(repos))
+	errorsChan := make(chan error, len(repos))
+
+	defer close(repoChan)
+	defer close(pullsBytesChan)
+	defer close(errorsChan)
 
 	var wg sync.WaitGroup
 	wg.Add(len(repos))

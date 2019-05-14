@@ -5,29 +5,28 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/api"
-	"github.com/777777miSSU7777777/github-aggregator/internal/middleware"
-	"github.com/777777miSSU7777777/github-aggregator/internal/security/tokenservice"
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
-	"github.com/777777miSSU7777777/github-aggregator/internal/view/index"
-	"github.com/777777miSSU7777777/github-aggregator/internal/view/login"
-	"github.com/777777miSSU7777777/github-aggregator/internal/view/pulls"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/factory/datasrcfactory"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log/logutil"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/gokit/rest"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/query"
+	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 
 	"github.com/gorilla/mux"
+	log "github.com/sirupsen/logrus"
 )
 
 var host string
 var port string
 var dataSrc string
+var logger *log.Logger
 
 const STATIC_DIR = "/web/static/"
+const timeFormat = "2006-01-02 15:04:05"
 
 func init() {
 	flag.StringVar(&host, "host", "0.0.0.0", "Defines host ip")
@@ -36,13 +35,31 @@ func init() {
 	flag.StringVar(&port, "p", "8080", "Defines host port")
 	flag.StringVar(&dataSrc, "data-source", "rest-api", "Defines data source")
 	flag.Parse()
+
+	logger = log.New()
+	jsonFormatter := &log.JSONFormatter{}
+	jsonFormatter.TimestampFormat = timeFormat
+	logger.SetFormatter(jsonFormatter)
+	logger.SetReportCaller(true)
+	logger.SetOutput(os.Stdout)
+
 	view.SetTemplates(template.Must(template.ParseGlob("web/templates/*.gohtml")))
-	logutil.SetProjectName("github-aggregator")
 	query.SetDataSource(datasrcfactory.New(dataSrc))
-	tokenservice.GetTokenService().TryLoadToken()
-	token := tokenservice.GetTokenService().GetToken()
+	err := token.GetTokenService().TryLoadToken()
+
+	if err != nil {
+		logger.Warnln(err)
+	} else {
+		logger.Infoln("Token initalized from .token file")
+	}
+
+	token := token.GetTokenService().GetToken()
 	if token != "" {
-		session.GetSessionService().StartSession(token)
+		err = session.GetSessionService().StartSession(token)
+
+		if err != nil {
+			logger.Warnln(err)
+		}
 	}
 }
 
@@ -53,25 +70,41 @@ func main() {
 
 	router.PathPrefix(STATIC_DIR).Handler(http.StripPrefix(STATIC_DIR, http.FileServer(http.Dir("."+STATIC_DIR))))
 
-	router.HandleFunc("/", index.Render).Methods("GET")
-	router.HandleFunc("/login", login.Render).Methods("GET")
-	router.HandleFunc("/pulls", pulls.Render).Methods("GET")
+	indexRender := view.MakeIndexHandler(logger)
+	loginRender := view.MakeLoginRenderHandler(logger)
+	pullsRender := view.MakePullsRenderHandler(logger)
 
-	apiRouter.HandleFunc("/auth", api.Auth).Methods("POST")
-	apiRouter.HandleFunc("/logout", api.Logout).Methods("POST")
+	router.HandleFunc("/", indexRender).Methods("GET")
+	router.HandleFunc("/login", loginRender).Methods("GET")
+	router.HandleFunc("/pulls", pullsRender).Methods("GET")
 
-	apiRouter.HandleFunc("/profile", middleware.ChainMiddleware(api.Profile)).Methods("GET")
-	apiRouter.HandleFunc("/scopes", middleware.ChainMiddleware(api.Scopes)).Methods("GET")
-	apiRouter.HandleFunc("/orgs", middleware.ChainMiddleware(api.Orgs)).Methods("GET")
-	apiRouter.HandleFunc("/pulls", middleware.ChainMiddleware(api.PullRequests)).Methods("GET")
+	authAPI := api.MakeAuthAPIHandler(logger)
+	logoutAPI := api.MakeLogoutAPIHandler(logger)
+
+	apiRouter.HandleFunc("/auth", authAPI).Methods("POST")
+	apiRouter.HandleFunc("/logout", logoutAPI).Methods("POST")
+
+	restService := rest.NewRestServiceImpl()
+	restService = rest.WrapRecoverMiddleware(restService, logger)
+	restService = rest.WrapLoggingMiddleware(restService, logger)
+
+	currentUserHandler := rest.MakeCurrentUserHandler(restService)
+	tokenScopesHandler := rest.MakeTokenScopesHandler(restService)
+	userOrgsHandler := rest.MakeUserOrgsHandler(restService)
+	filteredPullsHandler := rest.MakeFilteredPullsHandler(restService)
+
+	apiRouter.Handle("/profile", currentUserHandler).Methods("GET")
+	apiRouter.Handle("/scopes", tokenScopesHandler).Methods("GET")
+	apiRouter.Handle("/orgs", userOrgsHandler).Methods("GET")
+	apiRouter.Handle("/pulls", filteredPullsHandler).Methods("GET")
 
 	http.Handle("/", router)
 
-	log.Info.Printf("Server started on %s:%s", host, port)
+	logger.Infof("Server started listening on %s:%s", host, port)
 
 	err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
 	if err != nil {
-		log.Error.Fatalln(err)
+		logger.Fatalln(err)
 	}
 
 }

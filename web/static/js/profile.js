@@ -19,7 +19,9 @@ const profile = () => {
         .then(data => renderProfile(data));
 }
 
-const renderProfile = (profileData) => {
+const renderProfile = (data) => {
+    let profileData = data["current_user"];
+    
     let profilePic = document.createElement("img");
     profilePic.className = "profile-pic";
     profilePic.src = profileData["avatar_url"];
