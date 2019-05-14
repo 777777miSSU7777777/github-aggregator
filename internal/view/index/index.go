@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/777777miSSU7777777/github-aggregator/internal/view"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
 
@@ -16,9 +15,9 @@ func Render(rw http.ResponseWriter, req *http.Request) {
 	err := view.GetTemplates().ExecuteTemplate(rw, "index.gohtml", view.AuthState{Auth: tkn != ""})
 
 	if err != nil {
-		log.Error.Println(err)
+		view.Logger().Warnln(err)
 		http.Error(rw, "Internal server error", http.StatusInternalServerError)
 	} else {
-		log.Info.Println("Index page successfuly rendered")
+		view.Logger().Infoln("Index page rendered")
 	}
 }

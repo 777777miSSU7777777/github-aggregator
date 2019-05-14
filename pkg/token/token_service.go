@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/777777miSSU7777777/github-aggregator/pkg/io/fileutil"
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 )
 
 // TOKEN_FILE name of file which stores personal access token.
@@ -33,60 +32,64 @@ func SetTokenService(ts *TokenService) {
 }
 
 // TryLoadToken tries to load token from .token file in $HOME or current dir.
-func (ts *TokenService) TryLoadToken() {
+func (ts *TokenService) TryLoadToken() error {
 	homeDir := os.Getenv("HOME")
 	token, err := fileutil.ReadStringFromFile(homeDir + "/" + TOKEN_FILE)
 
-	if err != nil {
-		log.Warning.Println(err)
-	}
-
 	if token != "" {
 		ts.SaveToken(token)
+		return nil
 	}
 
 	token, err = fileutil.ReadStringFromFile(TOKEN_FILE)
 
-	if err != nil {
-		log.Warning.Println(err)
-	}
-
 	if token != "" {
 		ts.SaveToken(token)
-		return
+		return nil
 	}
 
 	ts.apiToken = ""
+
+	if err != nil {
+		return err
+	}
+
+	return &TokenNotFoundError{}
 }
 
-func (ts *TokenService) saveTokenFile() {
+func (ts *TokenService) saveTokenFile() error {
 	err := fileutil.WriteStringToFile(TOKEN_FILE, ts.apiToken)
 
 	if err != nil {
-		log.Warning.Println(err)
+		return err
 	}
+
+	return nil
 }
 
-func (ts *TokenService) deleteTokenFile() {
+func (ts *TokenService) deleteTokenFile() error {
 	err := os.Remove(TOKEN_FILE)
 
 	if err != nil {
-		log.Warning.Println(err)
+		return err
 	}
+
+	return nil
 }
 
 // SaveToken saves token to memory.
-func (ts *TokenService) SaveToken(token string) {
+func (ts *TokenService) SaveToken(token string) error {
 	valid, err := ts.tokenChecker.checkValidity(token)
 
 	if err != nil {
-		log.Warning.Println(err)
-		return
+		return err
 	} else if valid {
 		ts.apiToken = token
 
 		ts.saveTokenFile()
 	}
+
+	return nil
 }
 
 // GetToken return token.

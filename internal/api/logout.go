@@ -5,7 +5,6 @@ package api
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
@@ -16,5 +15,5 @@ func Logout(rw http.ResponseWriter, req *http.Request) {
 
 	session.GetSessionService().CloseSession()
 
-	log.Info.Println("Logout")
+	logger.Infoln("Logout")
 }

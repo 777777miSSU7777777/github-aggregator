@@ -5,7 +5,6 @@ package api
 import (
 	"net/http"
 
-	"github.com/777777miSSU7777777/github-aggregator/pkg/log"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/session"
 	"github.com/777777miSSU7777777/github-aggregator/pkg/token"
 )
@@ -31,11 +30,16 @@ func Auth(rw http.ResponseWriter, req *http.Request) {
 	token.GetTokenService().SaveToken(tkn)
 
 	if token.GetTokenService().GetToken() != "" {
-		session.GetSessionService().StartSession(tkn)
-		log.Info.Println("Authentication is successful")
-		http.Redirect(rw, req, "/", 301)
+		err := session.GetSessionService().StartSession(tkn)
+
+		if err != nil {
+			logger.Warnln(err)
+		} else {
+			logger.Infoln("Authentication is successful")
+			http.Redirect(rw, req, "/", 301)
+		}
 	} else {
-		log.Info.Println("Authentication is failed")
+		logger.Infoln("Authentication is failed")
 		http.Redirect(rw, req, "/login", 301)
 	}
 
